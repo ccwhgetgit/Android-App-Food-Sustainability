@@ -147,14 +147,29 @@ Padding(
           ),
           child: Column(
             children: <Widget>[
-               SizedBox(height: 15.0),
+             /*
+
+    
+    consider adding something at the top 
+             */Row(
+                children: <Widget>[
+               /* Expanded(
+      child: Image.asset('assets/images/logo.png',
+        height:30,
+                   width: 30,),
+      
+    ),
+             */  
+SizedBox(width:MediaQuery.of(context).size.width/4 ),
           Text('Rewards Catalogue',
+          textAlign: TextAlign.center,
               style: TextStyle(
                   fontFamily: 'Varela',
                   fontSize: 25.0,
-                  fontWeight: FontWeight.bold, 
+                 
           )),
-
+                ],
+             ), 
          
           SizedBox(height: 30),
               Flexible(
@@ -175,9 +190,13 @@ Padding(
                               context, snapshot.data.documents[index]));
                     }),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+
+
+
               Container(
+         padding: const EdgeInsets.all(8.0),
                 child: Column(
+                  
                   children: <Widget>[
                     
                     DatabaseService(uid: LoginPage.user.uid)
@@ -190,8 +209,9 @@ Padding(
                   ],
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+             
               Container(
+                
                 height: 50,
                 margin: EdgeInsets.symmetric(
                   horizontal: 10,
@@ -301,6 +321,7 @@ Padding(
                   },
                 ),
               ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
             ],
           ),
         ));
