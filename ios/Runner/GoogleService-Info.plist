@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>749067594191-cqo89afmvnn9mf4u5o77q0qutbp1bpkf.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.749067594191-cqo89afmvnn9mf4u5o77q0qutbp1bpkf</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCNcbkZ4eRuY4dNQgjhINhLKjd4fO80VUU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>749067594191</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.orbital.cycled</string>
+	<key>PROJECT_ID</key>
+	<string>cycled-cd174</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cycled-cd174.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:749067594191:ios:5cde02a847781426108aba</string>
+	<key>DATABASE_URL</key>
+	<string>https://cycled-cd174.firebaseio.com</string>
+</dict>
+</plist>

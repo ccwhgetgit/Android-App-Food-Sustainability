@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "244805619380",
+    "firebase_url": "https://cycledorbital-ab3ff.firebaseio.com",
+    "project_id": "cycledorbital-ab3ff",
+    "storage_bucket": "cycledorbital-ab3ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244805619380:android:2f898298100433af1211e1",
+        "android_client_info": {
+          "package_name": "com.nus.cycled2020"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244805619380-8m1j564ig1ucqsfek2a0k0jfps0legdp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nus.cycled2020",
+            "certificate_hash": "e8a9a26474d647bf61f868af85ccb4c9ae313281"
+          }
+        },
+        {
+          "client_id": "244805619380-fl50r4m9d2m5118aakq104oifb83jevv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7zM7p3ImyBisERiry8VSyCEgaZ1rqQK4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244805619380-fl50r4m9d2m5118aakq104oifb83jevv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
