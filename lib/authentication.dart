@@ -39,6 +39,8 @@ class _LoginPageState extends State<LoginPage>
   final _signupFormKey = GlobalKey<FormState>();
   final _loginFormKey = GlobalKey<FormState>();
 
+  String userName = "";
+
   TextEditingController loginEmailController = new TextEditingController();
   TextEditingController loginPasswordController = new TextEditingController();
 
@@ -73,7 +75,7 @@ class _LoginPageState extends State<LoginPage>
             decoration: BoxDecoration(
               image: DecorationImage(
                   image: ExactAssetImage("assets/images/background.png"),
-                  fit: BoxFit.fitWidth,
+                  fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.85), BlendMode.dstATop)),
             ),
@@ -692,9 +694,6 @@ class _LoginPageState extends State<LoginPage>
     DatabaseService(uid: LoginPage.user.uid).updateUserPoints(0);
     DatabaseService(uid: LoginPage.user.uid).updateUserTier('Bronze');
 
-    DatabaseService(uid: LoginPage.user.uid)
-        .updateFoodie(DateFormat('dd MMMM yyyy').format(DateTime.now()));
-
     DatabaseService(uid: LoginPage.user.uid).updateStats();
 
     for (String store in StorePage.stores) {
@@ -745,6 +744,7 @@ class _LoginPageState extends State<LoginPage>
               email: signupEmailController.text,
               password: signupPasswordController.text))
           .user;
+      userName = signupNameController.text;
       if (signupNameController.text == "" ||
           signupPasswordController.text.length < 8 ||
           signupPasswordController.text !=
@@ -775,44 +775,50 @@ class _LoginPageState extends State<LoginPage>
 
   Future<FirebaseUser> _signInWithEmailPassword() async {
     FirebaseUser user;
-    try {
-      LoginPage.user = (await _auth.signInWithEmailAndPassword(
-              email: loginEmailController.text,
-              password: loginPasswordController.text))
-          .user;
+    LoginPage.user = (await _auth.signInWithEmailAndPassword(
+            email: loginEmailController.text,
+            password: loginPasswordController.text))
+        .user;
+    if (LoginPage.user.isEmailVerified) {
+      try {
+        DatabaseService(uid: LoginPage.user.uid)
+            .updateUserInfo(LoginPage.user.email, userName, false);
 
-      DatabaseService(uid: LoginPage.user.uid).updateUserInfo(
-          LoginPage.user.email, LoginPage.user.displayName, false);
+        DatabaseService(uid: LoginPage.user.uid).updateUserTokens(0);
+        DatabaseService(uid: LoginPage.user.uid).updateUserStatus(false);
+        DatabaseService(uid: LoginPage.user.uid).updateUserPoints(0);
+        DatabaseService(uid: LoginPage.user.uid).updateUserTier('Bronze');
 
-      DatabaseService(uid: LoginPage.user.uid).updateUserTokens(0);
-      DatabaseService(uid: LoginPage.user.uid).updateUserStatus(false);
-      DatabaseService(uid: LoginPage.user.uid).updateUserPoints(0);
-      DatabaseService(uid: LoginPage.user.uid).updateUserTier('Bronze');
+        DatabaseService(uid: LoginPage.user.uid).updateStats();
 
-      DatabaseService(uid: LoginPage.user.uid)
-          .updateFoodie(DateFormat('dd MMMM yyyy').format(DateTime.now()));
+        for (String store in StorePage.stores) {
+          DatabaseService(uid: LoginPage.user.uid).resetRewards(store, 0);
+        }
 
-      DatabaseService(uid: LoginPage.user.uid).updateStats();
-
-      for (String store in StorePage.stores) {
-        DatabaseService(uid: LoginPage.user.uid).resetRewards(store, 0);
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => MainInterface()));
+        return user;
+      } catch (e) {
+        print(e.toString());
+        showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                  title: Text(
+                      "Sorry, we couldn't find an account with that email address or password."),
+                  content: Text(
+                      "Can we help you recover your account? Click on 'Forgot Password' to reset your password"),
+                ));
+        return null;
       }
-
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (BuildContext context) => MainInterface()));
-
-      return user;
-    } catch (e) {
-      print(e.toString());
+    } else {
       showDialog(
           context: context,
           builder: (_) => AlertDialog(
-                title: Text(
-                    "Sorry, we couldn't find an account with that email address or password."),
+                title: Text("OOPS!"),
                 content: Text(
-                    "Can we help you recover your account? Click on 'Forgot Password' to reset your password"),
+                    "A verification link has been sent to your registered email. Please verify your account first."),
               ));
       return null;
     }
