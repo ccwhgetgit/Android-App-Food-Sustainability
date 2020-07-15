@@ -71,8 +71,8 @@ class _LandingPageState extends State<LandingPage> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             color: (index == _currentPage)
-                                ? Colors.brown
-                                : Colors.brown.withOpacity(0.5)));
+                                ? Colors.green
+                                : Colors.green.withOpacity(0.5)));
                   })),
               InkWell(
                 onTap: () {
