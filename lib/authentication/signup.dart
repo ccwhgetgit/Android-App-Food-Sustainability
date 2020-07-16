@@ -60,48 +60,37 @@ class _Login1PageState extends State<Login1Page>
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-    appBar: AppBar(
-          leading: IconButton(
-              icon: Icon(LineAwesomeIcons.arrow_left, color: Colors.black),
-              onPressed: () => {Navigator.pop(context, false)}),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          title: Text("New Use",
-              style: TextStyle(fontSize: 23, fontFamily: 'SFProText')),
-        ),
-
-      
-      body: 
-       SingleChildScrollView(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-          
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 70.0),
-                ),
-                Text(
-                  "New User? ",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 30, color: Colors.black),
-                ),
-                Text(
-                  "Welcome to Cycled ",
-                 style: TextStyle(
-                            color: kTextLightColor,
-                            fontSize: 20)    ),
-               _buildSignUp(context),
-                
-
-                
-              ],
-            ),
+      appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(LineAwesomeIcons.arrow_left, color: Colors.black),
+            onPressed: () => {Navigator.pop(context, false)}),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: Text("New Use",
+            style: TextStyle(fontSize: 23, fontFamily: 'SFProText')),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(top: 70.0),
+              ),
+              Text(
+                "New User? ",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 30, color: Colors.black),
+              ),
+              Text("Welcome to Cycled ",
+                  style: TextStyle(color: kTextLightColor, fontSize: 20)),
+              _buildSignUp(context),
+            ],
           ),
         ),
-      
+      ),
     );
   }
 
@@ -125,9 +114,6 @@ class _Login1PageState extends State<Login1Page>
 
     _pageController = PageController();
   }
-
-
-
 
   Widget _buildSignUp(BuildContext context) {
     return Container(
@@ -280,22 +266,20 @@ class _Login1PageState extends State<Login1Page>
                   ),
                 ),
               ),
- Container(
+              Container(
                 margin: EdgeInsets.only(top: 350.0),
                 decoration: new BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: Theme.Colors.loginGradientStart,
-                      offset: Offset(1.0, 6.0),
-                      blurRadius: 20.0,
-                    ),
-                  
-                  ],
-                  color: Colors. white
-                ),
+                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Theme.Colors.loginGradientStart,
+                        offset: Offset(1.0, 6.0),
+                        blurRadius: 20.0,
+                      ),
+                    ],
+                    color: Colors.white),
                 child: MaterialButton(
-                     highlightColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
                     splashColor: Theme.Colors.loginGradientEnd,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -303,23 +287,19 @@ class _Login1PageState extends State<Login1Page>
                       child: Text(
                         "Sign Up",
                         style: TextStyle(
-                            color: Colors.blue[900],
-                            fontSize: 25.0,
-                            ),
+                          color: Colors.blue[900],
+                          fontSize: 25.0,
+                        ),
                       ),
                     ),
                     onPressed: () => showInSnackBar("SignUp button pressed")),
               ),
-
             ],
           ),
         ],
       ),
     );
   }
-
-
-  
 
   void showInSnackBar(String value) {
     FocusScope.of(context).requestFocus(new FocusNode());
@@ -338,8 +318,6 @@ class _Login1PageState extends State<Login1Page>
     ));
   }
 
-
-
   void _toggleSignup() {
     setState(() {
       _obscureTextSignup = !_obscureTextSignup;
@@ -352,3 +330,4 @@ class _Login1PageState extends State<Login1Page>
     });
   }
 }
+//test comment
