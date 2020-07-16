@@ -1,6 +1,5 @@
-import 'package:Cycled_iOS/customWidgets/Statistics.dart';
+
 import 'package:Cycled_iOS/database/DatabaseService.dart';
-import 'package:Cycled_iOS/profileNav/inviteFriend.dart';
 import 'package:Cycled_iOS/tabs/disposePage.dart';
 
 

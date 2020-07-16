@@ -283,6 +283,10 @@ class DatabaseService extends State<DatabaseServicee> {
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) return Container();
+
+ if (snapshot.data.documents[0]['Points'] >= 0 &&
+            snapshot.data.documents[0]['Points'] < 300){
+
           return LinearPercentIndicator(
             animation: true,
             lineHeight: 20.0,
@@ -291,11 +295,39 @@ class DatabaseService extends State<DatabaseServicee> {
             percent: snapshot.data.documents[0]['Points'] / 300,
     
             //need to set for the various levels
-            center: Text("LEVEL UP!"),
+            center: Text("LEVEL UP"),
             linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor: Colors.deepOrangeAccent,
+            progressColor: Colors.deepOrangeAccent[100],
           );
-        });
+        }  else if (snapshot.data.documents[0]['Points'] > 299 &&
+            snapshot.data.documents[0]['Points'] < 700) {
+         return LinearPercentIndicator(
+            animation: true,
+            lineHeight: 20.0,
+            animationDuration: 2500,
+
+            percent: snapshot.data.documents[0]['Points'] / 500,
+    
+            //need to set for the various levels
+            center: Text("Gold is Next"),
+            linearStrokeCap: LinearStrokeCap.roundAll,
+            progressColor:  Colors.blueGrey,
+          );
+        
+        }   return LinearPercentIndicator(
+            animation: true,
+            lineHeight: 20.0,
+            animationDuration: 2500,
+
+            percent: snapshot.data.documents[0]['Points'] / 700,
+    
+            //need to set for the various levels
+            center: Text("Gold Standard"),
+            linearStrokeCap: LinearStrokeCap.roundAll,
+            progressColor:Colors.amber,
+          );
+        }
+        );
   }
 
   Widget getPoints() {

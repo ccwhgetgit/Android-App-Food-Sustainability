@@ -1,7 +1,6 @@
 import 'package:Cycled_iOS/customWidgets/shoe_model.dart';
 import 'package:Cycled_iOS/database/DatabaseService.dart';
 import 'package:Cycled_iOS/tabs/duplicatestorePage.dart';
-import 'package:Cycled_iOS/tabs/storePage.dart';
 import 'package:flutter/material.dart';
 import '../authentication.dart';
 

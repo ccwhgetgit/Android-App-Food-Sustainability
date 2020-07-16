@@ -155,7 +155,7 @@ class _StorePageState extends State<StorePage> {
                    width: 30,),
       
     ),
-             */
+             
                   SizedBox(width: MediaQuery.of(context).size.width / 4),
                   Text('Rewards Catalogue',
                       textAlign: TextAlign.center,
@@ -163,6 +163,19 @@ class _StorePageState extends State<StorePage> {
                         fontFamily: 'Varela',
                         fontSize: 25.0,
                       )),
+             */  
+SizedBox(width:MediaQuery.of(context).size.width/5 ),
+          Text('Rewards Catalogue',
+          textAlign: TextAlign.center,
+               style: TextStyle(
+                             
+                              fontSize: 25,
+                              letterSpacing: .6,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              )),
+          
+                
                 ],
               ),
               SizedBox(height: 30),

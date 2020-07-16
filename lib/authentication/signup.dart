@@ -1,17 +1,13 @@
-import 'package:Cycled_iOS/tabs/storePage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:Cycled_iOS/design/theme.dart' as Theme;
-import 'package:Cycled_iOS/design/bubble_indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:Cycled_iOS/mainInterface.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-import 'package:Cycled_iOS/database/DatabaseService.dart';
 import 'dart:async';
 
-import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 const kTextLightColor = Color(0xFFACB1C0);
@@ -39,6 +35,7 @@ class _Login1PageState extends State<Login1Page>
   final GoogleSignIn googleSignIn = new GoogleSignIn();
   final FacebookLogin fbLogin = new FacebookLogin();
 
+  final _signupFormKey = GlobalKey<FormState>();
   TextEditingController loginEmailController = new TextEditingController();
   TextEditingController loginPasswordController = new TextEditingController();
 
@@ -62,12 +59,11 @@ class _Login1PageState extends State<Login1Page>
     return new Scaffold(
     appBar: AppBar(
           leading: IconButton(
-              icon: Icon(LineAwesomeIcons.arrow_left, color: Colors.black),
+              icon: Icon(LineAwesomeIcons.arrow_left, color: Colors.black, ),
               onPressed: () => {Navigator.pop(context, false)}),
           centerTitle: true,
-          backgroundColor: Colors.white,
-          title: Text("New Use",
-              style: TextStyle(fontSize: 23, fontFamily: 'SFProText')),
+          backgroundColor: Colors.transparent,
+        
         ),
 
       
@@ -80,19 +76,20 @@ class _Login1PageState extends State<Login1Page>
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
+                
                 Padding(
-                  padding: EdgeInsets.only(top: 70.0),
+                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.01),
                 ),
-                Text(
-                  "New User? ",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 30, color: Colors.black),
-                ),
-                Text(
-                  "Welcome to Cycled ",
+             
+          
+          Text("Sign Up",
                  style: TextStyle(
-                            color: kTextLightColor,
-                            fontSize: 20)    ),
+                             
+                              fontSize: 25,
+                              letterSpacing: .6,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              )),
                _buildSignUp(context),
                 
 
@@ -130,6 +127,7 @@ class _Login1PageState extends State<Login1Page>
 
 
   Widget _buildSignUp(BuildContext context) {
+    
     return Container(
       padding: EdgeInsets.only(top: 23.0),
       child: Column(
@@ -158,7 +156,7 @@ class _Login1PageState extends State<Login1Page>
                           keyboardType: TextInputType.text,
                           textCapitalization: TextCapitalization.words,
                           style: TextStyle(
-                              fontFamily: "WorkSansSemiBold",
+                             
                               fontSize: 16.0,
                               color: Colors.black),
                           decoration: InputDecoration(
@@ -169,7 +167,7 @@ class _Login1PageState extends State<Login1Page>
                             ),
                             hintText: "Name",
                             hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 16.0),
+                               fontSize: 16.0),
                           ),
                         ),
                       ),
@@ -186,7 +184,7 @@ class _Login1PageState extends State<Login1Page>
                           controller: signupEmailController,
                           keyboardType: TextInputType.emailAddress,
                           style: TextStyle(
-                              fontFamily: "WorkSansSemiBold",
+                              
                               fontSize: 16.0,
                               color: Colors.black),
                           decoration: InputDecoration(
@@ -197,7 +195,7 @@ class _Login1PageState extends State<Login1Page>
                             ),
                             hintText: "Email Address",
                             hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 16.0),
+                              fontSize: 16.0),
                           ),
                         ),
                       ),
@@ -214,7 +212,7 @@ class _Login1PageState extends State<Login1Page>
                           controller: signupPasswordController,
                           obscureText: _obscureTextSignup,
                           style: TextStyle(
-                              fontFamily: "WorkSansSemiBold",
+                           
                               fontSize: 16.0,
                               color: Colors.black),
                           decoration: InputDecoration(
@@ -225,7 +223,7 @@ class _Login1PageState extends State<Login1Page>
                             ),
                             hintText: "Password",
                             hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 16.0),
+                              fontSize: 16.0),
                             suffixIcon: GestureDetector(
                               onTap: _toggleSignup,
                               child: Icon(
@@ -251,7 +249,7 @@ class _Login1PageState extends State<Login1Page>
                           controller: signupConfirmPasswordController,
                           obscureText: _obscureTextSignupConfirm,
                           style: TextStyle(
-                              fontFamily: "WorkSansSemiBold",
+                             
                               fontSize: 16.0,
                               color: Colors.black),
                           decoration: InputDecoration(
@@ -262,7 +260,7 @@ class _Login1PageState extends State<Login1Page>
                             ),
                             hintText: "Confirm Password",
                             hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 16.0),
+                                fontSize: 16.0),
                             suffixIcon: GestureDetector(
                               onTap: _toggleSignupConfirm,
                               child: Icon(
@@ -272,27 +270,31 @@ class _Login1PageState extends State<Login1Page>
                                 size: 15.0,
                                 color: Colors.black,
                               ),
+                              
                             ),
                           ),
                         ),
+                      
                       ),
+                      
+                      
                     ],
                   ),
                 ),
               ),
  Container(
-                margin: EdgeInsets.only(top: 350.0),
+                margin: EdgeInsets.only(top:  MediaQuery.of(context).size.height * 0.53),
                 decoration: new BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(30.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
                       color: Theme.Colors.loginGradientStart,
                       offset: Offset(1.0, 6.0),
-                      blurRadius: 20.0,
+                      blurRadius: 10.0,
                     ),
                   
                   ],
-                  color: Colors. white
+                  color: Colors.green[900]
                 ),
                 child: MaterialButton(
                      highlightColor: Colors.transparent,
@@ -301,21 +303,65 @@ class _Login1PageState extends State<Login1Page>
                       padding: const EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 70.0),
                       child: Text(
-                        "Sign Up",
+                        "Sign Up".toUpperCase(),
                         style: TextStyle(
-                            color: Colors.blue[900],
-                            fontSize: 25.0,
+                            color: Colors.white,
+                            fontSize: 20.0,
                             ),
                       ),
                     ),
-                    onPressed: () => showInSnackBar("SignUp button pressed")),
+                     onPressed: () async {
+                        _signupFormKey.currentState.validate();
+                        _signUpWithEmailPassword();
+                      }
+                    
+                    
+                    ),
               ),
+              SizedBox(height:MediaQuery.of(context).size.height *0.2 ),
+    
+    
 
             ],
           ),
         ],
       ),
     );
+    
+  }
+  Future<FirebaseUser> _signUpWithEmailPassword() async {
+    FirebaseUser user;
+    try {
+      user = (await _auth.createUserWithEmailAndPassword(
+              email: signupEmailController.text,
+              password: signupPasswordController.text))
+          .user;
+      if (signupNameController.text == "" ||
+          signupPasswordController.text.length < 8 ||
+          signupPasswordController.text !=
+              signupConfirmPasswordController.text) {
+        showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                  title: Text(
+                      'ERROR! One of the following might have caused an issue:'),
+                  content: Text(
+                      '1. Invalid Name\n\n2. Invalid Email Address\n\n3. Email already in use\n\n4. Password shorter than 8 characters\n\n5. Password and Confirm Password do not match'),
+                ));
+      } else {
+        showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                  title: Text('Sign Up Successful!'),
+                  content: Text(
+                      'An Email will be sent to your registered email address for verification purposes'),
+                ));
+      }
+      return user;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
 
