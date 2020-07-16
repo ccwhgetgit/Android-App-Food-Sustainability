@@ -72,27 +72,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               
 
 
-  
-/*
-
-  title:  Container(
-            padding: EdgeInsets.fromLTRB(0, 2, 20, 10),
-            child: Column(
-              children: <Widget>[
-                Text("\n"+message,
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'SFProText', 
-                          color: Colors.black)),
-                SizedBox(height: 0),
-                DatabaseService(uid: LoginPage.user.uid).getTier(),
-              ],
-            )),
-              
-
-  
-*/
 
         backgroundColor: Colors.white,
         

@@ -160,14 +160,18 @@ Padding(
       
     ),
              */  
-SizedBox(width:MediaQuery.of(context).size.width/4 ),
+SizedBox(width:MediaQuery.of(context).size.width/5 ),
           Text('Rewards Catalogue',
           textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontFamily: 'Varela',
-                  fontSize: 25.0,
-                 
-          )),
+               style: TextStyle(
+                             
+                              fontSize: 25,
+                              letterSpacing: .6,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              )),
+          
+                
                 ],
              ), 
          
