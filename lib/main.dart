@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'Onboarding/landing.dart';
+
+import 'authentication.dart';
 
 void main() => runApp(new MyApp());
 
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'SFProText',
       ),
-      home: new LandingPage(),
+      home: new LoginPage(),
     );
   }
 }

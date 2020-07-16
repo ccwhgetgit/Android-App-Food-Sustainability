@@ -87,7 +87,7 @@ flutter:
     - assets/images/tokens.png
     - assets/images/arrow.png
     - assets/images/gift.png
-    - assets/images/background.jpg
+    - assets/images/background.png
     - assets/images/Welcome.png
     - assets/images/community.png
     - assets/images/Eat and Shop.png
@@ -105,6 +105,7 @@ flutter:
     - assets/images/community.jpg
     - assets/images/image_01.png
     - assets/images/google.png
+    - assets/images/grass.jpg
     - assets/t&c.md
     - assets/privacy_policy.md
   #   - images/a_dot_burr.jpeg

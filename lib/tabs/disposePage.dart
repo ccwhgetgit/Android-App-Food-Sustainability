@@ -239,8 +239,8 @@ class _DisposePageState extends State<DisposePage> {
                 onPressed: () => getDist(),
               )
             ],
-            title: Text("Locate Our Nearest Bins",
-                style: TextStyle(fontSize: 23, fontFamily: 'SFProText'))),
+            title: Text("Locate the nearest point",
+                style: TextStyle(fontSize: 20, fontFamily: 'SFProText'))),
         body: Stack(
           children: <Widget>[
             Container(
