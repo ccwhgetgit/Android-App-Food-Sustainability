@@ -13,6 +13,9 @@ import 'dart:async';
 
 import 'package:intl/intl.dart';
 
+import 'authentication/signup.dart';
+import 'dailyPoll.dart';
+
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
   static FirebaseUser user;
@@ -63,6 +66,9 @@ class _LoginPageState extends State<LoginPage>
   Widget build(BuildContext context) {
     return new Scaffold(
       key: _scaffoldKey,
+
+      
+
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (overscroll) {
           overscroll.disallowGlow();
@@ -72,58 +78,99 @@ class _LoginPageState extends State<LoginPage>
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: ExactAssetImage("assets/images/background.png"),
-                  fit: BoxFit.cover,
-                  colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.85), BlendMode.dstATop)),
-            ),
+   
+            
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 70.0),
+                SizedBox(height:60),
+
+                Row(
+                    children: <Widget>[
+
+                      SizedBox(width:MediaQuery.of(context).size.width * .73),
+            RaisedButton(
+                shape: RoundedRectangleBorder(
+  borderRadius: BorderRadius.circular(10.0),
+  side: BorderSide(color: Colors.brown[100])
+),
+  color: Colors.white,
+                  /* child: new Icon(
+                      FontAwesomeIcons.facebookF,
+                      color: Color(0xFF0084ff),
+                      */
+                child: Center(
+                  child: Text(
+                    "Sign Up",
+                    style: TextStyle(
+                      color: Colors.black,
+                
+                      fontSize: 16,
+                    ),
+                  ),
                 ),
-                Text(
-                  "CYCLED",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 60, color: Colors.black),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 50.0),
-                  child: _buildMenuBar(context),
-                ),
+               onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => Login1Page(),
+                  ),
+                );
+              }
+              ),
+                        
+                    ],
+                ),      
+              
+               
+Container(
+     
+      alignment: Alignment.bottomLeft,
+      padding: new EdgeInsets.only(left: 16.0, bottom: 0),
+ 
+      child:  Row(
+        children: <Widget>[
+          SizedBox(width: MediaQuery.of(context).size.width/4),
+          Text("Cycled".toUpperCase(),
+                 style: TextStyle(
+                             
+                              fontSize: 40,
+                              letterSpacing: .6,
+                              color: Colors.black,
+                              )),
+        ],
+      ),
+    ),
+               
+             
+             
+                SizedBox(height: MediaQuery.of(context).size.height * .04),
                 Expanded(
-                  flex: 2,
+                 
                   child: PageView(
-                    controller: _pageController,
-                    onPageChanged: (i) {
-                      if (i == 0) {
-                        setState(() {
-                          right = Colors.white;
-                          left = Colors.black;
-                        });
-                      } else if (i == 1) {
-                        setState(() {
-                          right = Colors.black;
-                          left = Colors.white;
-                        });
-                      }
-                    },
+                   
                     children: <Widget>[
                       new ConstrainedBox(
                         constraints: const BoxConstraints.expand(),
+
+
                         child: _buildSignIn(context),
+
+
                       ),
-                      new ConstrainedBox(
-                        constraints: const BoxConstraints.expand(),
-                        child: _buildSignUp(context),
-                      ),
+                     
+                     
+             
                     ],
                   ),
                 ),
-              ],
+                
+                
+
+          //socil buttons to sign in 
+          
+        ],
+               
+              
             ),
           ),
         ),
@@ -162,62 +209,18 @@ class _LoginPageState extends State<LoginPage>
         style: TextStyle(
             color: Colors.white,
             fontSize: 16.0,
-            fontFamily: "WorkSansSemiBold"),
+          ),
       ),
       backgroundColor: Colors.blue,
       duration: Duration(seconds: 3),
     ));
   }
 
-  Widget _buildMenuBar(BuildContext context) {
-    return Container(
-      width: 300.0,
-      height: 50.0,
-      decoration: BoxDecoration(
-        color: Color(0x552B2B2B),
-        borderRadius: BorderRadius.all(Radius.circular(25.0)),
-      ),
-      child: CustomPaint(
-        painter: TabIndicationPainter(pageController: _pageController),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Expanded(
-              child: FlatButton(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onPressed: _onSignInButtonPress,
-                child: Text(
-                  "Existing",
-                  style: TextStyle(
-                      color: left,
-                      fontSize: 16.0,
-                      fontFamily: "WorkSansSemiBold"),
-                ),
-              ),
-            ),
-            Expanded(
-              child: FlatButton(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onPressed: _onSignUpButtonPress,
-                child: Text(
-                  "New",
-                  style: TextStyle(
-                      color: right,
-                      fontSize: 16.0,
-                      fontFamily: "WorkSansSemiBold"),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  
 
   Widget _buildSignIn(BuildContext context) {
     return Container(
+     
       padding: EdgeInsets.only(top: 23.0),
       child: Column(
         children: <Widget>[
@@ -232,8 +235,13 @@ class _LoginPageState extends State<LoginPage>
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: Container(
-                  width: 300.0,
-                  height: 190.0,
+                    decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(10),
+    color: Colors.white,
+  
+  ),
+                  width:   MediaQuery.of(context).size.width * .9,
+                  height:  MediaQuery.of(context).size.width * .7,
                   child: Column(
                     children: <Widget>[
                       Padding(
@@ -243,12 +251,15 @@ class _LoginPageState extends State<LoginPage>
                               key: _loginFormKey,
                               child: Column(
                                 children: <Widget>[
+                                  Text("Log In To Cycled", 
+                                  style: TextStyle(fontSize: 18)),
+                                  SizedBox(height: 30),
                                   TextFormField(
                                     focusNode: myFocusNodeEmailLogin,
                                     controller: loginEmailController,
                                     keyboardType: TextInputType.emailAddress,
                                     style: TextStyle(
-                                        fontFamily: "WorkSansSemiBold",
+                                       
                                         fontSize: 16.0,
                                         color: Colors.black),
                                     decoration: InputDecoration(
@@ -260,8 +271,8 @@ class _LoginPageState extends State<LoginPage>
                                       ),
                                       hintText: "Email Address",
                                       hintStyle: TextStyle(
-                                          fontFamily: "WorkSansSemiBold",
-                                          fontSize: 17.0),
+                                       
+                                          fontSize: 15.0),
                                     ),
                                   ),
                                   Container(
@@ -269,26 +280,26 @@ class _LoginPageState extends State<LoginPage>
                                     height: 1.0,
                                     color: Colors.grey[400],
                                   ),
-                                  SizedBox(height: 20),
+                                  SizedBox(height: 30),
                                   TextFormField(
                                     focusNode: myFocusNodePasswordLogin,
                                     controller: loginPasswordController,
                                     obscureText: _obscureTextLogin,
                                     style: TextStyle(
-                                        fontFamily: "WorkSansSemiBold",
+                                     
                                         fontSize: 16.0,
                                         color: Colors.black),
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       icon: Icon(
-                                        FontAwesomeIcons.lock,
+                                        FontAwesomeIcons.key,
                                         size: 22.0,
                                         color: Colors.black,
                                       ),
                                       hintText: "Password",
                                       hintStyle: TextStyle(
-                                          fontFamily: "WorkSansSemiBold",
-                                          fontSize: 17.0),
+                                        
+                                          fontSize: 15.0),
                                       suffixIcon: GestureDetector(
                                         onTap: _toggleLogin,
                                         child: Icon(
@@ -301,6 +312,7 @@ class _LoginPageState extends State<LoginPage>
                                       ),
                                     ),
                                   ),
+                                  SizedBox(height: 10),
                                   Container(
                                     width: 250.0,
                                     height: 1.0,
@@ -313,7 +325,7 @@ class _LoginPageState extends State<LoginPage>
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 170.0),
+                margin: EdgeInsets.only(top: 250.0),
                 decoration: new BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(30.0)),
                   boxShadow: <BoxShadow>[
@@ -322,21 +334,9 @@ class _LoginPageState extends State<LoginPage>
                       offset: Offset(1.0, 6.0),
                       blurRadius: 20.0,
                     ),
-                    BoxShadow(
-                      color: Theme.Colors.loginGradientEnd,
-                      offset: Offset(1.0, 6.0),
-                      blurRadius: 20.0,
-                    ),
+                  
                   ],
-                  gradient: new LinearGradient(
-                      colors: [
-                        Theme.Colors.loginGradientStart,
-                        Theme.Colors.loginGradientEnd
-                      ],
-                      begin: const FractionalOffset(0.2, 0.2),
-                      end: const FractionalOffset(1.0, 1.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
+                  color: Colors. white
                 ),
                 child: MaterialButton(
                     highlightColor: Colors.transparent,
@@ -347,9 +347,9 @@ class _LoginPageState extends State<LoginPage>
                       child: Text(
                         "LOGIN",
                         style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.blue[600],
                             fontSize: 25.0,
-                            fontFamily: "WorkSansBold"),
+                            ),
                       ),
                     ),
                     onPressed: () async {
@@ -359,22 +359,12 @@ class _LoginPageState extends State<LoginPage>
               ),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 10.0),
-            child: FlatButton(
-                onPressed: () {},
-                child: Text(
-                  "Forgot Password?",
-                  style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontFamily: "WorkSansMedium"),
-                )),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 10.0),
-            child: Row(
+          SizedBox(height: MediaQuery.of(context).size.height * .06),
+        Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+           
+              Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
@@ -392,22 +382,23 @@ class _LoginPageState extends State<LoginPage>
                   width: 100.0,
                   height: 1.0,
                 ),
-                Padding(
+              Padding(
                   padding: EdgeInsets.only(left: 15.0, right: 15.0),
                   child: Text(
-                    "OR",
+                    "or",
                     style: TextStyle(
                         color: Colors.black,
+                        fontWeight: FontWeight.bold, 
                         fontSize: 16.0,
-                        fontFamily: "WorkSansMedium"),
+                        ),
                   ),
                 ),
-                Container(
+                    Container(
                   decoration: BoxDecoration(
                     gradient: new LinearGradient(
                         colors: [
-                          Colors.black,
                           Colors.black12,
+                          Colors.black,
                         ],
                         begin: const FractionalOffset(0.0, 0.0),
                         end: const FractionalOffset(1.0, 1.0),
@@ -418,53 +409,107 @@ class _LoginPageState extends State<LoginPage>
                   height: 1.0,
                 ),
               ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
+              ), 
+
               Padding(
-                padding: EdgeInsets.only(top: 10.0, right: 40.0),
-                child: GestureDetector(
-                  onTap: () => _signInWithFB()
-                      .then((FirebaseUser user) => print(user))
-                      .catchError((e) => print(e)),
-                  child: Container(
-                    padding: const EdgeInsets.all(15.0),
-                    decoration: new BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: new Icon(
-                      FontAwesomeIcons.facebookF,
-                      color: Color(0xFF0084ff),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 10.0),
+                padding: EdgeInsets.only(top: 0.0),
                 child: GestureDetector(
                   onTap: () => _signInWithGoogle()
                       .then((FirebaseUser user) => print(user))
                       .catchError((e) => print(e)),
-                  child: Container(
-                    padding: const EdgeInsets.all(15.0),
-                    decoration: new BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: new Icon(
-                      FontAwesomeIcons.google,
+                  child:  Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            
+            SizedBox(height: 25),
+            GestureDetector(
+              onTap: () => _signInWithFB()
+                      .then((FirebaseUser user) => print(user))
+                      .catchError((e) => print(e)),
+
+
+              child: Container(
+              decoration: BoxDecoration(
+    border: Border.all(
+      color: Colors.blue[900],
+    ),
+    color: Colors.blue[900],
+    borderRadius: BorderRadius.circular(8.0),
+  ),
+               width: MediaQuery.of(context).size.width * .85,
+                height:MediaQuery.of(context).size.height * .06,
+                  /* child: new Icon(
+                      FontAwesomeIcons.facebookF,
                       color: Color(0xFF0084ff),
+                      */
+                
+                child: Center(
+                  child: Text(
+                    "Continue with Facebook",
+                    style: TextStyle(
+                      color: Colors.white,
+                fontWeight: FontWeight.bold,
+                      fontSize: 16,
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
-        ],
-      ),
+            )
+
+            
+          ],
+        ),
+              ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 0.0),
+                child: GestureDetector(
+                  onTap: () => _signInWithGoogle()
+                      .then((FirebaseUser user) => print(user))
+                      .catchError((e) => print(e)),
+                  child:  Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            
+            SizedBox(height: 15),
+            GestureDetector(
+              onTap: () => _signInWithGoogle()
+                      .then((FirebaseUser user) => print(user))
+                      .catchError((e) => print(e)),
+              child: Container(
+                decoration: BoxDecoration(
+    border: Border.all(
+      color: Colors.red[800],
+    ),
+    color: Colors.red[800],
+    borderRadius: BorderRadius.circular(8.0),
+  ),
+                width: MediaQuery.of(context).size.width * .85,
+                height:MediaQuery.of(context).size.height * .06,
+                
+                child: Center(
+                  child: Text(
+                    "Continue with Google",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+            )
+
+            
+          ],
+        ),
+              ),
+              )
+             ] )
+           
+             ] ),
+        
+      
     );
   }
 
@@ -502,7 +547,7 @@ class _LoginPageState extends State<LoginPage>
                                     textCapitalization:
                                         TextCapitalization.words,
                                     style: TextStyle(
-                                        fontFamily: "WorkSansSemiBold",
+                                       
                                         fontSize: 16.0,
                                         color: Colors.black),
                                     decoration: InputDecoration(
@@ -513,7 +558,7 @@ class _LoginPageState extends State<LoginPage>
                                       ),
                                       hintText: "Name",
                                       hintStyle: TextStyle(
-                                          fontFamily: "WorkSansSemiBold",
+                                      
                                           fontSize: 16.0),
                                     ),
                                   ),
@@ -528,7 +573,7 @@ class _LoginPageState extends State<LoginPage>
                                     controller: signupEmailController,
                                     keyboardType: TextInputType.emailAddress,
                                     style: TextStyle(
-                                        fontFamily: "WorkSansSemiBold",
+                                       
                                         fontSize: 16.0,
                                         color: Colors.black),
                                     decoration: InputDecoration(
@@ -539,7 +584,7 @@ class _LoginPageState extends State<LoginPage>
                                       ),
                                       hintText: "Email Address",
                                       hintStyle: TextStyle(
-                                          fontFamily: "WorkSansSemiBold",
+                                       
                                           fontSize: 16.0),
                                     ),
                                   ),
@@ -554,18 +599,18 @@ class _LoginPageState extends State<LoginPage>
                                     controller: signupPasswordController,
                                     obscureText: _obscureTextSignup,
                                     style: TextStyle(
-                                        fontFamily: "WorkSansSemiBold",
+                                       
                                         fontSize: 16.0,
                                         color: Colors.black),
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       icon: Icon(
-                                        FontAwesomeIcons.lock,
-                                        color: Colors.black,
+                                        FontAwesomeIcons.key,
+                                      
                                       ),
                                       hintText: "Password",
                                       hintStyle: TextStyle(
-                                          fontFamily: "WorkSansSemiBold",
+                                       
                                           fontSize: 16.0),
                                       suffixIcon: GestureDetector(
                                         onTap: _toggleSignup,
@@ -589,18 +634,18 @@ class _LoginPageState extends State<LoginPage>
                                     controller: signupConfirmPasswordController,
                                     obscureText: _obscureTextSignupConfirm,
                                     style: TextStyle(
-                                        fontFamily: "WorkSansSemiBold",
+                                       
                                         fontSize: 16.0,
                                         color: Colors.black),
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       icon: Icon(
-                                        FontAwesomeIcons.lock,
-                                        color: Colors.black,
+                                        FontAwesomeIcons.key,
+                                     
                                       ),
                                       hintText: "Confirm Password",
                                       hintStyle: TextStyle(
-                                          fontFamily: "WorkSansSemiBold",
+                                        
                                           fontSize: 16.0),
                                       suffixIcon: GestureDetector(
                                         onTap: _toggleSignupConfirm,
@@ -635,21 +680,9 @@ class _LoginPageState extends State<LoginPage>
                         offset: Offset(1.0, 6.0),
                         blurRadius: 20.0,
                       ),
-                      BoxShadow(
-                        color: Theme.Colors.loginGradientEnd,
-                        offset: Offset(1.0, 6.0),
-                        blurRadius: 20.0,
-                      ),
+                 
                     ],
-                    gradient: new LinearGradient(
-                        colors: [
-                          Theme.Colors.loginGradientStart,
-                          Theme.Colors.loginGradientEnd
-                        ],
-                        begin: const FractionalOffset(0.2, 0.2),
-                        end: const FractionalOffset(1.0, 1.0),
-                        stops: [0.0, 1.0],
-                        tileMode: TileMode.clamp),
+                   color: Colors.white, 
                   ),
                   child: MaterialButton(
                       highlightColor: Colors.transparent,
@@ -658,17 +691,20 @@ class _LoginPageState extends State<LoginPage>
                         padding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 70.0),
                         child: Text(
-                          "SIGN UP",
+                          "SIGN UƒP",
                           style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.blue[500],
                               fontSize: 25.0,
-                              fontFamily: "WorkSansBold"),
+                              ),
                         ),
                       ),
-                      onPressed: () async {
-                        _signupFormKey.currentState.validate();
-                        _signUpWithEmailPassword();
-                      })),
+                      onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => Login1Page(),
+                  ),
+                );
+              },)),
             ],
           ),
         ],
@@ -758,6 +794,7 @@ class _LoginPageState extends State<LoginPage>
                       '1. Invalid Name\n\n2. Invalid Email Address\n\n3. Email already in use\n\n4. Password shorter than 8 characters\n\n5. Password and Confirm Password do not match'),
                 ));
       } else {
+        user.sendEmailVerification();
         showDialog(
             context: context,
             builder: (_) => AlertDialog(
@@ -824,15 +861,6 @@ class _LoginPageState extends State<LoginPage>
     }
   }
 
-  void _onSignInButtonPress() {
-    _pageController.animateToPage(0,
-        duration: Duration(milliseconds: 500), curve: Curves.decelerate);
-  }
-
-  void _onSignUpButtonPress() {
-    _pageController.animateToPage(1,
-        duration: Duration(milliseconds: 500), curve: Curves.decelerate);
-  }
 
   void _toggleLogin() {
     setState(() {
