@@ -90,13 +90,11 @@ class _ProfilePageState extends State<ProfilePage> {
     return Positioned(
       top: 0,
       child: Container(
-              decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-   color: Colors.blueGrey[500],
-      ),
-
-     
-        height:MediaQuery.of(context).size.height/2.5,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          color: Colors.blueGrey[500],
+        ),
+        height: MediaQuery.of(context).size.height / 2.5,
         width: MediaQuery.of(context).size.width,
       ),
     );
@@ -164,7 +162,13 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+        body: NotificationListener<OverscrollIndicatorNotification>(
+      onNotification: (OverscrollIndicatorNotification overscroll) {
+        overscroll.disallowGlow();
+        return;
+      },
+      child: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
         child: Stack(
           children: <Widget>[
             Container(
@@ -203,6 +207,6 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       ),
-    );
+    ));
   }
 }
