@@ -18,6 +18,7 @@ import 'onboarding/slide_item.dart';
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
   static FirebaseUser user;
+  static String userName = "";
 
   @override
   _LoginPageState createState() => new _LoginPageState();
@@ -38,17 +39,8 @@ class _LoginPageState extends State<LoginPage>
   final GoogleSignIn googleSignIn = new GoogleSignIn();
   final FacebookLogin fbLogin = new FacebookLogin();
 
-  final _signupFormKey = GlobalKey<FormState>();
-  final _loginFormKey = GlobalKey<FormState>();
-
-  String userName = "";
-
   TextEditingController loginEmailController = new TextEditingController();
   TextEditingController loginPasswordController = new TextEditingController();
-
-  bool _obscureTextLogin = true;
-  bool _obscureTextSignup = true;
-  bool _obscureTextSignupConfirm = true;
 
   TextEditingController signupEmailController = new TextEditingController();
   TextEditingController signupNameController = new TextEditingController();
@@ -436,93 +428,5 @@ class _LoginPageState extends State<LoginPage>
 
     print("Username: ${user.displayName}");
     return user;
-  }
-
-  Future<FirebaseUser> _signUpWithEmailPassword() async {
-    FirebaseUser user;
-    try {
-      user = (await _auth.createUserWithEmailAndPassword(
-              email: signupEmailController.text,
-              password: signupPasswordController.text))
-          .user;
-      userName = signupNameController.text;
-      if (signupNameController.text == "" ||
-          signupPasswordController.text.length < 8 ||
-          signupPasswordController.text !=
-              signupConfirmPasswordController.text) {
-        showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-                  title: Text(
-                      'ERROR! One of the following might have caused an issue:'),
-                  content: Text(
-                      '1. Invalid Name\n\n2. Invalid Email Address\n\n3. Email already in use\n\n4. Password shorter than 8 characters\n\n5. Password and Confirm Password do not match'),
-                ));
-      } else {
-        user.sendEmailVerification();
-        showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-                  title: Text('Sign Up Successful!'),
-                  content: Text(
-                      'An Email will be sent to your registered email address for verification purposes'),
-                ));
-      }
-      return user;
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
-
-  Future<FirebaseUser> _signInWithEmailPassword() async {
-    FirebaseUser user;
-    LoginPage.user = (await _auth.signInWithEmailAndPassword(
-            email: loginEmailController.text,
-            password: loginPasswordController.text))
-        .user;
-    if (LoginPage.user.isEmailVerified) {
-      try {
-        DatabaseService(uid: LoginPage.user.uid)
-            .updateUserInfo(LoginPage.user.email, userName, false);
-
-        DatabaseService(uid: LoginPage.user.uid).updateUserTokens(0);
-        DatabaseService(uid: LoginPage.user.uid).updateUserStatus(false);
-        DatabaseService(uid: LoginPage.user.uid).updateUserPoints(0);
-        DatabaseService(uid: LoginPage.user.uid).updateUserTier('Bronze');
-
-        DatabaseService(uid: LoginPage.user.uid).updateStats();
-
-        for (String store in StorePage.stores) {
-          DatabaseService(uid: LoginPage.user.uid).resetRewards(store, 0);
-        }
-
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => MainInterface()));
-        return user;
-      } catch (e) {
-        print(e.toString());
-        showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-                  title: Text(
-                      "Sorry, we couldn't find an account with that email address or password."),
-                  content: Text(
-                      "Can we help you recover your account? Click on 'Forgot Password' to reset your password"),
-                ));
-        return null;
-      }
-    } else {
-      showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-                title: Text("OOPS!"),
-                content: Text(
-                    "A verification link has been sent to your registered email. Please verify your account first."),
-              ));
-      return null;
-    }
   }
 }

@@ -9,6 +9,8 @@ import 'dart:async';
 
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
+import '../authentication.dart';
+
 const kTextLightColor = Color(0xFFACB1C0);
 
 class Login1Page extends StatefulWidget {
@@ -38,7 +40,6 @@ class _Login1PageState extends State<Login1Page>
   TextEditingController loginEmailController = new TextEditingController();
   TextEditingController loginPasswordController = new TextEditingController();
 
-  bool _obscureTextLogin = true;
   bool _obscureTextSignup = true;
   bool _obscureTextSignupConfirm = true;
 
@@ -134,116 +135,122 @@ class _Login1PageState extends State<Login1Page>
                   child: Column(
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          focusNode: myFocusNodeName,
-                          controller: signupNameController,
-                          keyboardType: TextInputType.text,
-                          textCapitalization: TextCapitalization.words,
-                          style: TextStyle(fontSize: 16.0, color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.user,
-                              color: Colors.black,
-                            ),
-                            hintText: "Name",
-                            hintStyle: TextStyle(fontSize: 16.0),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          focusNode: myFocusNodeEmail,
-                          controller: signupEmailController,
-                          keyboardType: TextInputType.emailAddress,
-                          style: TextStyle(fontSize: 16.0, color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.envelope,
-                              color: Colors.black,
-                            ),
-                            hintText: "Email Address",
-                            hintStyle: TextStyle(fontSize: 16.0),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          focusNode: myFocusNodePassword,
-                          controller: signupPasswordController,
-                          obscureText: _obscureTextSignup,
-                          style: TextStyle(fontSize: 16.0, color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.lock,
-                              color: Colors.black,
-                            ),
-                            hintText: "Password",
-                            hintStyle: TextStyle(fontSize: 16.0),
-                            suffixIcon: GestureDetector(
-                              onTap: _toggleSignup,
-                              child: Icon(
-                                _obscureTextSignup
-                                    ? FontAwesomeIcons.eye
-                                    : FontAwesomeIcons.eyeSlash,
-                                size: 15.0,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          controller: signupConfirmPasswordController,
-                          obscureText: _obscureTextSignupConfirm,
-                          style: TextStyle(fontSize: 16.0, color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.lock,
-                              color: Colors.black,
-                            ),
-                            hintText: "Confirm Password",
-                            hintStyle: TextStyle(fontSize: 16.0),
-                            suffixIcon: GestureDetector(
-                              onTap: _toggleSignupConfirm,
-                              child: Icon(
-                                _obscureTextSignupConfirm
-                                    ? FontAwesomeIcons.eye
-                                    : FontAwesomeIcons.eyeSlash,
-                                size: 15.0,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                          padding: EdgeInsets.only(
+                              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                          child: Form(
+                              key: _signupFormKey,
+                              child: Column(
+                                children: <Widget>[
+                                  TextFormField(
+                                    focusNode: myFocusNodeName,
+                                    controller: signupNameController,
+                                    keyboardType: TextInputType.text,
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    style: TextStyle(
+                                        fontSize: 16.0, color: Colors.black),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      icon: Icon(
+                                        FontAwesomeIcons.user,
+                                        color: Colors.black,
+                                      ),
+                                      hintText: "Name",
+                                      hintStyle: TextStyle(fontSize: 16.0),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 250.0,
+                                    height: 1.0,
+                                    color: Colors.grey[400],
+                                  ),
+                                  SizedBox(height: 30),
+                                  TextFormField(
+                                    focusNode: myFocusNodeEmail,
+                                    controller: signupEmailController,
+                                    keyboardType: TextInputType.emailAddress,
+                                    style: TextStyle(
+                                        fontSize: 16.0, color: Colors.black),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      icon: Icon(
+                                        FontAwesomeIcons.envelope,
+                                        color: Colors.black,
+                                      ),
+                                      hintText: "Email Address",
+                                      hintStyle: TextStyle(fontSize: 16.0),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 250.0,
+                                    height: 1.0,
+                                    color: Colors.grey[400],
+                                  ),
+                                  SizedBox(height: 30),
+                                  TextFormField(
+                                    focusNode: myFocusNodePassword,
+                                    controller: signupPasswordController,
+                                    obscureText: _obscureTextSignup,
+                                    style: TextStyle(
+                                        fontSize: 16.0, color: Colors.black),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      icon: Icon(
+                                        FontAwesomeIcons.lock,
+                                        color: Colors.black,
+                                      ),
+                                      hintText: "Password",
+                                      hintStyle: TextStyle(fontSize: 16.0),
+                                      suffixIcon: GestureDetector(
+                                        onTap: _toggleSignup,
+                                        child: Icon(
+                                          _obscureTextSignup
+                                              ? FontAwesomeIcons.eye
+                                              : FontAwesomeIcons.eyeSlash,
+                                          size: 15.0,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 250.0,
+                                    height: 1.0,
+                                    color: Colors.grey[400],
+                                  ),
+                                  SizedBox(height: 30),
+                                  TextFormField(
+                                    controller: signupConfirmPasswordController,
+                                    obscureText: _obscureTextSignupConfirm,
+                                    style: TextStyle(
+                                        fontSize: 16.0, color: Colors.black),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      icon: Icon(
+                                        FontAwesomeIcons.lock,
+                                        color: Colors.black,
+                                      ),
+                                      hintText: "Confirm Password",
+                                      hintStyle: TextStyle(fontSize: 16.0),
+                                      suffixIcon: GestureDetector(
+                                        onTap: _toggleSignupConfirm,
+                                        child: Icon(
+                                          _obscureTextSignupConfirm
+                                              ? FontAwesomeIcons.eye
+                                              : FontAwesomeIcons.eyeSlash,
+                                          size: 15.0,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 250.0,
+                                    height: 1.0,
+                                    color: Colors.grey[400],
+                                  ),
+                                ],
+                              ))),
                     ],
                   ),
                 ),
@@ -289,12 +296,12 @@ class _Login1PageState extends State<Login1Page>
   }
 
   Future<FirebaseUser> _signUpWithEmailPassword() async {
-    FirebaseUser user;
     try {
-      user = (await _auth.createUserWithEmailAndPassword(
+      Login1Page.user = (await _auth.createUserWithEmailAndPassword(
               email: signupEmailController.text,
               password: signupPasswordController.text))
           .user;
+      LoginPage.userName = signupNameController.text;
       if (signupNameController.text == "" ||
           signupPasswordController.text.length < 8 ||
           signupPasswordController.text !=
@@ -308,6 +315,7 @@ class _Login1PageState extends State<Login1Page>
                       '1. Invalid Name\n\n2. Invalid Email Address\n\n3. Email already in use\n\n4. Password shorter than 8 characters\n\n5. Password and Confirm Password do not match'),
                 ));
       } else {
+        Login1Page.user.sendEmailVerification();
         showDialog(
             context: context,
             builder: (_) => AlertDialog(
@@ -316,9 +324,17 @@ class _Login1PageState extends State<Login1Page>
                       'An Email will be sent to your registered email address for verification purposes'),
                 ));
       }
-      return user;
+      return Login1Page.user;
     } catch (e) {
       print(e.toString());
+      showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+                title: Text(
+                    'ERROR! One of the following might have caused an issue:'),
+                content: Text(
+                    '1. Invalid Name\n\n2. Invalid Email Address\n\n3. Email already in use\n\n4. Password shorter than 8 characters\n\n5. Password and Confirm Password do not match'),
+              ));
       return null;
     }
   }
@@ -352,4 +368,3 @@ class _Login1PageState extends State<Login1Page>
     });
   }
 }
-//test comment

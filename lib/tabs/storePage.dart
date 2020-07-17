@@ -163,38 +163,41 @@ class _StorePageState extends State<StorePage> {
                         fontFamily: 'Varela',
                         fontSize: 25.0,
                       )),
-             */  
-SizedBox(width:MediaQuery.of(context).size.width/5 ),
-          Text('Rewards Catalogue',
-          textAlign: TextAlign.center,
-               style: TextStyle(
-                             
-                              fontSize: 25,
-                              letterSpacing: .6,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              )),
-          
-                
+             */
+                  SizedBox(width: MediaQuery.of(context).size.width / 5),
+                  Text('Rewards Catalogue',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 25,
+                        letterSpacing: .6,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      )),
                 ],
               ),
               SizedBox(height: 30),
-              Flexible(
-                fit: FlexFit.tight,
-                child: StreamBuilder(
-                    stream: Firestore.instance
-                        .collection('StoreDatabase')
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) return Container();
-                      return GridView.builder(
-                          gridDelegate:
-                              new SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2),
-                          itemCount: snapshot.data.documents.length,
-                          itemBuilder: (context, index) => _buildListItem(
-                              context, snapshot.data.documents[index]));
-                    }),
+              NotificationListener<OverscrollIndicatorNotification>(
+                onNotification: (OverscrollIndicatorNotification overscroll) {
+                  overscroll.disallowGlow();
+                  return;
+                },
+                child: Flexible(
+                  fit: FlexFit.tight,
+                  child: StreamBuilder(
+                      stream: Firestore.instance
+                          .collection('StoreDatabase')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) return Container();
+                        return GridView.builder(
+                            gridDelegate:
+                                new SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2),
+                            itemCount: snapshot.data.documents.length,
+                            itemBuilder: (context, index) => _buildListItem(
+                                context, snapshot.data.documents[index]));
+                      }),
+                ),
               ),
               Container(
                 padding: const EdgeInsets.all(8.0),
