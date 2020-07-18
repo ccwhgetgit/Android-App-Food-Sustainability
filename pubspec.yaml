@@ -27,6 +27,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
+
+  charts_flutter: ^0.6.0
   intl: any
   animated_theme_switcher: "^1.0.5"
   simple_animations: ^2.2.1
@@ -40,6 +42,7 @@ dependencies:
   geoflutterfire:
   hexcolor: any
   geolocator:
+    
   barcode_scan:
   qr_flutter:
   location:
@@ -53,6 +56,7 @@ dependencies:
   url_launcher:
   percent_indicator: "^2.1.5"
   flutter_svg: ^0.12.1
+  pie_chart: ^3.1.1
   
 
   share:
@@ -92,6 +96,7 @@ flutter:
     - assets/images/community.png
     - assets/images/Eat and Shop.png
     - assets/images/third.png
+    - assets/images/Legend.png
     - assets/images/secondscreen.png
     - assets/images/pollBG.png
     - assets/images/1.png
@@ -100,6 +105,15 @@ flutter:
     - assets/images/3.png
     - assets/images/seedling.jpg
     - assets/images/quiz.jpg
+    - assets/images/levels.png
+    - assets/images/challenger.png
+    - assets/images/poll.jpg
+    - assets/images/changer.png
+    - assets/images/PolLDetails.png
+    - assets/images/instructions.png
+    - assets/images/explore.png
+    - assets/images/cycler.png
+    - assets/images/grass.png
     - assets/images/store.jpg
     - assets/images/profile.png
     - assets/images/community.jpg

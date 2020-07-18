@@ -142,9 +142,11 @@ class DatabaseService extends State<DatabaseServicee> {
           builder: (context, snapshot) {
             if (!snapshot.hasData) return Container();
             return Text(
-                "Tokens: " + snapshot.data.documents[3]['Tokens'].toString(),
-                style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.height * 0.025));
+              "Tokens: "+ snapshot.data.documents[3]['Tokens'].toString(),
+               style: TextStyle(
+                        
+                            fontSize:
+                                MediaQuery.of(context).size.height * 0.025));
           },
         );
         break;
@@ -161,7 +163,7 @@ class DatabaseService extends State<DatabaseServicee> {
                 style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.025,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white));
+                    color: Colors.black));
           },
         );
         break;
@@ -200,7 +202,7 @@ class DatabaseService extends State<DatabaseServicee> {
                 style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.07,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white));
+                    color: Colors.black));
           },
         );
         break;
@@ -219,28 +221,8 @@ class DatabaseService extends State<DatabaseServicee> {
         : ref.updateData({'Status': status}));
   }
 
-  Widget getStatus() {
-    return StreamBuilder(
-      stream: Firestore.instance
-          .collection('UserDatabase')
-          .document(uid)
-          .collection('Other Info')
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) return Container();
-        return Text(
-            "Status Today: " +
-                (snapshot.data.documents[1]['Status'] == false
-                    ? "Uncycled"
-                    : "Cycled"),
-            style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width * 0.04,
-                fontWeight: FontWeight.bold,
-                color: Colors.white));
-      },
-    );
-  }
-
+ 
+//used in learn and earn 
 
   Widget getNewStatus() {
     return StreamBuilder(
@@ -249,7 +231,7 @@ class DatabaseService extends State<DatabaseServicee> {
           .document(uid)
           .collection('Other Info')
           .snapshots(),
-      builder: (context, snapshot) {
+      builder: (context, snapshot) { 
         if (!snapshot.hasData) return Container();
         return Text(
             "Status: " +
@@ -289,42 +271,43 @@ class DatabaseService extends State<DatabaseServicee> {
 
           return LinearPercentIndicator(
             animation: true,
-            lineHeight: 20.0,
-            animationDuration: 2500,
+            lineHeight: 23.0,
+            animationDuration: 4000,
+            width: MediaQuery.of(context).size.width*0.87,
 
             percent: snapshot.data.documents[0]['Points'] / 300,
     
             //need to set for the various levels
-            center: Text("LEVEL UP"),
+            center: Text("Next Level : Game Changer"),
             linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor: Colors.deepOrangeAccent[100],
+            progressColor: Colors.teal[100],
           );
         }  else if (snapshot.data.documents[0]['Points'] > 299 &&
             snapshot.data.documents[0]['Points'] < 700) {
          return LinearPercentIndicator(
             animation: true,
-            lineHeight: 20.0,
-            animationDuration: 2500,
+            lineHeight: 23.0,
+            animationDuration: 4000,
 
             percent: snapshot.data.documents[0]['Points'] / 500,
     
             //need to set for the various levels
-            center: Text("Gold is Next"),
+            center: Text("Next Level: Cycler"),
             linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor:  Colors.blueGrey,
+            progressColor: Colors.teal[200],
           );
         
         }   return LinearPercentIndicator(
             animation: true,
-            lineHeight: 20.0,
-            animationDuration: 2500,
+            lineHeight: 23.0,
+            animationDuration: 4000,
 
             percent: snapshot.data.documents[0]['Points'] / 700,
     
             //need to set for the various levels
             center: Text("Gold Standard"),
             linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor:Colors.amber,
+             progressColor: Colors.teal[300],
           );
         }
         );
@@ -352,7 +335,7 @@ class DatabaseService extends State<DatabaseServicee> {
             style: TextStyle(
                 fontSize: MediaQuery.of(context).size.width * 0.07,
                 fontWeight: FontWeight.bold,
-                color: Colors.deepOrangeAccent));
+                color: Colors.blueGrey[500]));
       },
     );
   }
@@ -391,12 +374,23 @@ class DatabaseService extends State<DatabaseServicee> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Text(" Mini Cycler ",
+                  Text(" Challenger".toUpperCase(),
                       style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.07,
+                          fontSize: MediaQuery.of(context).size.width * 0.06,
                           fontWeight: FontWeight.bold,
-                          foreground: Paint()..shader = bronzeGradient))
+                          fontStyle: FontStyle.italic,
+                          color: Colors.teal[700]),),
+                          SizedBox(width: MediaQuery.of(context).size.width * 0.36,),
+                CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.07,
+                    backgroundColor: Colors.grey[100],
+                    child: CircleAvatar(
+                      radius:MediaQuery.of(context).size.width * 0.07,
+                      backgroundImage: AssetImage('assets/images/challenger.png'),
+                    ),
+                  ),
                 ],
+                
               ));
         } else if (snapshot.data.documents[2]['Tier'] == 'SILVER') {
           return Container(
@@ -405,13 +399,22 @@ class DatabaseService extends State<DatabaseServicee> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text(" Budding Cycler ",
+                  Text(" GameChanger ".toUpperCase(),
                       style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.07,
+                          fontSize: MediaQuery.of(context).size.width * 0.06,
                           fontWeight: FontWeight.bold,
-                          foreground: Paint()..shader = silverGradient))
+                              fontStyle: FontStyle.italic,
+                           color: Colors.teal[800]),),
 
-                
+                   SizedBox(width: 10,),
+                CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.07,
+                    backgroundColor: Colors.grey[100],
+                    child: CircleAvatar(
+                      radius:MediaQuery.of(context).size.width * 0.07,
+                      backgroundImage: AssetImage('assets/images/chaner.png'),
+                    ),
+                  ),
                  ],
               ));
         } else {
@@ -421,11 +424,23 @@ class DatabaseService extends State<DatabaseServicee> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text("Foodie Warrior",
+                  Text(" Cycler".toUpperCase(),
                       style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.07,
+                          fontSize: MediaQuery.of(context).size.width * 0.06,
                           fontWeight: FontWeight.bold,
-                          foreground: Paint()..shader = goldGradient))
+                              fontStyle: FontStyle.italic,
+                          color: Colors.teal[900]),),
+   SizedBox(width: 10,),
+                CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.07,
+                    backgroundColor: Colors.grey[100],
+                    child: CircleAvatar(
+                      radius:MediaQuery.of(context).size.width * 0.07,
+                      backgroundImage: AssetImage('assets/images/cycler.png'),
+                    ),
+                  ),
+
+
                 ],
               ));
         }
@@ -536,6 +551,7 @@ class DatabaseService extends State<DatabaseServicee> {
             {'Type': 'Fertiliser', 'Value': FieldValue.increment(f2)}));
   }
 
+ 
   Future updateStats() async {
     updateUserFoodStats(0, 0);
     updateUserEnergyStats(0, 0);
@@ -560,13 +576,14 @@ Widget getEnergy() {
         if (!snapshot.hasData) return Text("");
         return Text(snapshot.data.documents[0]['Value'].toString(),
             style: TextStyle(
-              fontSize: 30,
+              fontSize: 20,
               fontWeight: FontWeight.w700,
               color: Colors.yellow[900],
             ));
       },
     );
   }
+ 
 
 Widget getFertlisers() {
     return StreamBuilder(
@@ -579,7 +596,7 @@ Widget getFertlisers() {
         if (!snapshot.hasData) return Text("");
         return Text(snapshot.data.documents[1]['Value'].toString(),
             style: TextStyle(
-              fontSize: 30,
+              fontSize: 20,
               fontWeight: FontWeight.w700,
               color: Colors.brown,
             ));
@@ -598,7 +615,7 @@ Widget getServings() {
         if (!snapshot.hasData) return Text("");
         return Text(snapshot.data.documents[2]['Value'].toString(),
             style: TextStyle(
-              fontSize: 30,
+              fontSize: 20,
               fontWeight: FontWeight.w700,
               color: Colors.green[800],
             ));
@@ -692,7 +709,7 @@ Widget getServings() {
       builder: (context, snapshot) {
         if (!snapshot.hasData) return Container();
         return Image.network(snapshot.data.documents[questionUID]['imageURL'],
-            width: MediaQuery.of(context).size.width * 0.85);
+            width: MediaQuery.of(context).size.width * 0.55);
       },
     );
   }
@@ -705,7 +722,8 @@ Widget getServings() {
         return Text(snapshot.data.documents[questionUID]['Question'],
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: MediaQuery.of(context).size.width * 0.05,
+              fontWeight:FontWeight.bold,
+              fontSize: MediaQuery.of(context).size.width * 0.04,
             ));
       },
     );

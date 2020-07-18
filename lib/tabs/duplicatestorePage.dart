@@ -1,4 +1,4 @@
-import 'package:Cycled_iOS/design/theme.dart' as Theme;
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Cycled_iOS/database/DatabaseService.dart';
@@ -13,6 +13,7 @@ class DuplicateStorePage extends StatefulWidget {
 }
 
 class _DuplicateStorePageState extends State<DuplicateStorePage> {
+  
   int cartVal = 0;
   Map<String, dynamic> userTokens = {};
 
@@ -29,57 +30,54 @@ class _DuplicateStorePageState extends State<DuplicateStorePage> {
   }
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
-   return Padding(
-        padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 5.0, right: 5.0),
+    return Padding(
+        padding:
+            EdgeInsets.only(top: 10.0, bottom: 10.0, left: 5.0, right: 5.0),
         child: InkWell(
-           
             child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 3.0,
-                          blurRadius: 5.0)
-                    ],
-                    color: Colors.white),
-                child: Column(children: 
-                 <Widget>[
-Container(
-                   
-                      child: Container(
-                          height: 75.0,
-                          width: 75.0,
-                         
-                             child: Image.network(document['imageURL']),
-)),
- SizedBox(height: 7.0),
- Text(document['Tokens'].toString() + " TOKENS",
-                      style: TextStyle(
-                          color: Color(0xFFCC8053),
-                          fontFamily: 'Varela',
-                          fontSize: 14.0)),
- Text(document['Description'],
-                      style: TextStyle(
-                          color: Color(0xFF575E67),
-                          fontFamily: 'Varela',
-                          fontSize: 14.0)),
-              
-Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Container(color: Color(0xFFEBEBEB), height: 1.0)),
-
-
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.0),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 3.0,
+                    blurRadius: 5.0)
+              ],
+              color: Colors.white),
+          child: Column(
+            children: <Widget>[
               Container(
-                width: MediaQuery.of(context).size.width * 3 ,
+                  child: Container(
+                height: 75.0,
+                width: 75.0,
+                child: Image.network(document['imageURL']),
+              )),
+              SizedBox(height: 7.0),
+              Text(document['Tokens'].toString() + " TOKENS",
+                  style: TextStyle(
+                      color: Color(0xFFCC8053),
+                      fontFamily: 'Varela',
+                      fontSize: 14.0)),
+              Text(document['Description'],
+                  style: TextStyle(
+                      color: Color(0xFF575E67),
+                      fontFamily: 'Varela',
+                      fontSize: 14.0)),
+              Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Container(color: Color(0xFFEBEBEB), height: 1.0)),
+              Container(
+                width: MediaQuery.of(context).size.width * 3,
                 height: MediaQuery.of(context).size.width * 0.08,
                 child: Row(
                   children: <Widget>[
-                       SizedBox(width: 20),
+                    SizedBox(width: 20),
                     FloatingActionButton(
-                      
-                      child: Icon(Icons.add ,color: Colors.orange,),
-                       backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.add,
+                        color: Colors.orange,
+                      ),
+                      backgroundColor: Colors.white,
                       onPressed: () {
                         Firestore.instance.runTransaction((transaction) async {
                           DocumentSnapshot freshSnap =
@@ -96,11 +94,12 @@ Padding(
                         style: TextStyle(
                             fontWeight: FontWeight.normal, fontSize: 20)),
                     SizedBox(width: 10),
-                    
                     FloatingActionButton(
-                      child: Icon(Icons.remove, color: Colors.red, ),
-                       backgroundColor: Colors.white,
-                       
+                      child: Icon(
+                        Icons.remove,
+                        color: Colors.red,
+                      ),
+                      backgroundColor: Colors.white,
                       onPressed: () {
                         if (document['Count'] > 0) {
                           Firestore.instance
@@ -119,17 +118,15 @@ Padding(
                 ),
               ),
               SizedBox(height: 5),
-              
             ],
           ),
-   )));
+        )));
   }
-
 
   @override
   Widget build(BuildContext build) {
     return Scaffold(
-      appBar: AppBar(
+        appBar: AppBar(
           leading: IconButton(
               icon: Icon(LineAwesomeIcons.arrow_left,  color: Colors.black,),
               onPressed: () => {Navigator.pop(context, false)}),
@@ -145,8 +142,7 @@ Padding(
       ),
       ), 
         body: new Container(
-  
- decoration: BoxDecoration(
+          decoration: BoxDecoration(
             image: new DecorationImage(
               colorFilter: new ColorFilter.mode(
                   Colors.black.withOpacity(0.1), BlendMode.dstATop),
@@ -155,32 +151,52 @@ Padding(
             ),
             borderRadius: BorderRadius.all(Radius.circular(50.0)),
           ),
+          
           child: Column(
             children: <Widget>[
-               SizedBox(height: 10.0),
-         
-        
-          SizedBox(height: 30),
-              Flexible(
-                fit: FlexFit.tight,
-                child: StreamBuilder(
-                    stream: Firestore.instance
-                        .collection('StoreDatabase')
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) return Container();
-                      return GridView.builder(
-                         
-                 gridDelegate:
-                      new SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
-                          itemCount: snapshot.data.documents.length,
-                          itemBuilder: (context, index) => _buildListItem(
-                              context, snapshot.data.documents[index]));
-                    }),
+              /*
+    
+    consider adding something at the top 
+             */
+              Row(
+                children: <Widget>[
+           
+                  SizedBox(width: MediaQuery.of(context).size.width / 5),
+                 
+                ],
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              SizedBox(height: 20),
+              NotificationListener<OverscrollIndicatorNotification>(
+                onNotification: (OverscrollIndicatorNotification overscroll) {
+                  overscroll.disallowGlow();
+                  return;
+                },
+                child: Flexible(
+                  fit: FlexFit.tight,
+                  child: StreamBuilder(
+                      stream: Firestore.instance
+                          .collection('StoreDatabase')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) return Container();
+                        return GridView.builder(
+                            gridDelegate:
+                                new SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2),
+                            itemCount: snapshot.data.documents.length,
+                            itemBuilder: (context, index) => _buildListItem(
+                                context, snapshot.data.documents[index]));
+                      }),
+                ),
+              ),
+              
               Container(
+                 decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(0),
+    color: Colors.blueGrey[50],
+    
+  ),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: <Widget>[
                     
@@ -191,36 +207,34 @@ Padding(
                         style: TextStyle(
                             fontSize:
                                 MediaQuery.of(context).size.height * 0.025)),
-                  ],
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Container(
                 height: 50,
                 margin: EdgeInsets.symmetric(
                   horizontal: 10,
                 ),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  gradient: LinearGradient(colors: <Color>[
-                    Theme.Colors.buttonGradientStart,
-                    Theme.Colors.buttonGradientEnd
-                  ]),
+                  borderRadius: BorderRadius.circular(0),
+                 color: Colors.blueGrey[700],
+                  
                 ),
+                
                 child: MaterialButton(
                   child: Row(children: <Widget>[
                     SizedBox(width: MediaQuery.of(context).size.width * 0.23),
-                    Icon(
-                      Icons.shopping_cart,
-                      color: Colors.white,
-                    ),
-                    SizedBox(width: 15),
+                    
                     Text("Checkout",
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: MediaQuery.of(context).size.width * 0.06,
                           color: Colors.white,
                         )),
+SizedBox(width: 15),
+                        Icon(
+                      Icons.shopping_cart,
+                      color: Colors.white,
+                    ),
+                    
                   ]),
                   onPressed: () {
                     if (cartVal != 0) {
@@ -248,9 +262,9 @@ Padding(
                                             "Checkout failed, insufficient tokens!",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16.0,
-                                                ),
+                                              color: Colors.white,
+                                              fontSize: 16.0,
+                                            ),
                                           ),
                                           backgroundColor: Colors.blue,
                                           duration: Duration(seconds: 2),
@@ -264,9 +278,9 @@ Padding(
                                             "Checkout successful! Check your email for your reward(s)",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16.0,
-                                               ),
+                                              color: Colors.white,
+                                              fontSize: 16.0,
+                                            ),
                                           ),
                                           backgroundColor: Colors.blue,
                                           duration: Duration(seconds: 5),
@@ -305,33 +319,13 @@ Padding(
                   },
                 ),
               ),
+
+               ],
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
             ],
           ),
         ));
   }
 }
-
-
-
-
-
-/*
-
-  FloatingActionButton(
-                      child: Icon(Icons.remove),
-                      onPressed: () {
-                        if (document['Count'] > 0) {
-                          Firestore.instance
-                              .runTransaction((transaction) async {
-                            DocumentSnapshot freshSnap =
-                                await transaction.get(document.reference);
-                            await transaction.update(freshSnap.reference,
-                                {'Count': freshSnap['Count'] - 1});
-                          });
-                          cartVal = cartVal - document['Tokens'];
-                          setState(() {});
-                        }
-                      },
-                    ),
-*/
-

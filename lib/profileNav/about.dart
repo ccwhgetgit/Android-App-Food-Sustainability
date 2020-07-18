@@ -31,12 +31,12 @@ class _AboutState extends State<About> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           leading: IconButton(
-              icon: Icon(LineAwesomeIcons.arrow_left),
+              icon: Icon(LineAwesomeIcons.arrow_left, color: Colors.black),
               onPressed: () => {Navigator.pop(context, false)}),
           centerTitle: true,
-          backgroundColor: Color.fromRGBO(1, 68, 109, 1.0),
+          backgroundColor: Colors.transparent,
           title: Text("About",
-              style: TextStyle(fontSize: 23, fontFamily: 'SFProText')),
+              style: TextStyle(fontSize: 23, color: Colors.black, fontFamily: 'SFProText')),
         ),
         body: Center(
             child: Column(

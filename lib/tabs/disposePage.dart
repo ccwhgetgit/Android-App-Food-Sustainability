@@ -1,7 +1,6 @@
 import 'dart:collection';
 import 'dart:io';
 import 'package:Cycled_iOS/database/DatabaseService.dart';
-import 'package:Cycled_iOS/design/theme.dart' as Theme;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +76,7 @@ class _DisposePageState extends State<DisposePage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-              title: Text("Make a choice!"),
+              title: Center(child: Text("Share your food waste"),),
               content: SingleChildScrollView(
                   child: ListBody(
                 children: <Widget>[
@@ -204,7 +203,7 @@ class _DisposePageState extends State<DisposePage> {
         barrierDismissible: true,
         builder: (context) {
           return AlertDialog(
-            title: Text('Enter Maximum Distance From Your Location'),
+            title: Text('Enter Preferred Distance From Your Location'),
             contentPadding: EdgeInsets.all(10.0),
             content: TextField(
                 decoration: InputDecoration(hintText: 'Distance in km'),
@@ -232,10 +231,10 @@ class _DisposePageState extends State<DisposePage> {
     return Scaffold(
         appBar: AppBar(
             centerTitle: true,
-            backgroundColor: Color.fromRGBO(1, 68, 109, 1.0),
+            backgroundColor: Colors.blueGrey[300],
             actions: <Widget>[
               IconButton(
-                icon: Icon(Icons.filter_list),
+                icon: Icon(Icons.location_on),
                 onPressed: () => getDist(),
               )
             ],
@@ -247,7 +246,7 @@ class _DisposePageState extends State<DisposePage> {
                 child: Column(
               children: <Widget>[
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.5,
+                    height: MediaQuery.of(context).size.height * 0.58,
                     child: GoogleMap(
                       onMapCreated: _populateBins,
                       initialCameraPosition: CameraPosition(
@@ -257,7 +256,7 @@ class _DisposePageState extends State<DisposePage> {
                       compassEnabled: true,
                     )),
                 SizedBox(height: 20),
-                Text("Nearest To You:", style: TextStyle(fontSize: 20)),
+                Text("Find the Nearest Point", style: TextStyle(fontSize: 18)),
                 nearestBin != ""
                     ? GestureDetector(
                         child: Text(nearestBin,
@@ -267,10 +266,10 @@ class _DisposePageState extends State<DisposePage> {
                         onTap: () => _zoomInMarker(bins[nearestBinIndex]),
                       )
                     : GestureDetector(
-                        child: Icon(Icons.refresh, size: 40),
+                        child: Icon(Icons.location_on, size: 30),
                         onTap: () => getDist(),
                       ),
-                SizedBox(height: 40),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.025),
                 Container(
                   height: 60,
                   margin: EdgeInsets.symmetric(
@@ -283,10 +282,7 @@ class _DisposePageState extends State<DisposePage> {
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
-                    gradient: LinearGradient(colors: <Color>[
-                      Theme.Colors.buttonGradientStart,
-                      Theme.Colors.buttonGradientEnd
-                    ]),
+                    color: Colors.blueGrey[500],
                   ),
                   child: MaterialButton(
                     child: Row(children: <Widget>[
@@ -294,13 +290,15 @@ class _DisposePageState extends State<DisposePage> {
                         Icons.camera_alt,
                         color: Colors.white,
                       ),
-                      SizedBox(width: 15),
-                      Text("Let's Dispose!",
+                      SizedBox(width: 35),
+                     Center( child: Text("Drop it off",
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             color: Colors.white,
                             fontSize: 18,
-                          )),
+                          ))
+                          ,
+                     )
                     ]),
                     onPressed: () async {
                       await _showChoiceDialog(context);

@@ -46,7 +46,7 @@ class _MainInterfaceState extends State<MainInterface> {
                         currentTab = 0;
                       });
                     },
-      backgroundColor: Colors.green[500],
+      backgroundColor: Colors.teal[900],
       child: Icon(Icons.restore_from_trash),
       ),
       
@@ -151,11 +151,11 @@ class _MainInterfaceState extends State<MainInterface> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Icon(
-                          Icons.chat_bubble,
+                          Icons.forum,
                           color: currentTab == 2 ? Colors.green[900] : Colors.grey,
                         ),
                         Text(
-                          'Chat',
+                          'Forum',
                           style: TextStyle(
                             color: currentTab == 2 ? Colors.green[900] : Colors.grey,
                           ),

@@ -1,4 +1,4 @@
-import 'package:Cycled_iOS/customWidgets/efforts.dart' as third;
+import 'package:Cycled_iOS/customWidgets/pie_chart.dart' as third;
 
 import 'package:flutter/material.dart';
 import 'package:Cycled_iOS/customWidgets/DailyPollCard.dart' as second;
@@ -37,28 +37,29 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     var timeNow = int.parse(DateFormat('kk').format(now));
     var message = '';
     if (timeNow < 12 || timeNow == 24) {
-      message = 'Good Morning!';
+      message = 'Good Morning';
     } else if ((timeNow >= 12) && (timeNow <= 16)) {
-      message = 'Good Afternoon!';
+      message = 'Good Afternoon';
     } else {
-      message = 'Good Evening!';
+      message = 'Good Evening';
     }
 
     return new Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(
-          MediaQuery.of(context).size.height / 5,
+          MediaQuery.of(context).size.height / 6.5,
         ),
         child: AppBar(
             title: Container(
-                padding: EdgeInsets.fromLTRB(0, 2, 20, 10),
+              
                 child: Column(
                   children: <Widget>[
-                    Text("\n" + message,
+                    Text(  "\n"+message,
                         style: TextStyle(
-                            fontSize: 27,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'SFProText',
+                            fontSize: 24.5,
+                     
+                           fontWeight: FontWeight.bold,
+                         
                             color: Colors.black)),
                   ],
                 )),
@@ -67,8 +68,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 controller: controller,
                 indicator: UnderlineTabIndicator(
                     borderSide: BorderSide(
-                  width: 5.0,
-                  color: Colors.green[400],
+                  width: 3.0,
+                  color: Colors.teal[900],
                 )),
                 indicatorColor: Colors.transparent,
                 labelColor: Color(0xFFC88D67),
@@ -77,28 +78,28 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 tabs: <Tab>[
                   new Tab(
                       icon: new Text(
-                    "Membership",
+                    "Account".toUpperCase(),
                     style: TextStyle(
                       color: Colors.black,
-                      fontFamily: 'Varela',
-                      fontSize: 14.0,
+                   
+                      fontSize: 12.0,
                     ),
                   )),
                   new Tab(
                       icon: new Text(
-                    "Learn & Earn ",
+                    "Learn & Earn ".toUpperCase(),
                     style: TextStyle(
-                      fontFamily: 'Varela',
-                      fontSize: 14.0,
+                     
+                      fontSize: 12.0,
                       color: Colors.black,
                     ),
                   )),
                   new Tab(
                       icon: new Text(
-                    "Your Efforts",
+                    "Efforts".toUpperCase(),
                     style: TextStyle(
-                      fontFamily: 'Varela',
-                      fontSize: 14.0,
+                     
+                      fontSize: 12.0,
                       color: Colors.black,
                     ),
                   )),
@@ -112,7 +113,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         child: new TabBarView(controller: controller, children: <Widget>[
           new first.UserCard(),
           new second.DailyPollCard(),
-          new third.Efforts(),
+          new third.Piechart(),
         ]),
       ),
     );

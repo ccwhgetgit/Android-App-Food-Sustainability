@@ -1,4 +1,4 @@
-import 'package:Cycled_iOS/design/theme.dart' as Theme;
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Cycled_iOS/database/DatabaseService.dart';
@@ -128,6 +128,14 @@ class _StorePageState extends State<StorePage> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           centerTitle: true,
+          title:  Text('\nRewards Catalogue',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 23,
+                  
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      )),
           //add a back
         ),
         body: new Container(
@@ -140,42 +148,21 @@ class _StorePageState extends State<StorePage> {
             ),
             borderRadius: BorderRadius.all(Radius.circular(50.0)),
           ),
+          
           child: Column(
             children: <Widget>[
               /*
-
     
     consider adding something at the top 
              */
               Row(
                 children: <Widget>[
-                  /* Expanded(
-      child: Image.asset('assets/images/logo.png',
-        height:30,
-                   width: 30,),
-      
-    ),
-             
-                  SizedBox(width: MediaQuery.of(context).size.width / 4),
-                  Text('Rewards Catalogue',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Varela',
-                        fontSize: 25.0,
-                      )),
-             */
+           
                   SizedBox(width: MediaQuery.of(context).size.width / 5),
-                  Text('Rewards Catalogue',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 25,
-                        letterSpacing: .6,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      )),
+                 
                 ],
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 20),
               NotificationListener<OverscrollIndicatorNotification>(
                 onNotification: (OverscrollIndicatorNotification overscroll) {
                   overscroll.disallowGlow();
@@ -199,10 +186,17 @@ class _StorePageState extends State<StorePage> {
                       }),
                 ),
               ),
+              
               Container(
+                 decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(0),
+    color: Colors.blueGrey[50],
+    
+  ),
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: <Widget>[
+                    
                     DatabaseService(uid: LoginPage.user.uid)
                         .getTokens('rewards'),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.01),
@@ -210,35 +204,34 @@ class _StorePageState extends State<StorePage> {
                         style: TextStyle(
                             fontSize:
                                 MediaQuery.of(context).size.height * 0.025)),
-                  ],
-                ),
-              ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Container(
                 height: 50,
                 margin: EdgeInsets.symmetric(
                   horizontal: 10,
                 ),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  gradient: LinearGradient(colors: <Color>[
-                    Theme.Colors.buttonGradientStart,
-                    Theme.Colors.buttonGradientEnd
-                  ]),
+                  borderRadius: BorderRadius.circular(0),
+                 color: Colors.blueGrey[700],
+                  
                 ),
+                
                 child: MaterialButton(
                   child: Row(children: <Widget>[
                     SizedBox(width: MediaQuery.of(context).size.width * 0.23),
-                    Icon(
-                      Icons.shopping_cart,
-                      color: Colors.white,
-                    ),
-                    SizedBox(width: 15),
+                    
                     Text("Checkout",
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: MediaQuery.of(context).size.width * 0.06,
                           color: Colors.white,
                         )),
+SizedBox(width: 15),
+                        Icon(
+                      Icons.shopping_cart,
+                      color: Colors.white,
+                    ),
+                    
                   ]),
                   onPressed: () {
                     if (cartVal != 0) {
@@ -321,6 +314,10 @@ class _StorePageState extends State<StorePage> {
                           barrierDismissible: false);
                     }
                   },
+                ),
+              ),
+
+               ],
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),

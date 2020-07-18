@@ -21,28 +21,32 @@ class _DailyPollCard extends State<DailyPollCard> {
           height: MediaQuery.of(context).size.height/1.7,
           width: MediaQuery.of(context).size.width - 2,
           decoration: BoxDecoration(
-            image: new DecorationImage(
-              colorFilter: new ColorFilter.mode(
-                  Colors.black.withOpacity(0.1), BlendMode.dstATop),
-              image: AssetImage("assets/images/quiz.jpg"),
-              fit: BoxFit.fill,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(50.0)),
+           color: Colors.white, 
+            borderRadius: BorderRadius.all(Radius.circular(0.0)),
           ),
         ),
       ),
  
+  Positioned(
+        child: Container(
+          height: MediaQuery.of(context).size.height *0.15 ,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(0),
+            color: Colors.blueGrey[100],
+          ),
+        ),
+      ),
       Positioned(
-        top: MediaQuery.of(context).size.height / 14,
-        right: MediaQuery.of(context).size.width /
-            1000, //to infinite to align in centre
+        top: MediaQuery.of(context).size.height / 39,
+        //to infinite to align in centre
 
         height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery.of(context).size.width/1.16,
         child: Column(children: <Widget>[
 
           Text(
-            "     Daily Challenge     \n\n".toUpperCase(),
+            "LEARN and earn     ".toUpperCase(),
             textAlign: TextAlign.left,
             style: TextStyle(
               fontSize: 35.0,
@@ -52,45 +56,57 @@ class _DailyPollCard extends State<DailyPollCard> {
            
             ),
           ),
- Text(
-            "Its that simple.",
-            style: TextStyle(
-              fontSize: 25.0,
-              fontFamily: "Arial",
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            "\nPut your environmental knowledge",
-            style: TextStyle(
-              fontSize: 20.0,
-              fontFamily: "Arial",
-            ),
-          ),
-          Text(
-            "to the test and earn points",
-            style: TextStyle(
-              fontSize: 20.0,
-              fontFamily: "Arial",
-            ),
-          ),
-          Text(
-            "\n\nHonestly lah, just 1 min a day\n",
-            style: TextStyle(
-              fontSize: 20.0,
-              fontFamily: "Arial",
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+      
         ]),
       ),
      
+
+ Positioned(
+        top: MediaQuery.of(context).size.height / 12,
+
+        //to infinite to align in centre
+
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width/1.38,
+        child: Column(children: <Widget>[
+
+              Row(children: <Widget>[
+   Image.asset("assets/images/PolLDetails.png",  width:  MediaQuery.of(context).size.width/1.4), 
+     
+
+
+              ],)
+              
+        ]),
+      ),
+     
+     //build a container with grey
+     //small graphic with quote 
+
+    
+
+ Positioned(
+        top: MediaQuery.of(context).size.height / 5,
+
+        //to infinite to align in centre
+
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Column(children: <Widget>[
+
+              Row(children: <Widget>[
+ Image.asset("assets/images/instructions.png",  width:  MediaQuery.of(context).size.width/1.13,), 
+         
+
+              ],)
+              
+        ]),
+      ),
             
             _buildFooter(context),
         
       
 
-//replace with slider button for quiz page UI
       
     ])));
   }
@@ -99,7 +115,7 @@ class _DailyPollCard extends State<DailyPollCard> {
 
   Widget _buildFooter(BuildContext context) {
     return Positioned(
-      bottom: 50,
+      bottom: 0,
       child: Container(
         width: MediaQuery.of(context).size.width,
         child: Column(
@@ -118,10 +134,8 @@ class _DailyPollCard extends State<DailyPollCard> {
               child: Container(
                 decoration: BoxDecoration(
                   
-                  color: Colors.brown[700],
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(50),
-                  ),
+                  color: Colors.teal[200],
+               
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black26,
@@ -131,8 +145,8 @@ class _DailyPollCard extends State<DailyPollCard> {
                     )
                   ],
                 ),
-                width: MediaQuery.of(context).size.width * .85,
-                height: 60,
+                width: MediaQuery.of(context).size.width ,
+                height: 90,
                 child: Center(
                   child: Text(
                     "GET STARTED",

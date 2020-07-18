@@ -1,13 +1,12 @@
+import 'package:Cycled_iOS/customWidgets/formPage.dart';
 import 'package:Cycled_iOS/database/DatabaseService.dart';
 import 'package:Cycled_iOS/profileNav/inviteFriend.dart';
-import 'package:Cycled_iOS/profileNav/settings.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
 import '../authentication.dart';
 import 'package:Cycled_iOS/profileNav/about.dart';
-import 'package:Cycled_iOS/profileNav/purchaseHistory.dart';
 import 'package:Cycled_iOS/authentication.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
@@ -60,15 +59,12 @@ class ProfileListItem extends StatelessWidget {
           ],
         ),
         onPressed: () => {
-          if (this.text == 'Purchase History')
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PurchaseHistory()))
-          else if (this.text == 'About')
+        if (this.text == 'About')
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => About()))
           else if (this.text == 'Settings')
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Settings()))
+                context, MaterialPageRoute(builder: (context) =>FormPage()))
           else if (this.text == 'Logout')
             Navigator.pushReplacement(
                 context,
@@ -185,10 +181,7 @@ class _ProfilePageState extends State<ProfilePage> {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: Column(children: <Widget>[
-                ProfileListItem(
-                  icon: LineAwesomeIcons.history,
-                  text: 'Purchase History',
-                ),
+               
                 ProfileListItem(
                   icon: LineAwesomeIcons.user_plus,
                   text: 'About',

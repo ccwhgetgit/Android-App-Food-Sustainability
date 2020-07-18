@@ -14,7 +14,6 @@ import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../authentication.dart';
-import 'signup.dart';
 
 class Login2Page extends StatefulWidget {
   Login2Page({Key key}) : super(key: key);
