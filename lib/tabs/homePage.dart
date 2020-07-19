@@ -51,26 +51,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ),
         child: AppBar(
             title: Container(
-              
                 child: Column(
-                  children: <Widget>[
-                    Text(  "\n"+message,
-                        style: TextStyle(
-                            fontSize: 24.5,
-                     
-                           fontWeight: FontWeight.bold,
-                         
-                            color: Colors.black)),
-                  ],
-                )),
+              children: <Widget>[
+                Text("\n" + message,
+                    style: TextStyle(
+                        fontSize: 24.5,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black)),
+              ],
+            )),
             backgroundColor: Colors.white,
             bottom: new TabBar(
+                labelPadding: EdgeInsets.symmetric(horizontal: 30.0),
                 controller: controller,
                 indicator: UnderlineTabIndicator(
+                    insets: EdgeInsets.symmetric(horizontal: 10.0),
                     borderSide: BorderSide(
-                  width: 3.0,
-                  color: Colors.teal[900],
-                )),
+                      width: 3.0,
+                      color: Colors.teal[900],
+                    )),
                 indicatorColor: Colors.transparent,
                 labelColor: Color(0xFFC88D67),
                 isScrollable: true,
@@ -81,7 +80,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     "Account".toUpperCase(),
                     style: TextStyle(
                       color: Colors.black,
-                   
                       fontSize: 12.0,
                     ),
                   )),
@@ -89,7 +87,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       icon: new Text(
                     "Learn & Earn ".toUpperCase(),
                     style: TextStyle(
-                     
                       fontSize: 12.0,
                       color: Colors.black,
                     ),
@@ -98,7 +95,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       icon: new Text(
                     "Efforts".toUpperCase(),
                     style: TextStyle(
-                     
                       fontSize: 12.0,
                       color: Colors.black,
                     ),

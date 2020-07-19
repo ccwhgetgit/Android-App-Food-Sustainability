@@ -1,6 +1,3 @@
-import 'package:Cycled_iOS/authentication.dart';
-import 'package:Cycled_iOS/database/DatabaseService.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:geolocator/geolocator.dart';
