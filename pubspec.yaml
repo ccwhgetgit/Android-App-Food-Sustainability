@@ -42,7 +42,7 @@ dependencies:
   geoflutterfire:
   hexcolor: any
   geolocator:
-    
+
   barcode_scan:
   qr_flutter:
   location:
@@ -57,7 +57,6 @@ dependencies:
   percent_indicator: "^2.1.5"
   flutter_svg: ^0.12.1
   pie_chart: ^3.1.1
-  
 
   share:
 
