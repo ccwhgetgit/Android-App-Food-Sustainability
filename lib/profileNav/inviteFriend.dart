@@ -1,4 +1,3 @@
-
 import "package:flutter/material.dart";
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:share/share.dart';
@@ -52,16 +51,15 @@ class _ReferFriendState extends State<ReferFriend> {
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 50),
-              child: Text(
-                  "Spread the joy \nSave our Environment together",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20)),
+              child: Text("Spread the joy \nSave our Environment together",
+                  textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.07),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 30),
               child: Text("Share the Link",
-                  textAlign: TextAlign.center, style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             ),
             SizedBox(height: 10),
             Container(
@@ -78,7 +76,6 @@ class _ReferFriendState extends State<ReferFriend> {
                       fontSize: MediaQuery.of(context).size.width * 0.1)),
             ),
             SizedBox(height: 10),
-           
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             GestureDetector(
                 child: Text(
@@ -88,10 +85,8 @@ class _ReferFriendState extends State<ReferFriend> {
                 ),
                 onTap: () {
                   share(context);
-                  print("test");
                 }),
             SizedBox(height: 20),
-           
           ],
         )));
   }
