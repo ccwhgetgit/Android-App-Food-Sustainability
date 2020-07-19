@@ -42,10 +42,10 @@ dependencies:
   geoflutterfire:
   hexcolor: any
   geolocator:
-    
+  location: ^3.0.0
   barcode_scan:
   qr_flutter:
-  location:
+
   cloud_firestore:
   curved_navigation_bar: ^0.3.3
   progress_dialog:

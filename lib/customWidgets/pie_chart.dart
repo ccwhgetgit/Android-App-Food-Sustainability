@@ -19,9 +19,9 @@ class _MyHomePageState extends State<Piechart> {
   @override
   void initState() {
     data.addAll({
-      'Food': 1,
-      'Electricity': 2,
-      'Fertilisers': 3,
+      'GHG': 3,
+      'Electricity': 5,
+      'Fertilisers': 9,
      
     });
     super.initState();
@@ -116,26 +116,28 @@ class _MyHomePageState extends State<Piechart> {
           ]),
 
 SizedBox(height:MediaQuery.of(context).size.height /28),
-           Align(
+/*
+            Align(
                 alignment: Alignment.centerLeft,
             child: 
-             Text( "    //will research and dupdate exaxt stats. outline is this  \n ",
+             Text( "   Environmental Progress  \n ",
                           style: TextStyle(
-                            color: Colors.grey[600],
-                             fontSize: 13,
+            
+                             fontSize: 20,
                           ),
                         ),
   ),
-
+*/
 
 
    Container(
               padding:
                   EdgeInsets.only( top: MediaQuery.of(context).size.height /90, bottom: MediaQuery.of(context).size.height /5, left: 5,),
               width: double.infinity,
-                child: Row(
+                child: Column(
                   children: <Widget>[
-               
+               Row(
+                  children: <Widget>[
 Container(
                              
                               // Here constraints.maxWidth provide us the available width for the widget
@@ -307,8 +309,8 @@ Container(
                                     children: <Widget>[
                                       Container(
                                         padding: EdgeInsets.all(6),
-                                        height: 55,
-                                        width: 55,
+                                        height: 45,
+                                        width: 45,
                                         child: CircleAvatar(
                                           radius: 1072.0,
                                           backgroundColor: Colors.transparent,
@@ -317,7 +319,7 @@ Container(
                                         ),
                                       ),
                                       Text(
-                                      "  land ".toUpperCase(),
+                                      "  Carbon ".toUpperCase(),
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: Colors.black,
@@ -340,7 +342,7 @@ Container(
                                         fontFamily: 'SFProText'),
                                   ),
                                   Text(
-                                    "SERVINGS",
+                                    "GRAMS",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 14,
@@ -348,7 +350,7 @@ Container(
                                     ),
                                   ),
                                  
-                          Text("OF FOOD SAVED",
+                          Text("OF GHG SAVED",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontSize: 10,
@@ -368,83 +370,43 @@ Container(
                               ))
 
 
-                              /*
- Container(
-                             
-                              // Here constraints.maxWidth provide us the available width for the widget
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(18),
-                              ),
-                              child: Column(
-                                children: <Widget>[
-                                  // wrapped within an expanded widget to allow for small density device
-                                  
-
-                                  // wrapped within an expanded widget to allow for small density device
-                                  Row(
-                                    children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.all(6),
-                                        height: 55,
-                                        width: 55,
-                                        child: CircleAvatar(
-                                          radius: 1072.0,
-                                          backgroundColor: Colors.transparent,
-                                          backgroundImage: AssetImage(
-                                              'assets/images/rice.png'),
-                                        ),
-                                      ),
-                                      Text(
-                                        "Foodies".toUpperCase(),
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-
-                                        SizedBox(width: MediaQuery.of(context).size.width /50),
-                                    ],
-                                  ),
-
-                                
-                                  DatabaseService(uid: LoginPage.user.uid)
-                                      .getServings(),
-                                  Text(
-                                    "",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                        fontFamily: 'SFProText'),
-                                  ),
-                                  Text(
-                                    "SERVINGS",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                 
-
-                                  Text(
-                                    "",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                        fontFamily: 'SFProText'),
-                                  ),
-                                ],
-                              )), 
-
-                              */
                   ]
-                )
+                ), 
+
+SizedBox(height:MediaQuery.of(context).size.height /38),
+Center(
+                     
+          child: Text(
+            'Your Environmental Progress ',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                            color:  Color(0xFFACB1C0),
+                            fontSize: MediaQuery.of(context).size.height /55)
+          ),
+        ),
+            
+
+
+ Center(
+          child: Text(
+            'Be Part of the Movement',
+            textAlign: TextAlign.center,
+               style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height /58,
+                      color: Colors.black,
+                     ),
+          ),
+        ),
+
+
+
+                    SizedBox(height: 40),
+                  ]
+                ), 
                 
 
             ),
-            SizedBox(height:MediaQuery.of(context).size.height /13),
+
           ],
         ),
       ),

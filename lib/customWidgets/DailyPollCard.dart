@@ -29,10 +29,13 @@ class _DailyPollCard extends State<DailyPollCard> {
  
   Positioned(
         child: Container(
-          height: MediaQuery.of(context).size.height *0.15 ,
+          height: MediaQuery.of(context).size.height *0.155 ,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(0),
+            borderRadius: new BorderRadius.only(
+                            bottomLeft:  const  Radius.circular(20.0),
+                            bottomRight: const  Radius.circular(20.0))
+                    ,
             color: Colors.blueGrey[100],
           ),
         ),
@@ -44,18 +47,19 @@ class _DailyPollCard extends State<DailyPollCard> {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width/1.16,
         child: Column(children: <Widget>[
-
+Center(child:
           Text(
-            "LEARN and earn     ".toUpperCase(),
+            "LEARN and earn              ".toUpperCase(),
             textAlign: TextAlign.left,
             style: TextStyle(
-              fontSize: 35.0,
+              fontSize: MediaQuery.of(context).size.width/14,
               fontFamily: "Arial",
               fontWeight: FontWeight.bold,
               color: Colors.black,
            
             ),
-          ),
+          )
+        ),
       
         ]),
       ),
@@ -95,6 +99,7 @@ class _DailyPollCard extends State<DailyPollCard> {
         child: Column(children: <Widget>[
 
               Row(children: <Widget>[
+                
  Image.asset("assets/images/instructions.png",  width:  MediaQuery.of(context).size.width/1.13,), 
          
 

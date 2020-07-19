@@ -515,6 +515,19 @@ class DatabaseService extends State<DatabaseServicee> {
     return await ref.get().then(
         (docData) => docData.exists ? ref.updateData({'Tier': tier}) : {});
   }
+// =========== SIGN UP AS HOSTS  ===========
+
+Future updateCollectionPoints(String name, GeoPoint coordinate,
+    String pc, ) async {
+
+ binCollection.document(uid).setData({
+    'Address:' : pc, 
+    'Coordinates:': coordinate, 
+    'Landmark:' : name,  
+   
+  });
+}
+
 
   // =========== STATISTICS ===========
   Future updateUserFoodStats(int food1, int food2) async {
@@ -728,4 +741,6 @@ Widget getServings() {
       },
     );
   }
+
+  void writeCollector(name, coordinate, landmark) {}
 }

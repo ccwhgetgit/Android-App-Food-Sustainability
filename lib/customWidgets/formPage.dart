@@ -1,13 +1,23 @@
 
+import 'package:Cycled_iOS/authentication.dart';
+import 'package:Cycled_iOS/database/DatabaseService.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 
+import 'package:geolocator/geolocator.dart';
 class FormPage extends StatefulWidget {
   @override
   _FormPageState createState() => new  _FormPageState();
 }
 
 class _FormPageState extends State<FormPage>  {
+  final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+  
+  Position _currentPosition;
+  String _currentAddress;
+
+
   @override
   Widget build(BuildContext context) {
     
@@ -41,6 +51,22 @@ class _FormPageState extends State<FormPage>  {
               ],
             ),
           ),
+Container(
+            child: Stack(
+              children: <Widget>[
+                Container(
+                padding: EdgeInsets.fromLTRB(20.0, 35.0, 0.0, 0.0),
+                  child: Text(
+                    'Quick Tips: \n\n1) Share distinctive features for disposers to easily recognise \n\n2) Click on the icon to get your postal code\n\n3) Be on the map!',
+                    style:
+                        TextStyle(fontSize: 12),
+                  ),
+                ),
+                
+              ],
+            ),
+          ),
+          
           Container(
               padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
               child: Column(
@@ -49,23 +75,52 @@ class _FormPageState extends State<FormPage>  {
                   SizedBox(height: 10.0),
                   TextField(
                     decoration: InputDecoration(
-                        labelText: 'Name (Nickname) ',
+                        labelText: 'LandMark : Building etc (Any Distinct Features)  ',
                         labelStyle: TextStyle(
-                            color: Colors.grey),
+                            color: Colors.grey, fontSize: 15),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.green))),
-                    obscureText: true,
+                    obscureText: false,
                   ),
                   SizedBox(height: 10.0),
-                  TextField(
-                    decoration: InputDecoration(
-                        labelText: 'replace with Postal Code ',
-                        labelStyle: TextStyle(
-                            
-                            color: Colors.grey),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green))),
-                  ),
+            
+
+               if (_currentPosition != null)
+              Text(
+                  "${_currentPosition.latitude}, ${_currentPosition.longitude}"),
+            FlatButton(
+              child: Text("Get location"),
+              onPressed: () {
+                _getCurrentLocation();
+              },
+            ),
+            
+Row(
+  mainAxisAlignment: MainAxisAlignment.start,
+  children: <Widget>[
+   if (_currentPosition != null) Text(_currentAddress),
+     
+            RaisedButton(
+               padding: EdgeInsets.all(2.0),
+    color: Colors.transparent,
+    shape: RoundedRectangleBorder(
+  borderRadius: BorderRadius.circular(18.0),
+ 
+),
+   onPressed: () {
+                _getPostalCode();
+              },
+    child: Row(
+      children: <Widget>[
+       
+        Icon(Icons.location_on, color: Colors.green[900],),
+      ],
+    ),
+  ),
+  ],
+),
+           
+
                   SizedBox(height: 50.0),
                   Container(
                       height: 40.0,
@@ -101,9 +156,7 @@ class _FormPageState extends State<FormPage>  {
                         elevation: 7.0,
                         child: GestureDetector(
                           onTap: () {  
-
-                              //goes back to home page / alert dialog 
-
+                             // DatabaseService(uid: LoginPage.user.uid).updateCollectionPoints();
                           },
                           child: Center(
                             child: Text(
@@ -138,7 +191,7 @@ class _FormPageState extends State<FormPage>  {
                               child: Text('Go Back',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: 'Montserrat')),
+                                    )),
                             ),
                         
                         
@@ -149,5 +202,86 @@ class _FormPageState extends State<FormPage>  {
               )),
         
         ]));
+  }
+
+
+//for LatLong
+  _getCurrentLocation() {
+    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+
+      });
+    }).catchError((e) {
+      print(e);
+    });
+
+  }
+
+
+//get Postal Code
+  _getPostalCode() {
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+      });
+
+      _getAddressFromLatLng();
+    }).catchError((e) {
+      print(e);
+    });
+    
+  }
+
+  _getAddressFromLatLng() async {
+    try {
+      List<Placemark> p = await geolocator.placemarkFromCoordinates(
+          _currentPosition.latitude, _currentPosition.longitude);
+
+      Placemark place = p[0];
+
+      setState(() {
+        _currentAddress =
+            "Postal Code : ${place.postalCode}";
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  _getPostalCodestring() {
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+      });
+
+      _getAddressFromLatLngstring();
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  _getAddressFromLatLngstring() async {
+    try {
+      List<Placemark> p = await geolocator.placemarkFromCoordinates(
+          _currentPosition.latitude, _currentPosition.longitude);
+
+      Placemark place = p[0];
+
+      setState(() {
+        _currentAddress =
+            "${place.postalCode}";
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 }

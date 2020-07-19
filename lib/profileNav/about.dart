@@ -36,7 +36,7 @@ class _AboutState extends State<About> {
           centerTitle: true,
           backgroundColor: Colors.transparent,
           title: Text("About",
-              style: TextStyle(fontSize: 23, color: Colors.black, fontFamily: 'SFProText')),
+              style: TextStyle(fontSize: 23, color: Colors.black)),
         ),
         body: Center(
             child: Column(
