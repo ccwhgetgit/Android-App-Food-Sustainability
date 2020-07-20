@@ -22,12 +22,12 @@ class _ReferFriendState extends State<ReferFriend> {
     return new Scaffold(
         appBar: AppBar(
           leading: IconButton(
-              icon: Icon(LineAwesomeIcons.arrow_left),
+              icon: Icon(LineAwesomeIcons.arrow_left, color: Colors.black),
               onPressed: () => {Navigator.pop(context, false)}),
           centerTitle: true,
-          backgroundColor: Color.fromRGBO(1, 68, 109, 1.0),
+          backgroundColor: Colors.white,
           title: Text("Refer & Earn",
-              style: TextStyle(fontSize: 23, fontFamily: 'SFProText')),
+              style: TextStyle(fontSize: 23, color: Colors.black)),
         ),
         body: Center(
             child: Column(
@@ -61,22 +61,7 @@ class _ReferFriendState extends State<ReferFriend> {
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             ),
-            SizedBox(height: 10),
-            Container(
-              height: MediaQuery.of(context).size.width * 0.13,
-              width: MediaQuery.of(context).size.width * 0.8,
-              padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.05),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blue),
-                  borderRadius: BorderRadius.circular(20)),
-              child: Text("Link put",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.1)),
-            ),
-            SizedBox(height: 10),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
             GestureDetector(
                 child: Text(
                   "Social Media Invite",

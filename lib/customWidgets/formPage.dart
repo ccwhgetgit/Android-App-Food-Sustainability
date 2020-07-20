@@ -23,25 +23,17 @@ class _FormPageState extends State<FormPage>  {
  Geoflutterfire geo = Geoflutterfire();
   String _currentAddress;
  
+ bool _validate = false;
 
 final myController = TextEditingController();
 final controller2 = TextEditingController();
 
 final controller3 = TextEditingController();
 
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    myController.dispose();
-    super.dispose();
-  }
+final controllerpw = TextEditingController();
+final controllerpwcheck = TextEditingController();
 
-  @override
-  void dispose2() {
-    // Clean up the controller when the widget is disposed.
-    controller2.dispose();
-    super.dispose();
-  }
+
 
 
 
@@ -132,35 +124,71 @@ Container(
             ),
                 ]),
    
-
+   Row(children: <Widget>[
+Container(
+  width:MediaQuery.of(context).size.width / 2.8,
+  child: 
  TextFormField(
                     decoration: InputDecoration(
                         labelText: 'LandMarks/Features ',
                         labelStyle: TextStyle(
-                            color: Colors.grey, fontSize: 15),
+                            color: Colors.grey, fontSize: 13),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.green))),
                     obscureText: false,
                      controller: controller2,
                   ),
-
-
+), 
+SizedBox(width: MediaQuery.of(context).size.width / 7,),
+Container(width: MediaQuery.of(context).size.width / 2.8,
+child: 
+ TextFormField( 
+                    decoration: InputDecoration(
+                        labelText: 'Password for Your Point ',
+                        labelStyle: TextStyle(
+                            color: Colors.grey, fontSize: 13),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.green))),
+                    obscureText: false,
+                     controller: controllerpw,
+                  ),)
+   ]
+   ), 
 
                   SizedBox(height: 50.0),
                   Container(
                       height: 40.0,
                       child: Material(
-                        borderRadius: BorderRadius.circular(20.0),
+                       
+                        elevation: 7.0,
+                        child: RaisedButton(
+                         onPressed: () async {
+
+
+                        if (myController.text == "" ||
+                  controller2.text =="" ||
+              controllerpw.text ==""
+              ) {
+        showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                  title: Text(
+                      'Do ensure all the text fields have been filled up! If not, do check:'),
+                  content: Text(
+                      '1. Is the information correct? \n\n2. Choose a stronger password for your own collection point. You can access it easily thereafter!'),
+                ));
+              } else{                             
+                _popupDialog(context);
+              }
+                         },
+                        
+                       shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          
+                            ),
+                          
                        
                         color: Colors.blueGrey[500],
-                        elevation: 7.0,
-                        child: GestureDetector(
-                          onTap: ()
-                             => _popupDialog(context),
-                     
-                       
-                       
-                          
                           child: Center(
                             child: Text(
                               'Be Part Of The Movement',
@@ -181,12 +209,8 @@ Container(
                         color: Colors.red[900],
                         elevation: 7.0,
                         child: GestureDetector(
-                          onTap: () async{  
-                           //link to another page that show his records of all the bins he uploaded
-                           //on tap at the next page, have to write in and apply for deletion within 3 days
-                           //suggest reasons and feedback thats all 
-                           
-                                   },
+                            onTap: ()
+                             => _popupDeleteDialog(context),
                           child: Center(
                             child: Text(
                               'Remove My Location',
@@ -242,13 +266,13 @@ Container(
         builder: (context) {
           return AlertDialog(
             title: Text('Great! Come and Join us!'),
-            content: Text('Ensure that all the details are correct and we are ready to go'),
+            content: Text('Ensure that all the details are correct (eg. Your Collection Point) and we are ready to go'),
             actions: <Widget>[
               FlatButton(
                   onPressed: (){   _addGeoPoint();
                  
-                       Navigator.of(context).pop();
-
+                       Navigator.of(context).pop("");
+                       
                   },
                   child: Text('Add Me in!')),
               FlatButton(
@@ -262,64 +286,90 @@ Container(
        
 
 
+void _popupDeleteDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Awww we hate to see you go!'),
+            content: 
+            
+  TextFormField(
+                    decoration: InputDecoration(
+                        labelText: 'Password for Your Collection Point ',
+                        labelStyle: TextStyle(
+                            color: Colors.grey, fontSize: 15),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.green))),
+                    obscureText: false,
+                     controller: controllerpwcheck ,
+                  ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: (){   
+                    deleteData();
+                 
+                    Navigator.of(context).pop();
 
+                  },
+                  child: Text('Remove My Point!')),
+              FlatButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Cancel')),
+            ],
+          );
+        });
+  }
 
   final String uid;
   _FormPageState({this.uid});
 
 
-Future<DocumentReference> _addGeoPoint() async {
+void _addGeoPoint() async {
   var pos = await location.getLocation();
   
   GeoPoint point = GeoPoint(pos.latitude, pos.longitude);
   Text txt = Text(myController.text); 
 
   var name = txt.data;    
+
   Text txt2 = Text(controller2.text); 
+  var landmark = txt2.data;    
 
-  var name2 = txt2.data;    
-
+  Text pw = Text(controllerpw.text); 
+  var password = pw.data;    
    
-
-  return firestore.collection('BinLocationDatabase').add({ 
+ await firestore.collection('BinLocationDatabase')
+      .document(password)
+      .setData({
+ 
 
     'Address': name ,
     'Coordinates': point,
-
-    'LandMark':name2 ,
-    
+    'LandMark':landmark,
+    'Password': password,    
 
    
           
   });
 }
 
-
-Future<DocumentReference> _transferInfo() async {
-  var pos = await location.getLocation();
+void deleteData() {
   
-  GeoPoint point = GeoPoint(pos.latitude, pos.longitude);
-  Text txt = Text(myController.text); 
+   Text pwcheck = Text(controllerpwcheck.text); 
+  var passwordcheck = pwcheck.data;      
 
-  var name = txt.data;    
-  Text txt2 = Text(controller2.text); 
-
-  var name2 = txt2.data;    
-
-   
-
-  return firestore.collection('BinLocationDatabase').add({ 
-
-    'Address': name ,
-    'Coordinates': point,
-
-    'LandMark':name2 ,
-    
-
-   
-          
-  });
+  try {
+   firestore.collection('BinLocationDatabase')
+      .document(passwordcheck)
+      .delete();
+  } catch (e) {
+    print(e.toString());
+  }
 }
+
+
+
   _getCurrentLocation() {
     geolocator
         .getCurrentPosition()

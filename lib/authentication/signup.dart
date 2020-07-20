@@ -48,7 +48,7 @@ class _Login1PageState extends State<Login1Page>
   TextEditingController signupPasswordController = new TextEditingController();
   TextEditingController signupConfirmPasswordController =
       new TextEditingController();
-
+  
   PageController _pageController;
 
   Color left = Colors.black;
@@ -349,7 +349,7 @@ class _Login1PageState extends State<Login1Page>
         style: TextStyle(
             color: Colors.white,
             fontSize: 16.0,
-            fontFamily: "WorkSansSemiBold"),
+            ),
       ),
       backgroundColor: Colors.blue,
       duration: Duration(seconds: 3),

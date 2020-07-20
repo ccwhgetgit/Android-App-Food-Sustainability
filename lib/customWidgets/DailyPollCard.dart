@@ -90,7 +90,7 @@ Center(child:
     
 
  Positioned(
-        top: MediaQuery.of(context).size.height / 5,
+        top: MediaQuery.of(context).size.height / 6.5,
 
         //to infinite to align in centre
 
@@ -98,11 +98,173 @@ Center(child:
         width: MediaQuery.of(context).size.width,
         child: Column(children: <Widget>[
 
-              Row(children: <Widget>[
+              Column(children: <Widget>[
                 
- Image.asset("assets/images/instructions.png",  width:  MediaQuery.of(context).size.width/1.13,), 
-         
+              Row(
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.all(6),
+                                        height: MediaQuery.of(context).size.height/10,
+                                        width: MediaQuery.of(context).size.width/5,
+                                        child: CircleAvatar(
+                                          radius: 1072.0,
+                                          backgroundColor: Colors.transparent,
+                                          backgroundImage: AssetImage(
+                                              'assets/images/quiz1.png'),
+                                        ),
+                                      ),
+                                        Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Choose the right answer to",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.black,
+                                          
+                                        ),
+                                      ),
+                                  Text(
+                                        " 5 easy questions ",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                          
+                                        ),
+                                      ),
+                                      
+                                    ]),
+                                       
+                                    ],
+                                  ),
 
+SizedBox(  height: MediaQuery.of(context).size.height/70,),
+                                  Row(
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.all(6),
+                                        height: MediaQuery.of(context).size.height/10,
+                                        width: MediaQuery.of(context).size.width/5,
+                                        child: CircleAvatar(
+                                          radius: 1072.0,
+                                          backgroundColor: Colors.transparent,
+                                          backgroundImage: AssetImage(
+                                              'assets/images/quiz2.png'),
+                                        ),
+                                      ),
+
+                                        Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Test & Expand your ",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.black,
+                                          
+                                        ),
+                                      ),
+                                  Text(
+                                        "environmental knowledge ",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      
+                                    ]),
+                                       
+                                    ],
+                                  ),
+
+SizedBox(  height: MediaQuery.of(context).size.height/70,),
+                                  Row(
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.all(6),
+                                        height: MediaQuery.of(context).size.height/10,
+                                        width: MediaQuery.of(context).size.width/5,
+                                        child: CircleAvatar(
+                                          radius: 1072.0,
+                                          backgroundColor: Colors.transparent,
+                                          backgroundImage: AssetImage(
+                                              'assets/images/quiz3.png'),
+                                        ),
+                                      ),
+                                        Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Earn ",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.black,
+                                          
+                                        ),
+                                      ),
+                                  Text(
+                                        "10 tokens ",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                       Text(
+                                        "on every correct answer",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.black,
+                                          
+                                        ),
+                                      ),
+                                    ]),
+                                       
+                                    ],
+                                  ),
+SizedBox(  height: MediaQuery.of(context).size.height/70,),
+              Row(
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.all(6),
+                                        height: MediaQuery.of(context).size.height/10,
+                                        width: MediaQuery.of(context).size.width/5,
+                                        child: CircleAvatar(
+                                          radius: 1072.0,
+                                          backgroundColor: Colors.transparent,
+                                          backgroundImage: AssetImage(
+                                              'assets/images/quiz4.png'),
+                                        ),
+                                      ),
+                                        Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Redeem your ",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.black,
+                                          
+                                        ),
+                                      ),
+                                  Text(
+                                        "earned points ",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                       Text(
+                                        "on exciting rewards",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.black,
+                                          
+                                        ),
+                                      ),
+                                    ]),
+                                       
+                                    ],
+                                  ),
               ],)
               
         ]),

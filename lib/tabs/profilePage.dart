@@ -62,9 +62,9 @@ class ProfileListItem extends StatelessWidget {
         if (this.text == 'About')
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => About()))
-          else if (this.text == 'Settings')
+          else if (this.text == 'Be a Host')
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) =>FormPage()))
+                context, MaterialPageRoute(builder: (context) => FormPage()))
           else if (this.text == 'Logout')
             Navigator.pushReplacement(
                 context,
@@ -187,8 +187,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   text: 'About',
                 ),
                 ProfileListItem(
-                  icon: LineAwesomeIcons.exclamation_circle,
-                  text: 'Settings',
+                  icon: LineAwesomeIcons.lightbulb,
+                  text: 'Be a Host',
                 ),
                 ProfileListItem(
                   icon: LineAwesomeIcons.alternate_sign_out,

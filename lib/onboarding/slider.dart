@@ -30,7 +30,7 @@ final slideList = [
   ),
   Slide(
     imageUrl: "assets/images/Eat and Shop.png",
-    title: "Join Communities",
+    title: "Be a Host",
     description:
         "Share food waste with your neighbours and be part of the green movement ",
   ),

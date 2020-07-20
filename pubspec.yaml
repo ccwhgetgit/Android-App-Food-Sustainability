@@ -98,6 +98,13 @@ flutter:
     - assets/images/Legend.png
     - assets/images/secondscreen.png
     - assets/images/pollBG.png
+    - assets/images/quiz1.png
+    - assets/images/quiz2.png
+    
+    - assets/images/quiz3.png
+    - assets/images/quiz4.png
+
+
     - assets/images/1.png
     - assets/images/2.png
     - assets/images/3.jpg

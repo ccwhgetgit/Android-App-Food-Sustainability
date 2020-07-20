@@ -40,9 +40,10 @@ class _MainInterfaceState extends State<MainInterface> {
           setState(() {
             currentScreen =
                 DisposePage(); // if user taps on this dashboard tab will be active
-            currentTab = 0;
+            currentTab = 5;
           });
         },
+
         backgroundColor: Colors.teal[900],
         child: Icon(Icons.restore_from_trash),
       ),
