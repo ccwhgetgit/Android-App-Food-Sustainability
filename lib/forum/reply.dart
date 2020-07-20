@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../authentication.dart';
 
-class StartDiscussion extends StatefulWidget {
+class Reply extends StatefulWidget {
   @override
-  _StartDiscussionState createState() => new _StartDiscussionState();
+  _ReplyState createState() => new _ReplyState();
 }
 
-class _StartDiscussionState extends State<StartDiscussion> {
-  TextEditingController titleController = new TextEditingController();
-  TextEditingController descController = new TextEditingController();
+class _ReplyState extends State<Reply> {
+  TextEditingController replyController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +20,7 @@ class _StartDiscussionState extends State<StartDiscussion> {
                 child: Icon(Icons.close, color: Colors.black),
                 onTap: () => Navigator.of(context).pop()),
             backgroundColor: Colors.transparent,
-            title:
-                Text("New Discussion", style: TextStyle(color: Colors.black))),
+            title: Text("Reply Thread", style: TextStyle(color: Colors.black))),
         body: SingleChildScrollView(
             physics: NeverScrollableScrollPhysics(),
             child: Column(
@@ -31,22 +29,13 @@ class _StartDiscussionState extends State<StartDiscussion> {
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
                     child: TextField(
-                        controller: titleController,
-                        maxLines: 2,
-                        maxLength: 50,
-                        decoration: InputDecoration(
-                            icon: Icon(Icons.title, color: Colors.black),
-                            hintText: "An Interesting Title"))),
-                Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: TextField(
-                        controller: descController,
+                        controller: replyController,
                         maxLines: 8,
-                        maxLength: 500,
+                        maxLength: 200,
                         decoration: InputDecoration(
-                            icon: Icon(Icons.info_outline, color: Colors.black),
-                            hintText: "Discussion Content"))),
-                SizedBox(height: 20),
+                            icon: Icon(Icons.reply, color: Colors.black),
+                            hintText: "Your Reply"))),
+                SizedBox(height: 100),
                 SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     height: MediaQuery.of(context).size.width * 0.12,
@@ -57,24 +46,24 @@ class _StartDiscussionState extends State<StartDiscussion> {
                             Padding(
                                 padding: EdgeInsets.only(
                                     left: MediaQuery.of(context).size.width *
-                                        0.15),
-                                child: Icon(Icons.create, color: Colors.white)),
+                                        0.19),
+                                child: Icon(Icons.send, color: Colors.white)),
                             SizedBox(width: 10),
-                            Text("POST DISCUSSION",
+                            Text("CONFIRM REPLY",
                                 style: TextStyle(
                                     fontSize: 18, color: Colors.white)),
                           ],
                         ),
                         onPressed: () {
                           DatabaseService(uid: LoginPage.user.uid)
-                              .updateForumThread(
-                                  LoginPage.user.uid,
-                                  LoginPage.user.displayName,
-                                  DateFormat('dd-MM-yyyy @ kk:mm')
-                                      .format(DateTime.now())
-                                      .toString(),
-                                  titleController.text,
-                                  descController.text);
+                              .updateThreadReplies(
+                            DatabaseServicee.postUID,
+                            LoginPage.user.displayName,
+                            DateFormat('dd-MM-yyyy @ kk:mm')
+                                .format(DateTime.now())
+                                .toString(),
+                            replyController.text,
+                          );
                           Navigator.of(context).pop();
                           Scaffold.of(context).showSnackBar(
                               SnackBar(content: Text("Successfully Posted!")));

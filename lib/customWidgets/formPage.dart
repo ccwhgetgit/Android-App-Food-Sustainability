@@ -1,33 +1,31 @@
-
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 
-
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
+
 class FormPage extends StatefulWidget {
   @override
-  _FormPageState createState() => new  _FormPageState();
+  _FormPageState createState() => new _FormPageState();
 }
 
-class _FormPageState extends State<FormPage>  {
+class _FormPageState extends State<FormPage> {
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   final databaseReference = Firestore.instance;
   Position _currentPosition;
 
-   Firestore firestore = Firestore.instance;
-     Location location = new Location();
- Geoflutterfire geo = Geoflutterfire();
+  Firestore firestore = Firestore.instance;
+  Location location = new Location();
+  Geoflutterfire geo = Geoflutterfire();
   String _currentAddress;
- 
 
-final myController = TextEditingController();
-final controller2 = TextEditingController();
+  final myController = TextEditingController();
+  final controller2 = TextEditingController();
 
-final controller3 = TextEditingController();
+  final controller3 = TextEditingController();
 
   @override
   void dispose() {
@@ -43,14 +41,9 @@ final controller3 = TextEditingController();
     super.dispose();
   }
 
-
-
-  
   @override
   Widget build(BuildContext context) {
-    
     return new Scaffold(
-     
         resizeToAvoidBottomPadding: false,
         body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
             Widget>[
@@ -58,7 +51,6 @@ final controller3 = TextEditingController();
             child: Stack(
               children: <Widget>[
                 Container(
-               
                   child: Text(
                     ' \n\ Be a\n       Host Today',
                     style:
@@ -75,92 +67,70 @@ final controller3 = TextEditingController();
                         color: Colors.green),
                   ),
                 ),
-               
               ],
             ),
           ),
-Container(
+          Container(
             child: Stack(
               children: <Widget>[
                 Container(
-                padding: EdgeInsets.fromLTRB(20.0, 35.0, 0.0, 0.0),
+                  padding: EdgeInsets.fromLTRB(20.0, 35.0, 0.0, 0.0),
                   child: Text(
                     'Quick Tips: \n\n1) Share distinctive features for disposers to easily recognise \n\n2) Click on the icon to get your postal code\n\n3) Be on the map!',
-                    style:
-                        TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 12),
                   ),
                 ),
-                
               ],
             ),
           ),
-          
           Container(
               padding: EdgeInsets.only(top: 2.0, left: 20.0, right: 20.0),
               child: Column(
                 children: <Widget>[
-                  
                   SizedBox(height: 10.0),
                   TextFormField(
                     decoration: InputDecoration(
                         labelText: 'Preferred Name / Nickname ',
-                        labelStyle: TextStyle(
-                            color: Colors.grey, fontSize: 15),
+                        labelStyle: TextStyle(color: Colors.grey, fontSize: 15),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.green))),
                     obscureText: false,
-                     controller: myController,
+                    controller: myController,
                   ),
                   SizedBox(height: 10.0),
-            
-
-             
-            Row(
-                children: <Widget>[
-                   if (_currentPosition != null) Text(_currentAddress),
-           FlatButton(
-             
-              onPressed: () {
-                _getCurrentLocation();
-              },
-            child: Column( // Replace with a Row for horizontal icon + text
-                  children: <Widget>[
-                    Icon(Icons.location_on, color: Colors.green[900]),
-                    Text("Postal Code", style: TextStyle(fontSize: 10))
-                  ],
-                ),
-            ),
-                ]),
-   
-
- TextFormField(
+                  Row(children: <Widget>[
+                    if (_currentPosition != null) Text(_currentAddress),
+                    FlatButton(
+                      onPressed: () {
+                        _getCurrentLocation();
+                      },
+                      child: Column(
+                        // Replace with a Row for horizontal icon + text
+                        children: <Widget>[
+                          Icon(Icons.location_on, color: Colors.green[900]),
+                          Text("Postal Code", style: TextStyle(fontSize: 10))
+                        ],
+                      ),
+                    ),
+                  ]),
+                  TextFormField(
                     decoration: InputDecoration(
                         labelText: 'LandMarks/Features ',
-                        labelStyle: TextStyle(
-                            color: Colors.grey, fontSize: 15),
+                        labelStyle: TextStyle(color: Colors.grey, fontSize: 15),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.green))),
                     obscureText: false,
-                     controller: controller2,
+                    controller: controller2,
                   ),
-
-
-
                   SizedBox(height: 50.0),
                   Container(
                       height: 40.0,
                       child: Material(
                         borderRadius: BorderRadius.circular(20.0),
-                       
                         color: Colors.blueGrey[500],
                         elevation: 7.0,
                         child: GestureDetector(
-                          onTap: ()
-                             => _popupDialog(context),
-                     
-                       
-                       
-                          
+                          onTap: () => _popupDialog(context),
                           child: Center(
                             child: Text(
                               'Be Part Of The Movement',
@@ -172,21 +142,19 @@ Container(
                           ),
                         ),
                       )),
-                      SizedBox(height: 21),
-                      Container(
+                  SizedBox(height: 21),
+                  Container(
                       height: 40.0,
                       child: Material(
                         borderRadius: BorderRadius.circular(20.0),
-                       
                         color: Colors.red[900],
                         elevation: 7.0,
                         child: GestureDetector(
-                          onTap: () async{  
-                           //link to another page that show his records of all the bins he uploaded
-                           //on tap at the next page, have to write in and apply for deletion within 3 days
-                           //suggest reasons and feedback thats all 
-                           
-                                   },
+                          onTap: () async {
+                            //link to another page that show his records of all the bins he uploaded
+                            //on tap at the next page, have to write in and apply for deletion within 3 days
+                            //suggest reasons and feedback thats all
+                          },
                           child: Center(
                             child: Text(
                               'Remove My Location',
@@ -211,28 +179,20 @@ Container(
                           color: Colors.transparent,
                           borderRadius: BorderRadius.circular(20.0)),
                       child: InkWell(
-                        onTap: () 
-                            => {Navigator.pop(context, false)},
-                        //forwards the data 
+                        onTap: () => {Navigator.pop(context, false)},
+                        //forwards the data
 
-
-
-                        child: 
-                        
-                            Center(
-                              child: Text('Go Back',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                            ),
-                        
-                        
+                        child: Center(
+                          child: Text('Go Back',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ),
                       ),
                     ),
                   ),
                 ],
               )),
-        
         ]));
   }
 
@@ -242,13 +202,14 @@ Container(
         builder: (context) {
           return AlertDialog(
             title: Text('Great! Come and Join us!'),
-            content: Text('Ensure that all the details are correct and we are ready to go'),
+            content: Text(
+                'Ensure that all the details are correct and we are ready to go'),
             actions: <Widget>[
               FlatButton(
-                  onPressed: (){   _addGeoPoint();
-                 
-                       Navigator.of(context).pop();
+                  onPressed: () {
+                    _addGeoPoint();
 
+                    Navigator.of(context).pop();
                   },
                   child: Text('Add Me in!')),
               FlatButton(
@@ -259,71 +220,47 @@ Container(
         });
   }
 
-       
-
-
-
-
   final String uid;
   _FormPageState({this.uid});
 
+  Future<DocumentReference> _addGeoPoint() async {
+    var pos = await location.getLocation();
 
-Future<DocumentReference> _addGeoPoint() async {
-  var pos = await location.getLocation();
-  
-  GeoPoint point = GeoPoint(pos.latitude, pos.longitude);
-  Text txt = Text(myController.text); 
+    GeoPoint point = GeoPoint(pos.latitude, pos.longitude);
+    Text txt = Text(myController.text);
 
-  var name = txt.data;    
-  Text txt2 = Text(controller2.text); 
+    var name = txt.data;
+    Text txt2 = Text(controller2.text);
 
-  var name2 = txt2.data;    
+    var name2 = txt2.data;
 
-   
+    return firestore.collection('BinLocationDatabase').add({
+      'Address': name,
+      'Coordinates': point,
+      'LandMark': name2,
+    });
+  }
 
-  return firestore.collection('BinLocationDatabase').add({ 
+  Future<DocumentReference> _transferInfo() async {
+    var pos = await location.getLocation();
 
-    'Address': name ,
-    'Coordinates': point,
+    GeoPoint point = GeoPoint(pos.latitude, pos.longitude);
+    Text txt = Text(myController.text);
 
-    'LandMark':name2 ,
-    
+    var name = txt.data;
+    Text txt2 = Text(controller2.text);
 
-   
-          
-  });
-}
+    var name2 = txt2.data;
 
+    return firestore.collection('BinLocationDatabase').add({
+      'Address': name,
+      'Coordinates': point,
+      'LandMark': name2,
+    });
+  }
 
-Future<DocumentReference> _transferInfo() async {
-  var pos = await location.getLocation();
-  
-  GeoPoint point = GeoPoint(pos.latitude, pos.longitude);
-  Text txt = Text(myController.text); 
-
-  var name = txt.data;    
-  Text txt2 = Text(controller2.text); 
-
-  var name2 = txt2.data;    
-
-   
-
-  return firestore.collection('BinLocationDatabase').add({ 
-
-    'Address': name ,
-    'Coordinates': point,
-
-    'LandMark':name2 ,
-    
-
-   
-          
-  });
-}
   _getCurrentLocation() {
-    geolocator
-        .getCurrentPosition()
-        .then((Position position) {
+    geolocator.getCurrentPosition().then((Position position) {
       setState(() {
         _currentPosition = position;
       });
@@ -342,13 +279,10 @@ Future<DocumentReference> _transferInfo() async {
       Placemark place = p[0];
 
       setState(() {
-        _currentAddress =
-            "Your Collection Point:\n${place.postalCode}";
+        _currentAddress = "Your Collection Point:\n${place.postalCode}";
       });
     } catch (e) {
       print(e);
     }
   }
- 
- 
 }
