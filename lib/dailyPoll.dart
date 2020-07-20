@@ -33,44 +33,37 @@ class _PollQuestionState extends State<PollQuestion> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-backgroundColor: Colors.transparent,
-  leading: IconButton(
-            icon: Icon(
-              LineAwesomeIcons.arrow_left,
-              color: Colors.black,
-          
-            ),
-            onPressed: () => {Navigator.pop(context, false)}),
-      title:  Text("     Daily Challenge", style: TextStyle(color: Colors.black,fontSize: 25), textAlign: TextAlign.center)),
-   
-      
+          backgroundColor: Colors.transparent,
+          leading: IconButton(
+              icon: Icon(
+                LineAwesomeIcons.arrow_left,
+                color: Colors.black,
+              ),
+              onPressed: () => {Navigator.pop(context, false)}),
+          title: Text("     Daily Challenge",
+              style: TextStyle(color: Colors.black, fontSize: 25),
+              textAlign: TextAlign.center)),
       body: Stack(
         children: <Widget>[
-      Opacity(
-          opacity: 0.2,
-          child: Container(
-          
-          child:  Image.asset('assets/images/poll.jpg',
-              fit: BoxFit.cover, height: double.infinity, 
-              
+          Opacity(
+            opacity: 0.2,
+            child: Container(
+              child: Image.asset(
+                'assets/images/poll.jpg',
+                fit: BoxFit.cover,
+                height: double.infinity,
               ),
-
-  ),
-        ),
-             
-
+            ),
+          ),
           Container(
             child: Card(
-               margin: EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 30.0),
+              margin: EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 30.0),
               elevation: 8.0,
-             color: Colors.grey[100],
+              color: Colors.grey[100],
               child: Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Column(
                     children: <Widget>[
-                      
-                   
-                 
                       DatabaseService(uid: LoginPage.user.uid).getPoll(random),
                       StreamBuilder(
                         stream: Firestore.instance
@@ -78,27 +71,28 @@ backgroundColor: Colors.transparent,
                             .snapshots(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) return Container();
-                          
+
                           return SizedBox(
-                            
                             height: MediaQuery.of(context).size.height * 0.35,
                             width: MediaQuery.of(context).size.width * 0.8,
                             child: ListView(
                               physics: NeverScrollableScrollPhysics(),
                               children: <Widget>[
-                                  SizedBox(height:MediaQuery.of(context).size.height * 0.03),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.03),
                                 SizedBox(
                                   height:
                                       MediaQuery.of(context).size.width * 0.12,
                                   child: RaisedButton(
                                     color: selectedA
                                         ? Colors.teal[200]
-                                       
                                         : Colors.grey[300],
-                                        shape: RoundedRectangleBorder(
-  borderRadius: BorderRadius.circular(18.0),
-  side: BorderSide(color: Colors.transparent)
-),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18.0),
+                                        side: BorderSide(
+                                            color: Colors.transparent)),
                                     child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
@@ -135,14 +129,14 @@ backgroundColor: Colors.transparent,
                                     height: MediaQuery.of(context).size.width *
                                         0.12,
                                     child: RaisedButton(
-                                          color: selectedB
-                                         ? Colors.teal[200]
-                                       
-                                        : Colors.grey[300],
+                                        color: selectedB
+                                            ? Colors.teal[200]
+                                            : Colors.grey[300],
                                         shape: RoundedRectangleBorder(
-  borderRadius: BorderRadius.circular(18.0),
-  side: BorderSide(color: Colors.transparent)
-),
+                                            borderRadius:
+                                                BorderRadius.circular(18.0),
+                                            side: BorderSide(
+                                                color: Colors.transparent)),
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
@@ -183,14 +177,14 @@ backgroundColor: Colors.transparent,
                                                 ['Choice C'] !=
                                             ""
                                         ? RaisedButton(
-                                              color: selectedC
-                                          ? Colors.teal[200]
-                                       
-                                        : Colors.grey[300],
-                                        shape: RoundedRectangleBorder(
-  borderRadius: BorderRadius.circular(18.0),
-  side: BorderSide(color: Colors.transparent)
-),
+                                            color: selectedC
+                                                ? Colors.teal[200]
+                                                : Colors.grey[300],
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18.0),
+                                                side: BorderSide(
+                                                    color: Colors.transparent)),
                                             child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
@@ -232,14 +226,14 @@ backgroundColor: Colors.transparent,
                                                 ['Choice D'] !=
                                             ""
                                         ? RaisedButton(
-                                               color: selectedD
-                                          ? Colors.teal[200]
-                                       
-                                        : Colors.grey[300],
-                                        shape: RoundedRectangleBorder(
-  borderRadius: BorderRadius.circular(18.0),
-  side: BorderSide(color: Colors.transparent)
-),
+                                            color: selectedD
+                                                ? Colors.teal[200]
+                                                : Colors.grey[300],
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18.0),
+                                                side: BorderSide(
+                                                    color: Colors.transparent)),
                                             child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
@@ -283,7 +277,7 @@ backgroundColor: Colors.transparent,
                         child: RaisedButton(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.0)),
-                            color:   Colors.blueGrey[700],
+                            color: Colors.blueGrey[700],
                             child: Text("Submit Answer",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 18)),

@@ -1,48 +1,42 @@
-
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 
-
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
+
 class FormPage extends StatefulWidget {
   @override
-  _FormPageState createState() => new  _FormPageState();
+  _FormPageState createState() => new _FormPageState();
 }
 
-class _FormPageState extends State<FormPage>  {
+class _FormPageState extends State<FormPage> {
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   final databaseReference = Firestore.instance;
   Position _currentPosition;
 
-   Firestore firestore = Firestore.instance;
-     Location location = new Location();
- Geoflutterfire geo = Geoflutterfire();
+  Firestore firestore = Firestore.instance;
+  Location location = new Location();
+  Geoflutterfire geo = Geoflutterfire();
   String _currentAddress;
  
  bool _validate = false;
 
-final myController = TextEditingController();
-final controller2 = TextEditingController();
+  final myController = TextEditingController();
+  final controller2 = TextEditingController();
 
-final controller3 = TextEditingController();
+  final controller3 = TextEditingController();
 
 final controllerpw = TextEditingController();
 final controllerpwcheck = TextEditingController();
 
 
 
-
-
-  
   @override
   Widget build(BuildContext context) {
-    
     return new Scaffold(
-     
         resizeToAvoidBottomPadding: false,
         body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
             Widget>[
@@ -50,7 +44,6 @@ final controllerpwcheck = TextEditingController();
             child: Stack(
               children: <Widget>[
                 Container(
-               
                   child: Text(
                     ' \n\ Be a\n       Host Today',
                     style:
@@ -67,41 +60,35 @@ final controllerpwcheck = TextEditingController();
                         color: Colors.green),
                   ),
                 ),
-               
               ],
             ),
           ),
-Container(
+          Container(
             child: Stack(
               children: <Widget>[
                 Container(
-                padding: EdgeInsets.fromLTRB(20.0, 35.0, 0.0, 0.0),
+                  padding: EdgeInsets.fromLTRB(20.0, 35.0, 0.0, 0.0),
                   child: Text(
                     'Quick Tips: \n\n1) Share distinctive features for disposers to easily recognise \n\n2) Click on the icon to get your postal code\n\n3) Be on the map!',
-                    style:
-                        TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 12),
                   ),
                 ),
-                
               ],
             ),
           ),
-          
           Container(
               padding: EdgeInsets.only(top: 2.0, left: 20.0, right: 20.0),
               child: Column(
                 children: <Widget>[
-                  
                   SizedBox(height: 10.0),
                   TextFormField(
                     decoration: InputDecoration(
                         labelText: 'Preferred Name / Nickname ',
-                        labelStyle: TextStyle(
-                            color: Colors.grey, fontSize: 15),
+                        labelStyle: TextStyle(color: Colors.grey, fontSize: 15),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.green))),
                     obscureText: false,
-                     controller: myController,
+                    controller: myController,
                   ),
                   SizedBox(height: 10.0),
             
@@ -136,7 +123,7 @@ Container(
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.green))),
                     obscureText: false,
-                     controller: controller2,
+                    controller: controller2,
                   ),
 ), 
 SizedBox(width: MediaQuery.of(context).size.width / 7,),
@@ -200,12 +187,11 @@ child:
                           ),
                         ),
                       )),
-                      SizedBox(height: 21),
-                      Container(
+                  SizedBox(height: 21),
+                  Container(
                       height: 40.0,
                       child: Material(
                         borderRadius: BorderRadius.circular(20.0),
-                       
                         color: Colors.red[900],
                         elevation: 7.0,
                         child: GestureDetector(
@@ -235,28 +221,20 @@ child:
                           color: Colors.transparent,
                           borderRadius: BorderRadius.circular(20.0)),
                       child: InkWell(
-                        onTap: () 
-                            => {Navigator.pop(context, false)},
-                        //forwards the data 
+                        onTap: () => {Navigator.pop(context, false)},
+                        //forwards the data
 
-
-
-                        child: 
-                        
-                            Center(
-                              child: Text('Go Back',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                            ),
-                        
-                        
+                        child: Center(
+                          child: Text('Go Back',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ),
                       ),
                     ),
                   ),
                 ],
               )),
-        
         ]));
   }
 
@@ -324,6 +302,8 @@ void _popupDeleteDialog(BuildContext context) {
   final String uid;
   _FormPageState({this.uid});
 
+  Future<DocumentReference> _addGeoPoint() async {
+    var pos = await location.getLocation();
 
 void _addGeoPoint() async {
   var pos = await location.getLocation();
@@ -371,9 +351,7 @@ void deleteData() {
 
 
   _getCurrentLocation() {
-    geolocator
-        .getCurrentPosition()
-        .then((Position position) {
+    geolocator.getCurrentPosition().then((Position position) {
       setState(() {
         _currentPosition = position;
       });
@@ -392,13 +370,10 @@ void deleteData() {
       Placemark place = p[0];
 
       setState(() {
-        _currentAddress =
-            "Your Collection Point:\n${place.postalCode}";
+        _currentAddress = "Your Collection Point:\n${place.postalCode}";
       });
     } catch (e) {
       print(e);
     }
   }
- 
- 
 }

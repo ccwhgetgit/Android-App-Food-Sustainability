@@ -1,9 +1,13 @@
+import 'package:Cycled_iOS/forum/reply.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
+import '../authentication.dart';
+
 class DatabaseServicee extends StatefulWidget {
+  static String postUID;
   @override
   DatabaseService createState() => DatabaseService();
 }
@@ -28,6 +32,9 @@ class DatabaseService extends State<DatabaseServicee> {
 
   final CollectionReference pollCollection =
       Firestore.instance.collection('PollDatabase');
+
+  final CollectionReference forumCollection =
+      Firestore.instance.collection('ForumDatabase');
 
   final Shader bronzeGradient = LinearGradient(
     colors: <Color>[Color.fromRGBO(205, 127, 50, 1.0), Colors.white],
@@ -72,7 +79,6 @@ class DatabaseService extends State<DatabaseServicee> {
     );
   }
 
-
   Widget getNewName() {
     return StreamBuilder(
       stream: Firestore.instance
@@ -86,12 +92,12 @@ class DatabaseService extends State<DatabaseServicee> {
             style: TextStyle(
               fontSize: 30,
               color: Colors.white,
-             
             ));
       },
     );
   }
- Widget getProfileName() {
+
+  Widget getProfileName() {
     return StreamBuilder(
       stream: Firestore.instance
           .collection('UserDatabase')
@@ -104,12 +110,12 @@ class DatabaseService extends State<DatabaseServicee> {
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.w500,
-              
               color: Colors.white,
             ));
       },
     );
   }
+
   // =========== OTHER INFO ===========
   Future updateUserTokens(int tokens) async {
     var ref = userCollection
@@ -142,11 +148,9 @@ class DatabaseService extends State<DatabaseServicee> {
           builder: (context, snapshot) {
             if (!snapshot.hasData) return Container();
             return Text(
-              "Tokens: "+ snapshot.data.documents[3]['Tokens'].toString(),
-               style: TextStyle(
-                        
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.025));
+                "Tokens: " + snapshot.data.documents[3]['Tokens'].toString(),
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.height * 0.025));
           },
         );
         break;
@@ -221,8 +225,7 @@ class DatabaseService extends State<DatabaseServicee> {
         : ref.updateData({'Status': status}));
   }
 
- 
-//used in learn and earn 
+//used in learn and earn
 
   Widget getNewStatus() {
     return StreamBuilder(
@@ -231,7 +234,7 @@ class DatabaseService extends State<DatabaseServicee> {
           .document(uid)
           .collection('Other Info')
           .snapshots(),
-      builder: (context, snapshot) { 
+      builder: (context, snapshot) {
         if (!snapshot.hasData) return Container();
         return Text(
             "Status: " +
@@ -241,11 +244,11 @@ class DatabaseService extends State<DatabaseServicee> {
             style: TextStyle(
                 fontSize: MediaQuery.of(context).size.width * 0.05,
                 fontWeight: FontWeight.bold,
-                
                 color: Colors.black));
       },
     );
   }
+
   Future updateUserPoints(int points) async {
     var ref = userCollection
         .document(uid)
@@ -266,51 +269,49 @@ class DatabaseService extends State<DatabaseServicee> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) return Container();
 
- if (snapshot.data.documents[0]['Points'] >= 0 &&
-            snapshot.data.documents[0]['Points'] < 300){
+          if (snapshot.data.documents[0]['Points'] >= 0 &&
+              snapshot.data.documents[0]['Points'] < 300) {
+            return LinearPercentIndicator(
+              animation: true,
+              lineHeight: 23.0,
+              animationDuration: 4000,
+              width: MediaQuery.of(context).size.width * 0.87,
 
+              percent: snapshot.data.documents[0]['Points'] / 300,
+
+              //need to set for the various levels
+              center: Text("Next Level : Game Changer"),
+              linearStrokeCap: LinearStrokeCap.roundAll,
+              progressColor: Colors.teal[100],
+            );
+          } else if (snapshot.data.documents[0]['Points'] > 299 &&
+              snapshot.data.documents[0]['Points'] < 700) {
+            return LinearPercentIndicator(
+              animation: true,
+              lineHeight: 23.0,
+              animationDuration: 4000,
+
+              percent: snapshot.data.documents[0]['Points'] / 500,
+
+              //need to set for the various levels
+              center: Text("Next Level: Cycler"),
+              linearStrokeCap: LinearStrokeCap.roundAll,
+              progressColor: Colors.teal[200],
+            );
+          }
           return LinearPercentIndicator(
-            animation: true,
-            lineHeight: 23.0,
-            animationDuration: 4000,
-            width: MediaQuery.of(context).size.width*0.87,
-
-            percent: snapshot.data.documents[0]['Points'] / 300,
-    
-            //need to set for the various levels
-            center: Text("Next Level : Game Changer"),
-            linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor: Colors.teal[100],
-          );
-        }  else if (snapshot.data.documents[0]['Points'] > 299 &&
-            snapshot.data.documents[0]['Points'] < 700) {
-         return LinearPercentIndicator(
-            animation: true,
-            lineHeight: 23.0,
-            animationDuration: 4000,
-
-            percent: snapshot.data.documents[0]['Points'] / 500,
-    
-            //need to set for the various levels
-            center: Text("Next Level: Cycler"),
-            linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor: Colors.teal[200],
-          );
-        
-        }   return LinearPercentIndicator(
             animation: true,
             lineHeight: 23.0,
             animationDuration: 4000,
 
             percent: snapshot.data.documents[0]['Points'] / 700,
-    
+
             //need to set for the various levels
             center: Text("Gold Standard"),
             linearStrokeCap: LinearStrokeCap.roundAll,
-             progressColor: Colors.teal[300],
+            progressColor: Colors.teal[300],
           );
-        }
-        );
+        });
   }
 
   Widget getPoints() {
@@ -374,23 +375,27 @@ class DatabaseService extends State<DatabaseServicee> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Text(" Challenger".toUpperCase(),
-                      style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.06,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                          color: Colors.teal[700]),),
-                          SizedBox(width: MediaQuery.of(context).size.width * 0.36,),
-                CircleAvatar(
+                  Text(
+                    " Challenger".toUpperCase(),
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.06,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                        color: Colors.teal[700]),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.36,
+                  ),
+                  CircleAvatar(
                     radius: MediaQuery.of(context).size.width * 0.07,
                     backgroundColor: Colors.grey[100],
                     child: CircleAvatar(
-                      radius:MediaQuery.of(context).size.width * 0.07,
-                      backgroundImage: AssetImage('assets/images/challenger.png'),
+                      radius: MediaQuery.of(context).size.width * 0.07,
+                      backgroundImage:
+                          AssetImage('assets/images/challenger.png'),
                     ),
                   ),
                 ],
-                
               ));
         } else if (snapshot.data.documents[2]['Tier'] == 'SILVER') {
           return Container(
@@ -399,23 +404,26 @@ class DatabaseService extends State<DatabaseServicee> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text(" GameChanger ".toUpperCase(),
-                      style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.06,
-                          fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                           color: Colors.teal[800]),),
-
-                   SizedBox(width: 10,),
-                CircleAvatar(
+                  Text(
+                    " GameChanger ".toUpperCase(),
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.06,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                        color: Colors.teal[800]),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  CircleAvatar(
                     radius: MediaQuery.of(context).size.width * 0.07,
                     backgroundColor: Colors.grey[100],
                     child: CircleAvatar(
-                      radius:MediaQuery.of(context).size.width * 0.07,
+                      radius: MediaQuery.of(context).size.width * 0.07,
                       backgroundImage: AssetImage('assets/images/chaner.png'),
                     ),
                   ),
-                 ],
+                ],
               ));
         } else {
           return Container(
@@ -424,30 +432,31 @@ class DatabaseService extends State<DatabaseServicee> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text(" Cycler".toUpperCase(),
-                      style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.06,
-                          fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                          color: Colors.teal[900]),),
-   SizedBox(width: 10,),
-                CircleAvatar(
+                  Text(
+                    " Cycler".toUpperCase(),
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.06,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                        color: Colors.teal[900]),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  CircleAvatar(
                     radius: MediaQuery.of(context).size.width * 0.07,
                     backgroundColor: Colors.grey[100],
                     child: CircleAvatar(
-                      radius:MediaQuery.of(context).size.width * 0.07,
+                      radius: MediaQuery.of(context).size.width * 0.07,
                       backgroundImage: AssetImage('assets/images/cycler.png'),
                     ),
                   ),
-
-
                 ],
               ));
         }
       },
     );
   }
-
 
   Widget newTier() {
     return StreamBuilder(
@@ -467,10 +476,9 @@ class DatabaseService extends State<DatabaseServicee> {
                 children: <Widget>[
                   Text("Tier: Bronze ",
                       style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.06,
-                          
-                          color: Colors.black,
-                         ))
+                        fontSize: MediaQuery.of(context).size.width * 0.06,
+                        color: Colors.black,
+                      ))
                 ],
               ));
         } else if (snapshot.data.documents[2]['Tier'] == 'SILVER') {
@@ -482,11 +490,9 @@ class DatabaseService extends State<DatabaseServicee> {
                 children: <Widget>[
                   Text("Tier: Silver ",
                       style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.06,
-                          
-                          
-                         color: Colors.black,
-                          ))
+                        fontSize: MediaQuery.of(context).size.width * 0.06,
+                        color: Colors.black,
+                      ))
                 ],
               ));
         } else {
@@ -498,9 +504,9 @@ class DatabaseService extends State<DatabaseServicee> {
                 children: <Widget>[
                   Text("Gold Member",
                       style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.06,
-                         
-                         color: Colors.black,))
+                        fontSize: MediaQuery.of(context).size.width * 0.06,
+                        color: Colors.black,
+                      ))
                 ],
               ));
         }
@@ -515,9 +521,6 @@ class DatabaseService extends State<DatabaseServicee> {
     return await ref.get().then(
         (docData) => docData.exists ? ref.updateData({'Tier': tier}) : {});
   }
-
-
-
 
   // =========== STATISTICS ===========
   Future updateUserFoodStats(int food1, int food2) async {
@@ -554,7 +557,6 @@ class DatabaseService extends State<DatabaseServicee> {
             {'Type': 'Fertiliser', 'Value': FieldValue.increment(f2)}));
   }
 
- 
   Future updateStats() async {
     updateUserFoodStats(0, 0);
     updateUserEnergyStats(0, 0);
@@ -567,8 +569,7 @@ class DatabaseService extends State<DatabaseServicee> {
     await updateUserFertStats(0, 9);
   }
 
-
-Widget getEnergy() {
+  Widget getEnergy() {
     return StreamBuilder(
       stream: Firestore.instance
           .collection('UserDatabase')
@@ -586,9 +587,8 @@ Widget getEnergy() {
       },
     );
   }
- 
 
-Widget getFertlisers() {
+  Widget getFertlisers() {
     return StreamBuilder(
       stream: Firestore.instance
           .collection('UserDatabase')
@@ -607,7 +607,7 @@ Widget getFertlisers() {
     );
   }
 
-Widget getServings() {
+  Widget getServings() {
     return StreamBuilder(
       stream: Firestore.instance
           .collection('UserDatabase')
@@ -725,7 +725,7 @@ Widget getServings() {
         return Text(snapshot.data.documents[questionUID]['Question'],
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontWeight:FontWeight.bold,
+              fontWeight: FontWeight.bold,
               fontSize: MediaQuery.of(context).size.width * 0.04,
             ));
       },
@@ -733,4 +733,129 @@ Widget getServings() {
   }
 
   void writeCollector(name, coordinate, landmark) {}
+
+  // =========== DAILY POLL Q&A RANDOM GENERATOR ===========
+  Future updateForumThread(String postUID, String author, String date,
+      String title, String description) async {
+    var ref = forumCollection.document(uid);
+
+    return await ref.get().then((docData) => !docData.exists
+        ? ref.setData({
+            'postUID': postUID,
+            'author': author,
+            'date': date,
+            'title': title,
+            'description': description
+          })
+        : {});
+  }
+
+  Future updateThreadReplies(
+      String postUID, String sender, String date, String message) async {
+    var ref =
+        forumCollection.document(postUID).collection('Replies').document(uid);
+
+    return await ref.get().then((docData) => !docData.exists
+        ? ref.setData({
+            'sender': sender,
+            'date': date,
+            'message': message,
+          })
+        : {});
+  }
+
+  Widget getThreads() {
+    return StreamBuilder(
+      stream: forumCollection.snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return Container();
+        return ListView.builder(
+          itemCount: snapshot.data.documents.length,
+          itemBuilder: (context, index) {
+            return new Container(
+                child: Card(
+                    child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                              child: Row(children: <Widget>[
+                                Text(snapshot.data.documents[index]['author']),
+                                Text(" - "),
+                                Text(snapshot.data.documents[index]['date']),
+                              ]),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                              child: Row(children: <Widget>[
+                                Text(snapshot.data.documents[index]['title'],
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold)),
+                              ]),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                              child: Row(children: <Widget>[
+                                Text(
+                                  snapshot.data.documents[index]['description'],
+                                ),
+                              ]),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                              child: Row(children: <Widget>[
+                                GestureDetector(
+                                    child: Icon(Icons.thumb_up), onTap: () {}),
+                                SizedBox(width: 20),
+                                GestureDetector(
+                                    child: Icon(Icons.comment), onTap: () {}),
+                                SizedBox(width: 20),
+                                GestureDetector(
+                                    child: Icon(Icons.reply),
+                                    onTap: () {
+                                      DatabaseServicee.postUID = snapshot
+                                          .data.documents
+                                          .firstWhere((doc) =>
+                                              doc.documentID ==
+                                              snapshot.data.d)['postUID'];
+                                      showModalBottomSheet(
+                                          context: context,
+                                          builder: (context) {
+                                            return Container(
+                                                color: Color(0xFF737373),
+                                                child: Container(
+                                                    child: Reply(),
+                                                    decoration: BoxDecoration(
+                                                        color: Theme.of(context)
+                                                            .canvasColor,
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        30),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        30)))));
+                                          });
+                                    }),
+                                SizedBox(width: 180),
+                                GestureDetector(
+                                    child: Icon(Icons.star_border),
+                                    onTap: () {}),
+                                SizedBox(width: 20),
+                                GestureDetector(
+                                    child: Icon(Icons.share),
+                                    onTap: () => {} //share(context)
+                                    ),
+                              ]),
+                            ),
+                          ],
+                        ))));
+          },
+        );
+      },
+    );
+  }
 }

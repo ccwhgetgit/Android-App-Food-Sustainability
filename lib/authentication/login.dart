@@ -261,6 +261,7 @@ class _Login2PageState extends State<Login2Page>
                     ),
                   ),
                   onPressed: () async {
+                    Navigator.of(context).pop();
                     _loginFormKey.currentState.validate();
                     _signInWithEmailPassword();
                   }),
