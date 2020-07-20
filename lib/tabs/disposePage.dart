@@ -121,8 +121,8 @@ class _DisposePageState extends State<DisposePage> {
                 position: LatLng(docs.documents[i]['Coordinates'].latitude,
                     docs.documents[i]['Coordinates'].longitude),
                 infoWindow: InfoWindow(
-                  title: docs.documents[i]['Landmark'],
-                  snippet: docs.documents[i]['Address'],
+                  title: docs.documents[i]['Address'],
+                  snippet: docs.documents[i]['LandMark'],
                 ),
                 icon: _markerIcon,
               ),
@@ -185,7 +185,7 @@ class _DisposePageState extends State<DisposePage> {
                 position: LatLng(bins[i]['Coordinates'].latitude,
                     bins[i]['Coordinates'].longitude),
                 infoWindow: InfoWindow(
-                  title: bins[i]['Landmark'],
+                  title: bins[i]['LandMark'],
                   snippet: bins[i]['Address'],
                 ),
                 icon: _markerIcon,
