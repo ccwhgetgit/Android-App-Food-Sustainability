@@ -25,9 +25,9 @@ class _FormPageState extends State<FormPage>  {
  
 
 final myController = TextEditingController();
-final Controller2 = TextEditingController();
+final controller2 = TextEditingController();
 
-final Controller3 = TextEditingController();
+final controller3 = TextEditingController();
 
   @override
   void dispose() {
@@ -39,7 +39,7 @@ final Controller3 = TextEditingController();
   @override
   void dispose2() {
     // Clean up the controller when the widget is disposed.
-    Controller2.dispose();
+    controller2.dispose();
     super.dispose();
   }
 
@@ -141,7 +141,7 @@ Container(
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.green))),
                     obscureText: false,
-                     controller: Controller2,
+                     controller: controller2,
                   ),
 
 
@@ -275,7 +275,7 @@ Future<DocumentReference> _addGeoPoint() async {
   Text txt = Text(myController.text); 
 
   var name = txt.data;    
-  Text txt2 = Text(Controller2.text); 
+  Text txt2 = Text(controller2.text); 
 
   var name2 = txt2.data;    
 
@@ -302,7 +302,7 @@ Future<DocumentReference> _transferInfo() async {
   Text txt = Text(myController.text); 
 
   var name = txt.data;    
-  Text txt2 = Text(Controller2.text); 
+  Text txt2 = Text(controller2.text); 
 
   var name2 = txt2.data;    
 
