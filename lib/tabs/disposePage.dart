@@ -26,7 +26,8 @@ class _DisposePageState extends State<DisposePage> {
 
   Set<Marker> _markers = HashSet<Marker>();
   GoogleMapController _mapController;
-  BitmapDescriptor _markerIcon;
+   BitmapDescriptor _markerIconA;
+   BitmapDescriptor _markerIconU;
   final FirebaseStorage _storage =
       FirebaseStorage(storageBucket: 'gs://cycledorbital-ab3ff.appspot.com');
   StorageUploadTask _uploadTask;
@@ -99,7 +100,8 @@ class _DisposePageState extends State<DisposePage> {
   @override
   void initState() {
     super.initState();
-    _setMarkerIcon();
+    _setMarkerIconAdmin();
+    _setMarkerIconUser();
     _getLocation();
   }
 
@@ -112,6 +114,24 @@ class _DisposePageState extends State<DisposePage> {
         .then((docs) {
       if (docs.documents.isNotEmpty) {
         for (int i = 0; i < docs.documents.length; i++) {
+            if (docs.documents[i]['UserType'] == "User"){
+          setState(() {
+            bins.add(docs.documents[i].data);
+            binsFlag = true;
+              _markers.add(
+              Marker(
+                markerId: MarkerId(i.toString()),
+                position: LatLng(docs.documents[i]['Coordinates'].latitude,
+                    docs.documents[i]['Coordinates'].longitude),
+                infoWindow: InfoWindow(
+                  title: docs.documents[i]['Address'],
+                  snippet: docs.documents[i]['LandMark'],
+                ),
+                icon: _markerIconU,
+              ),
+            );
+          });
+          } else  if (docs.documents[i]['UserType'] == "Admin"){
           setState(() {
             bins.add(docs.documents[i].data);
             binsFlag = true;
@@ -124,15 +144,15 @@ class _DisposePageState extends State<DisposePage> {
                   title: docs.documents[i]['Address'],
                   snippet: docs.documents[i]['LandMark'],
                 ),
-                icon: _markerIcon,
-              ),
+                icon: _markerIconA,
+            ),
             );
           });
+          }
         }
       }
     });
   }
-
   _zoomInMarker(elem) {
     _mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target:
@@ -152,12 +172,20 @@ class _DisposePageState extends State<DisposePage> {
     setState(() {});
   }
 
-  void _setMarkerIcon() async {
-    _markerIcon = await BitmapDescriptor.fromAssetImage(
+  void _setMarkerIconAdmin() async {
+    _markerIconA = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(), 'assets/images/bin.png');
   }
 
-  void filterMarkers(dist) async {
+   void _setMarkerIconUser() async {
+    _markerIconU = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(size: Size(0.0000003,0.0000003)), 'assets/images/hi.png')
+         .then((onValue) {
+       _markerIconU = onValue;
+    });
+  }
+
+ void filterMarkers(dist) async {
     final position = await Geolocator().getCurrentPosition();
     double nearest = 999000.0;
 
@@ -179,7 +207,12 @@ class _DisposePageState extends State<DisposePage> {
               nearestBin = bins[i]['Address'];
               nearestBinIndex = i;
             }
+
+           if (bins[i]['UserType'] == "User"){
             _markers.add(
+
+              
+              
               Marker(
                 markerId: MarkerId(i.toString()),
                 position: LatLng(bins[i]['Coordinates'].latitude,
@@ -188,9 +221,33 @@ class _DisposePageState extends State<DisposePage> {
                   title: bins[i]['LandMark'],
                   snippet: bins[i]['Address'],
                 ),
-                icon: _markerIcon,
+                
+                icon: _markerIconA,
               ),
             );
+
+           } else if (bins[i]['UserType'] == "Admin"){
+              _markers.add(
+
+              
+              
+              Marker(
+                markerId: MarkerId(i.toString()),
+                position: LatLng(bins[i]['Coordinates'].latitude,
+                    bins[i]['Coordinates'].longitude),
+                infoWindow: InfoWindow(
+                  title: bins[i]['LandMark'],
+                  snippet: bins[i]['Address'],
+                ),
+                
+                icon: _markerIconA,
+              ),
+            );
+
+
+             
+           }
+
           }
         });
       });
@@ -333,3 +390,4 @@ class _DisposePageState extends State<DisposePage> {
         ));
   }
 }
+
