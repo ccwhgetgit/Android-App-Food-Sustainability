@@ -1,7 +1,6 @@
 import 'dart:collection';
 import 'dart:io';
 import 'package:Cycled_iOS/database/DatabaseService.dart';
-import 'package:Cycled_iOS/design/theme.dart' as Theme;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,8 @@ class _DisposePageState extends State<DisposePage> {
 
   Set<Marker> _markers = HashSet<Marker>();
   GoogleMapController _mapController;
-  BitmapDescriptor _markerIcon;
+   BitmapDescriptor _markerIconA;
+   BitmapDescriptor _markerIconU;
   final FirebaseStorage _storage =
       FirebaseStorage(storageBucket: 'gs://cycledorbital-ab3ff.appspot.com');
   StorageUploadTask _uploadTask;
@@ -77,7 +77,7 @@ class _DisposePageState extends State<DisposePage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-              title: Text("Make a choice!"),
+              title: Center(child: Text("Share your food waste"),),
               content: SingleChildScrollView(
                   child: ListBody(
                 children: <Widget>[
@@ -100,7 +100,8 @@ class _DisposePageState extends State<DisposePage> {
   @override
   void initState() {
     super.initState();
-    _setMarkerIcon();
+    _setMarkerIconAdmin();
+    _setMarkerIconUser();
     _getLocation();
   }
 
@@ -113,6 +114,24 @@ class _DisposePageState extends State<DisposePage> {
         .then((docs) {
       if (docs.documents.isNotEmpty) {
         for (int i = 0; i < docs.documents.length; i++) {
+            if (docs.documents[i]['UserType'] == "User"){
+          setState(() {
+            bins.add(docs.documents[i].data);
+            binsFlag = true;
+              _markers.add(
+              Marker(
+                markerId: MarkerId(i.toString()),
+                position: LatLng(docs.documents[i]['Coordinates'].latitude,
+                    docs.documents[i]['Coordinates'].longitude),
+                infoWindow: InfoWindow(
+                  title: docs.documents[i]['Address'],
+                  snippet: docs.documents[i]['LandMark'],
+                ),
+                icon: _markerIconU,
+              ),
+            );
+          });
+          } else  if (docs.documents[i]['UserType'] == "Admin"){
           setState(() {
             bins.add(docs.documents[i].data);
             binsFlag = true;
@@ -122,18 +141,18 @@ class _DisposePageState extends State<DisposePage> {
                 position: LatLng(docs.documents[i]['Coordinates'].latitude,
                     docs.documents[i]['Coordinates'].longitude),
                 infoWindow: InfoWindow(
-                  title: docs.documents[i]['Landmark'],
-                  snippet: docs.documents[i]['Address'],
+                  title: docs.documents[i]['Address'],
+                  snippet: docs.documents[i]['LandMark'],
                 ),
-                icon: _markerIcon,
-              ),
+                icon: _markerIconA,
+            ),
             );
           });
+          }
         }
       }
     });
   }
-
   _zoomInMarker(elem) {
     _mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target:
@@ -153,12 +172,20 @@ class _DisposePageState extends State<DisposePage> {
     setState(() {});
   }
 
-  void _setMarkerIcon() async {
-    _markerIcon = await BitmapDescriptor.fromAssetImage(
+  void _setMarkerIconAdmin() async {
+    _markerIconA = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(), 'assets/images/bin.png');
   }
 
-  void filterMarkers(dist) async {
+   void _setMarkerIconUser() async {
+    _markerIconU = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(size: Size(0.0000003,0.0000003)), 'assets/images/hi.png')
+         .then((onValue) {
+       _markerIconU = onValue;
+    });
+  }
+
+ void filterMarkers(dist) async {
     final position = await Geolocator().getCurrentPosition();
     double nearest = 999000.0;
 
@@ -180,18 +207,47 @@ class _DisposePageState extends State<DisposePage> {
               nearestBin = bins[i]['Address'];
               nearestBinIndex = i;
             }
+
+           if (bins[i]['UserType'] == "User"){
             _markers.add(
+
+              
+              
               Marker(
                 markerId: MarkerId(i.toString()),
                 position: LatLng(bins[i]['Coordinates'].latitude,
                     bins[i]['Coordinates'].longitude),
                 infoWindow: InfoWindow(
-                  title: bins[i]['Landmark'],
+                  title: bins[i]['LandMark'],
                   snippet: bins[i]['Address'],
                 ),
-                icon: _markerIcon,
+                
+                icon: _markerIconA,
               ),
             );
+
+           } else if (bins[i]['UserType'] == "Admin"){
+              _markers.add(
+
+              
+              
+              Marker(
+                markerId: MarkerId(i.toString()),
+                position: LatLng(bins[i]['Coordinates'].latitude,
+                    bins[i]['Coordinates'].longitude),
+                infoWindow: InfoWindow(
+                  title: bins[i]['LandMark'],
+                  snippet: bins[i]['Address'],
+                ),
+                
+                icon: _markerIconA,
+              ),
+            );
+
+
+             
+           }
+
           }
         });
       });
@@ -204,7 +260,7 @@ class _DisposePageState extends State<DisposePage> {
         barrierDismissible: true,
         builder: (context) {
           return AlertDialog(
-            title: Text('Enter Maximum Distance From Your Location'),
+            title: Text('Enter Preferred Distance From Your Location'),
             contentPadding: EdgeInsets.all(10.0),
             content: TextField(
                 decoration: InputDecoration(hintText: 'Distance in km'),
@@ -232,10 +288,10 @@ class _DisposePageState extends State<DisposePage> {
     return Scaffold(
         appBar: AppBar(
             centerTitle: true,
-            backgroundColor: Color.fromRGBO(1, 68, 109, 1.0),
+            backgroundColor: Colors.blueGrey[300],
             actions: <Widget>[
               IconButton(
-                icon: Icon(Icons.filter_list),
+                icon: Icon(Icons.location_on),
                 onPressed: () => getDist(),
               )
             ],
@@ -247,7 +303,7 @@ class _DisposePageState extends State<DisposePage> {
                 child: Column(
               children: <Widget>[
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.5,
+                    height: MediaQuery.of(context).size.height * 0.58,
                     child: GoogleMap(
                       onMapCreated: _populateBins,
                       initialCameraPosition: CameraPosition(
@@ -257,7 +313,7 @@ class _DisposePageState extends State<DisposePage> {
                       compassEnabled: true,
                     )),
                 SizedBox(height: 20),
-                Text("Nearest To You:", style: TextStyle(fontSize: 20)),
+                Text("Find the Nearest Point", style: TextStyle(fontSize: 18)),
                 nearestBin != ""
                     ? GestureDetector(
                         child: Text(nearestBin,
@@ -267,10 +323,10 @@ class _DisposePageState extends State<DisposePage> {
                         onTap: () => _zoomInMarker(bins[nearestBinIndex]),
                       )
                     : GestureDetector(
-                        child: Icon(Icons.refresh, size: 40),
+                        child: Icon(Icons.location_on, size: 30),
                         onTap: () => getDist(),
                       ),
-                SizedBox(height: 40),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.025),
                 Container(
                   height: 60,
                   margin: EdgeInsets.symmetric(
@@ -283,10 +339,7 @@ class _DisposePageState extends State<DisposePage> {
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
-                    gradient: LinearGradient(colors: <Color>[
-                      Theme.Colors.buttonGradientStart,
-                      Theme.Colors.buttonGradientEnd
-                    ]),
+                    color: Colors.blueGrey[500],
                   ),
                   child: MaterialButton(
                     child: Row(children: <Widget>[
@@ -294,13 +347,15 @@ class _DisposePageState extends State<DisposePage> {
                         Icons.camera_alt,
                         color: Colors.white,
                       ),
-                      SizedBox(width: 15),
-                      Text("Let's Dispose!",
+                      SizedBox(width: 35),
+                     Center( child: Text("Drop it off",
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             color: Colors.white,
                             fontSize: 18,
-                          )),
+                          ))
+                          ,
+                     )
                     ]),
                     onPressed: () async {
                       await _showChoiceDialog(context);

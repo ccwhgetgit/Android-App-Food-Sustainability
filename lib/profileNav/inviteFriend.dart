@@ -1,4 +1,3 @@
-import 'package:Cycled_iOS/profileNav/redeemCode.dart';
 import "package:flutter/material.dart";
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:share/share.dart';
@@ -12,7 +11,7 @@ class _ReferFriendState extends State<ReferFriend> {
   void share(BuildContext context) {
     final RenderBox box = context.findRenderObject();
     final String text =
-        "Hey there! Cycled is a great way to make cents and sense of food waste! Cycle with me through this email and we'll both get 30 tokens! Do nothing and you'll get... well, nothing. No pressure!";
+        "Hey there! Cycled is a great way to make cents and sense of food waste! Cycle with me via this link. //play store link!";
 
     Share.share(text,
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
@@ -23,12 +22,12 @@ class _ReferFriendState extends State<ReferFriend> {
     return new Scaffold(
         appBar: AppBar(
           leading: IconButton(
-              icon: Icon(LineAwesomeIcons.arrow_left),
+              icon: Icon(LineAwesomeIcons.arrow_left, color: Colors.black),
               onPressed: () => {Navigator.pop(context, false)}),
           centerTitle: true,
-          backgroundColor: Color.fromRGBO(1, 68, 109, 1.0),
-          title: Text("Refer & Earn",
-              style: TextStyle(fontSize: 23, fontFamily: 'SFProText')),
+          backgroundColor: Colors.transparent,
+          title: Text("Be Part of the Movement",
+              style: TextStyle(fontSize: 23, color: Colors.black)),
         ),
         body: Center(
             child: Column(
@@ -52,40 +51,17 @@ class _ReferFriendState extends State<ReferFriend> {
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 50),
-              child: Text(
-                  "Earn 30 Tokens For Every Friend You Invite! Besides, Your Friend Also Earns 30 Tokens!",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20)),
+              child: Text("Spread the joy \nSave our Environment together",
+                  textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.07),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Text("YOUR REFERRAL CODE",
-                  textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
-            ),
-            SizedBox(height: 10),
-            Container(
-              height: MediaQuery.of(context).size.width * 0.13,
-              width: MediaQuery.of(context).size.width * 0.8,
-              padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.05),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blue),
-                  borderRadius: BorderRadius.circular(20)),
-              child: Text("LOREMIPSUM",
+              child: Text("Share the Link",
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.1)),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             ),
-            SizedBox(height: 10),
-            GestureDetector(
-                child: Text(
-                  "TAP TO COPY",
-                  style: TextStyle(
-                      fontSize: 15, decoration: TextDecoration.underline),
-                ),
-                onTap: () => print("Copy pressed")),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
             GestureDetector(
                 child: Text(
                   "Social Media Invite",
@@ -94,21 +70,8 @@ class _ReferFriendState extends State<ReferFriend> {
                 ),
                 onTap: () {
                   share(context);
-                  print("test");
                 }),
             SizedBox(height: 20),
-            GestureDetector(
-                child: Text(
-                  "Got A Referral Code?",
-                  style: TextStyle(
-                      fontSize: 15, decoration: TextDecoration.underline),
-                ),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => RedeemCode()));
-                }),
           ],
         )));
   }

@@ -32,30 +32,38 @@ class _PollQuestionState extends State<PollQuestion> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          leading: IconButton(
+              icon: Icon(
+                LineAwesomeIcons.arrow_left,
+                color: Colors.black,
+              ),
+              onPressed: () => {Navigator.pop(context, false)}),
+          title: Text("     Daily Challenge",
+              style: TextStyle(color: Colors.black, fontSize: 25),
+              textAlign: TextAlign.center)),
       body: Stack(
         children: <Widget>[
-          Image.asset('assets/images/pollBG.png',
-              fit: BoxFit.cover, height: double.infinity),
+          Opacity(
+            opacity: 0.2,
+            child: Container(
+              child: Image.asset(
+                'assets/images/poll.jpg',
+                fit: BoxFit.cover,
+                height: double.infinity,
+              ),
+            ),
+          ),
           Container(
             child: Card(
-              elevation: 10.0,
               margin: EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 30.0),
+              elevation: 8.0,
+              color: Colors.grey[100],
               child: Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Column(
                     children: <Widget>[
-                      Container(
-                          child: Row(
-                        children: <Widget>[
-                          IconButton(
-                              icon: Icon(LineAwesomeIcons.arrow_left),
-                              onPressed: () => Navigator.pop(context, false)),
-                          SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.09),
-                          Text("Question Of The Day",
-                              style: TextStyle(fontSize: 20)),
-                        ],
-                      )),
                       DatabaseService(uid: LoginPage.user.uid).getPoll(random),
                       StreamBuilder(
                         stream: Firestore.instance
@@ -63,6 +71,7 @@ class _PollQuestionState extends State<PollQuestion> {
                             .snapshots(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) return Container();
+
                           return SizedBox(
                             height: MediaQuery.of(context).size.height * 0.35,
                             width: MediaQuery.of(context).size.width * 0.8,
@@ -70,12 +79,20 @@ class _PollQuestionState extends State<PollQuestion> {
                               physics: NeverScrollableScrollPhysics(),
                               children: <Widget>[
                                 SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.03),
+                                SizedBox(
                                   height:
                                       MediaQuery.of(context).size.width * 0.12,
                                   child: RaisedButton(
                                     color: selectedA
-                                        ? Colors.blue
-                                        : Colors.grey.shade300,
+                                        ? Colors.teal[200]
+                                        : Colors.grey[300],
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18.0),
+                                        side: BorderSide(
+                                            color: Colors.transparent)),
                                     child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
@@ -86,7 +103,7 @@ class _PollQuestionState extends State<PollQuestion> {
                                               fontSize: MediaQuery.of(context)
                                                       .size
                                                       .width *
-                                                  0.045),
+                                                  0.04),
                                           textAlign: TextAlign.left),
                                     ),
                                     onPressed: () {
@@ -113,8 +130,13 @@ class _PollQuestionState extends State<PollQuestion> {
                                         0.12,
                                     child: RaisedButton(
                                         color: selectedB
-                                            ? Colors.blue
-                                            : Colors.grey.shade300,
+                                            ? Colors.teal[200]
+                                            : Colors.grey[300],
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(18.0),
+                                            side: BorderSide(
+                                                color: Colors.transparent)),
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
@@ -127,7 +149,7 @@ class _PollQuestionState extends State<PollQuestion> {
                                                       MediaQuery.of(context)
                                                               .size
                                                               .width *
-                                                          0.045),
+                                                          0.04),
                                               textAlign: TextAlign.left),
                                         ),
                                         onPressed: () {
@@ -156,8 +178,13 @@ class _PollQuestionState extends State<PollQuestion> {
                                             ""
                                         ? RaisedButton(
                                             color: selectedC
-                                                ? Colors.blue
-                                                : Colors.grey.shade300,
+                                                ? Colors.teal[200]
+                                                : Colors.grey[300],
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18.0),
+                                                side: BorderSide(
+                                                    color: Colors.transparent)),
                                             child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
@@ -170,7 +197,7 @@ class _PollQuestionState extends State<PollQuestion> {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width *
-                                                              0.045),
+                                                              0.04),
                                                   textAlign: TextAlign.left),
                                             ),
                                             onPressed: () {
@@ -200,8 +227,13 @@ class _PollQuestionState extends State<PollQuestion> {
                                             ""
                                         ? RaisedButton(
                                             color: selectedD
-                                                ? Colors.blue
-                                                : Colors.grey.shade300,
+                                                ? Colors.teal[200]
+                                                : Colors.grey[300],
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(18.0),
+                                                side: BorderSide(
+                                                    color: Colors.transparent)),
                                             child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
@@ -214,7 +246,7 @@ class _PollQuestionState extends State<PollQuestion> {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width *
-                                                              0.045),
+                                                              0.04),
                                                   textAlign: TextAlign.left),
                                             ),
                                             onPressed: () {
@@ -245,7 +277,7 @@ class _PollQuestionState extends State<PollQuestion> {
                         child: RaisedButton(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.0)),
-                            color: Color.fromRGBO(1, 68, 109, 1.0),
+                            color: Colors.blueGrey[700],
                             child: Text("Submit Answer",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 18)),

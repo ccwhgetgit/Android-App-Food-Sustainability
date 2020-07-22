@@ -1,9 +1,15 @@
-import 'package:Cycled_iOS/design/theme.dart' as Theme;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Cycled_iOS/database/DatabaseService.dart';
 
 import '../authentication.dart';
+
+/*
+
+
+Issue : Count does not reset to 0 upon exiting the tabs
+*/
+
 
 class StorePage extends StatefulWidget {
   static final stores = ['Giant', 'NTUC', 'Popular', 'Sheng Siong'];
@@ -51,15 +57,15 @@ class _StorePageState extends State<StorePage> {
                 child: Image.network(document['imageURL']),
               )),
               SizedBox(height: 7.0),
-              Text(document['Tokens'].toString() + " TOKENS",
+              Text(document['Tokens'].toString() + " Tokens",
                   style: TextStyle(
                       color: Color(0xFFCC8053),
-                      fontFamily: 'Varela',
-                      fontSize: 14.0)),
+                      
+                      fontSize: 16.0)),
               Text(document['Description'],
                   style: TextStyle(
                       color: Color(0xFF575E67),
-                      fontFamily: 'Varela',
+                     
                       fontSize: 14.0)),
               Padding(
                   padding: EdgeInsets.all(8.0),
@@ -128,6 +134,13 @@ class _StorePageState extends State<StorePage> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           centerTitle: true,
+          title: Text('\nReward Yourself',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 23,
+                color: Colors.black,
+               
+              )),
           //add a back
         ),
         body: new Container(
@@ -143,181 +156,193 @@ class _StorePageState extends State<StorePage> {
           child: Column(
             children: <Widget>[
               /*
-
     
     consider adding something at the top 
              */
               Row(
                 children: <Widget>[
-                  /* Expanded(
-      child: Image.asset('assets/images/logo.png',
-        height:30,
-                   width: 30,),
-      
-    ),
-             
-                  SizedBox(width: MediaQuery.of(context).size.width / 4),
-                  Text('Rewards Catalogue',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Varela',
-                        fontSize: 25.0,
-                      )),
-             */  
-SizedBox(width:MediaQuery.of(context).size.width/5 ),
-          Text('Rewards Catalogue',
-          textAlign: TextAlign.center,
-               style: TextStyle(
-                             
-                              fontSize: 25,
-                              letterSpacing: .6,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              )),
-          
-                
+                  SizedBox(width: MediaQuery.of(context).size.width / 5),
                 ],
               ),
-              SizedBox(height: 30),
-              Flexible(
-                fit: FlexFit.tight,
-                child: StreamBuilder(
-                    stream: Firestore.instance
-                        .collection('StoreDatabase')
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) return Container();
-                      return GridView.builder(
-                          gridDelegate:
-                              new SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2),
-                          itemCount: snapshot.data.documents.length,
-                          itemBuilder: (context, index) => _buildListItem(
-                              context, snapshot.data.documents[index]));
-                    }),
+              SizedBox(height: 20),
+              NotificationListener<OverscrollIndicatorNotification>(
+                onNotification: (OverscrollIndicatorNotification overscroll) {
+                  overscroll.disallowGlow();
+                  return;
+                },
+                child: Flexible(
+                  fit: FlexFit.tight,
+                  child: StreamBuilder(
+                      stream: Firestore.instance
+                          .collection('StoreDatabase')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) return Container();
+                        return GridView.builder(
+                            gridDelegate:
+                                new SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2),
+                            itemCount: snapshot.data.documents.length,
+                            itemBuilder: (context, index) => _buildListItem(
+                                context, snapshot.data.documents[index]));
+                      }),
+                ),
               ),
               Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(0),
+                  color: Colors.blueGrey[50],
+                ),
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: <Widget>[
+
+   Row(
+                  children: <Widget>[
+  Text("Tokens  ".toUpperCase(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                            fontSize:
+                                MediaQuery.of(context).size.height * 0.02)),
+     SizedBox(width: MediaQuery.of(context).size.width * 0.63),
+
                     DatabaseService(uid: LoginPage.user.uid)
                         .getTokens('rewards'),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                    Text("Cart: " + cartVal.toString(),
+                    
+                
+                  ]), 
+                
+                   SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                
+                
+                   Row(
+                  children: <Widget>[
+
+                     Text("Cart ".toUpperCase(),
                         style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                            fontSize:
+                                MediaQuery.of(context).size.height * 0.02)),
+     SizedBox(width: MediaQuery.of(context).size.width * 0.694),
+                   
+                    Text(cartVal.toString(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
                             fontSize:
                                 MediaQuery.of(context).size.height * 0.025)),
-                  ],
-                ),
-              ),
-              Container(
-                height: 50,
-                margin: EdgeInsets.symmetric(
-                  horizontal: 10,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  gradient: LinearGradient(colors: <Color>[
-                    Theme.Colors.buttonGradientStart,
-                    Theme.Colors.buttonGradientEnd
                   ]),
-                ),
-                child: MaterialButton(
-                  child: Row(children: <Widget>[
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.23),
-                    Icon(
-                      Icons.shopping_cart,
-                      color: Colors.white,
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                    Container(
+                      height: 50,
+                      margin: EdgeInsets.symmetric(
+                        horizontal: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(0),
+                        color: Colors.blueGrey[700],
+                      ),
+                      child: MaterialButton(
+                        child: Row(children: <Widget>[
+                             Text("Checkout".toUpperCase(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.04,
+                                color: Colors.white,
+                              )),
+                          SizedBox(width:  MediaQuery.of(context).size.width * 0.534),
+                          Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                          ),
+                        ]),
+                        onPressed: () {
+                          if (cartVal != 0) {
+                            showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                      title: Text(cartVal.toString() +
+                                          " tokens will be deducted from your account. Would you like to proceed?"),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          child: Text("No",
+                                              style: TextStyle(fontSize: 20)),
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                        ),
+                                        FlatButton(
+                                          child: Text("Yes",
+                                              style: TextStyle(fontSize: 20)),
+                                          onPressed: () {
+                                            getUserTokens();
+                                            if (cartVal >
+                                                userTokens['Tokens']) {
+                                              Scaffold.of(context)
+                                                  .showSnackBar(SnackBar(
+                                                content: Text(
+                                                  "Checkout failed, insufficient tokens!",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16.0,
+                                                  ),
+                                                ),
+                                                backgroundColor: Colors.blue,
+                                                duration: Duration(seconds: 2),
+                                              ));
+                                            } else {
+                                              DatabaseService(
+                                                      uid: LoginPage.user.uid)
+                                                  .addUserTokens(-cartVal);
+                                              Scaffold.of(context)
+                                                  .showSnackBar(SnackBar(
+                                                content: Text(
+                                                  "Checkout successful! Check your email for your reward(s)",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16.0,
+                                                  ),
+                                                ),
+                                                backgroundColor: Colors.blue,
+                                                duration: Duration(seconds: 5),
+                                              ));
+                                              cartVal = 0;
+                                              for (String store
+                                                  in StorePage.stores) {
+                                                DatabaseService(
+                                                        uid: LoginPage.user.uid)
+                                                    .resetRewards(store, 0);
+                                              }
+                                              setState(() {});
+                                            }
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                barrierDismissible: false);
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                      title: Text(
+                                          "Cart is empty! Please select the reward of your choice to proceed."),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          child: Text("OK",
+                                              style: TextStyle(fontSize: 20)),
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                        ),
+                                      ],
+                                    ),
+                                barrierDismissible: false);
+                          }
+                        },
+                      ),
                     ),
-                    SizedBox(width: 15),
-                    Text("Checkout",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: MediaQuery.of(context).size.width * 0.06,
-                          color: Colors.white,
-                        )),
-                  ]),
-                  onPressed: () {
-                    if (cartVal != 0) {
-                      showDialog(
-                          context: context,
-                          builder: (_) => AlertDialog(
-                                title: Text(cartVal.toString() +
-                                    " tokens will be deducted from your account. Would you like to proceed?"),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    child: Text("No",
-                                        style: TextStyle(fontSize: 20)),
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                  ),
-                                  FlatButton(
-                                    child: Text("Yes",
-                                        style: TextStyle(fontSize: 20)),
-                                    onPressed: () {
-                                      getUserTokens();
-                                      if (cartVal > userTokens['Tokens']) {
-                                        Scaffold.of(context)
-                                            .showSnackBar(SnackBar(
-                                          content: Text(
-                                            "Checkout failed, insufficient tokens!",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16.0,
-                                            ),
-                                          ),
-                                          backgroundColor: Colors.blue,
-                                          duration: Duration(seconds: 2),
-                                        ));
-                                      } else {
-                                        DatabaseService(uid: LoginPage.user.uid)
-                                            .addUserTokens(-cartVal);
-                                        Scaffold.of(context)
-                                            .showSnackBar(SnackBar(
-                                          content: Text(
-                                            "Checkout successful! Check your email for your reward(s)",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16.0,
-                                            ),
-                                          ),
-                                          backgroundColor: Colors.blue,
-                                          duration: Duration(seconds: 5),
-                                        ));
-                                        cartVal = 0;
-                                        for (String store in StorePage.stores) {
-                                          DatabaseService(
-                                                  uid: LoginPage.user.uid)
-                                              .resetRewards(store, 0);
-                                        }
-                                        setState(() {});
-                                      }
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
-                              ),
-                          barrierDismissible: false);
-                    } else {
-                      showDialog(
-                          context: context,
-                          builder: (_) => AlertDialog(
-                                title: Text(
-                                    "Cart is empty! Please select the reward of your choice to proceed."),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    child: Text("OK",
-                                        style: TextStyle(fontSize: 20)),
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                  ),
-                                ],
-                              ),
-                          barrierDismissible: false);
-                    }
-                  },
+                  ],
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),

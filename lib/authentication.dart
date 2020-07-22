@@ -10,7 +10,6 @@ import 'dart:async';
 import 'package:Cycled_iOS/onboarding/slide_dots.dart';
 import 'package:Cycled_iOS/onboarding/slide_item.dart';
 
-
 import 'authentication/login.dart';
 import 'authentication/signup.dart';
 import 'onboarding/slide_dots.dart';
@@ -19,6 +18,7 @@ import 'onboarding/slide_item.dart';
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
   static FirebaseUser user;
+  static String userName = "";
 
   @override
   _LoginPageState createState() => new _LoginPageState();
@@ -39,17 +39,8 @@ class _LoginPageState extends State<LoginPage>
   final GoogleSignIn googleSignIn = new GoogleSignIn();
   final FacebookLogin fbLogin = new FacebookLogin();
 
-  final _signupFormKey = GlobalKey<FormState>();
-  final _loginFormKey = GlobalKey<FormState>();
-
-  String userName = "";
-
   TextEditingController loginEmailController = new TextEditingController();
   TextEditingController loginPasswordController = new TextEditingController();
-
-  bool _obscureTextLogin = true;
-  bool _obscureTextSignup = true;
-  bool _obscureTextSignupConfirm = true;
 
   TextEditingController signupEmailController = new TextEditingController();
   TextEditingController signupNameController = new TextEditingController();
@@ -57,12 +48,10 @@ class _LoginPageState extends State<LoginPage>
   TextEditingController signupConfirmPasswordController =
       new TextEditingController();
 
- 
-
   Color left = Colors.black;
   Color right = Colors.white;
 
-int _currentPage = 0;
+  int _currentPage = 0;
   final PageController _pageController = PageController(initialPage: 0);
 
   @override
@@ -82,12 +71,12 @@ int _currentPage = 0;
       );
     });
   }
+
   _onPageChanged(int index) {
     setState(() {
       _currentPage = index;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -98,324 +87,261 @@ int _currentPage = 0;
           padding: const EdgeInsets.all(20),
           child: Column(
             children: <Widget>[
-
-            
-
               Expanded(
                 child: Stack(
                   alignment: AlignmentDirectional.bottomCenter,
                   children: <Widget>[
-                    PageView.builder(
-                      scrollDirection: Axis.horizontal,
-                      controller: _pageController,
-                      onPageChanged: _onPageChanged,
-                      itemCount: 5,
-                      itemBuilder: (ctx, i) => SlideItem(i),
+                    NotificationListener<OverscrollIndicatorNotification>(
+                      onNotification:
+                          (OverscrollIndicatorNotification overscroll) {
+                        overscroll.disallowGlow();
+                        return;
+                      },
+                      child: PageView.builder(
+                        scrollDirection: Axis.horizontal,
+                        controller: _pageController,
+                        onPageChanged: _onPageChanged,
+                        itemCount: 5,
+                        itemBuilder: (ctx, i) => SlideItem(i),
+                      ),
                     ),
-                   
-                        Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              for(int i = 0; i<5; i++)
-                                if( i == _currentPage )
-                                  SlideDots(true)
-                                else
-                                  SlideDots(false)
-                            ],
-                          ),
-                        
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        for (int i = 0; i < 5; i++)
+                          if (i == _currentPage)
+                            SlideDots(true)
+                          else
+                            SlideDots(false)
                       ],
-                                    
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
                 height: 20,
               ),
-              Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-           
-            
- Padding(
-                padding: EdgeInsets.only(top: 0.0),
-                child: GestureDetector(
-                  child:  Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-        
-         
-SizedBox(width: MediaQuery.of(context).size.width * .22,),
-ButtonTheme(
-    minWidth: MediaQuery.of(context).size.width * .1,
-                height:MediaQuery.of(context).size.height * .06,
-child: RaisedButton(
-                      elevation: 0.0,
-                      splashColor: Colors.transparent,
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(8.0)),
-                      padding: EdgeInsets.only(
-                          top: 7.0, bottom: 7.0, left: 0),
-                       onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => Login1Page(),
+              Column(mainAxisAlignment: MainAxisAlignment.center, children: <
+                  Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: 0.0),
+                  child: GestureDetector(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * .22,
+                        ),
+                        ButtonTheme(
+                          minWidth: MediaQuery.of(context).size.width * .1,
+                          height: MediaQuery.of(context).size.height * .06,
+                          child: RaisedButton(
+                            elevation: 0.0,
+                            splashColor: Colors.transparent,
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(8.0)),
+                            padding:
+                                EdgeInsets.only(top: 7.0, bottom: 7.0, left: 0),
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => Login1Page(),
+                                ),
+                              );
+                            },
+                            child: new Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Padding(
+                                    padding: EdgeInsets.only(
+                                        left:
+                                            MediaQuery.of(context).size.width *
+                                                .02,
+                                        right:
+                                            MediaQuery.of(context).size.width *
+                                                .02),
+                                    child: new Text("Sign Up",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        )))
+                              ],
+                            ),
+                            textColor: Colors.black,
+                            color: Colors.transparent,
+                          ),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * .07,
+                        ),
+                        ButtonTheme(
+                          minWidth: MediaQuery.of(context).size.width * .1,
+                          height: MediaQuery.of(context).size.height * .06,
+                          child: RaisedButton(
+                            elevation: 0.0,
+                            splashColor: Colors.transparent,
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(8.0)),
+                            padding:
+                                EdgeInsets.only(top: 7.0, bottom: 7.0, left: 0),
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => Login2Page(),
+                                ),
+                              );
+                            },
+                            child: new Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 20.0, right: 20),
+                                    child: new Text("Log In",
+                                        style: TextStyle(
+                                          color: Colors.blue[900],
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        )))
+                              ],
+                            ),
+                            textColor: Colors.black,
+                            color: Colors.transparent,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                );
-              },
-
-                      
-                      child: new Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                        
-                  Padding(
-                              padding: EdgeInsets.only(left: 
-                              
-                              MediaQuery.of(context).size.width * .02
-                              , right: MediaQuery.of(context).size.width * .02
-                              ),
-                              child: new  Text(
-                    "Sign Up",
-                    style: TextStyle(
-                      color: Colors.black,
-                fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    
-                  )))
-
-                  
-                        ],
-                      ),
-                      textColor: Colors.black, 
-                      color: Colors.transparent,
-                     
-                    
-            
-                      ),),
-SizedBox(width: MediaQuery.of(context).size.width * .07,),
-ButtonTheme(
-    minWidth: MediaQuery.of(context).size.width * .1,
-                height:MediaQuery.of(context).size.height * .06,
-child: RaisedButton(
-                      elevation: 0.0,
-                      splashColor: Colors.transparent,
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(8.0)),
-                      padding: EdgeInsets.only(
-                          top: 7.0, bottom: 7.0, left: 0),
-                       onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => Login2Page(),
-                  ),
-                );
-              },
-
-                      
-                      child: new Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                        
-                  Padding(
-                              padding: EdgeInsets.only(left: 20.0, right: 20),
-                              child: new  Text(
-                    "Log In",
-                    style: TextStyle(
-                      color: Colors.blue[900],
-                fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    
-                  )))
-
-                  
-                        ],
-                      ),
-                      textColor: Colors.black, 
-                      color: Colors.transparent,
-                     
-                    
-            
-                      ),),
-                
-              
-
-
-
-          
-
-
-
-            
-
-            
-          ],
-        ),
-              ),
-              ),
-
-
-              Padding(
-                padding: EdgeInsets.only(top: 0.0),
-                child: GestureDetector(
-                  onTap: () => _signInWithGoogle()
-                      .then((FirebaseUser user) => print(user))
-                      .catchError((e) => print(e)),
-
-
-
-                  child:  Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            
-            SizedBox(height: 0),
-            GestureDetector(
-              onTap: () => _signInWithFB()
-                      .then((FirebaseUser user) => print(user))
-                      .catchError((e) => print(e)),
-
-
-              child: 
-              
-
-ButtonTheme(
-    minWidth: MediaQuery.of(context).size.width * .85,
-                height:MediaQuery.of(context).size.height * .06,
-child: RaisedButton(
-                      elevation: 0.0,
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(8.0)),
-                      padding: EdgeInsets.only(
-                          top: 7.0, bottom: 7.0, right: 40.0, left: 0),
-                      onPressed: 
-                      () => _signInWithFB()
-                      .then((FirebaseUser user) => print(user))
-                      .catchError((e) => print(e)),
-
-                      
-                      child: new Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                         new Icon(
-                      FontAwesomeIcons.facebookF,
-                      color: Colors.white,),
-
-                      SizedBox(width: MediaQuery.of(context).size.width * .05 ),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10.0),
-                              child: new  Text(
-                    "Continue with Facebook",
-                    style: TextStyle(
-                      color: Colors.white,
-                fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    
-                  )))
-                        ],
-                      ),
-                      textColor: Color(0xFF292929),
-                      color: Colors.blue[900]
-                    
-            
-                      ),),
                 ),
-              
-
-
-
-          
-
-
-
-            
-
-            
-          ],
-        ),
-              ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 0.0),
-                child: GestureDetector(
-                  onTap: () => _signInWithGoogle()
-                      .then((FirebaseUser user) => print(user))
-                      .catchError((e) => print(e)),
-                  child:  Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            
-            SizedBox(height: 15),
-            GestureDetector(
-              onTap: () => _signInWithGoogle()
-                      .then((FirebaseUser user) => print(user))
-                      .catchError((e) => print(e)),
-              child: 
-              
-
-ButtonTheme(
-    minWidth: MediaQuery.of(context).size.width * .85,
-                height:MediaQuery.of(context).size.height * .06,
-child: RaisedButton(
-                      elevation: 0.0,
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(8.0)),
-                      padding: EdgeInsets.only(
-                          top: 7.0, bottom: 7.0, right: 40.0, left: 0),
-                      onPressed: ()=> _signInWithGoogle()
-                      .then((FirebaseUser user) => print(user))
-                      .catchError((e) => print(e)),
-                      
-                      
-                      child: new Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                         new Image.asset("assets/images/google.png",
-                          height: 27,
-                          width: 27,
-                         
-                        
-                   
-                   
-                   ),
-
-                      SizedBox(width: MediaQuery.of(context).size.width * .09 ),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10.0),
-                              child: new  Text(
-                    "Continue with Google",
-                    style: TextStyle(
-                      color: Colors.white,
-                fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    
-                  )))
-                        ],
-                      ),
-                      textColor: Color(0xFF292929),
-                      color: Colors.grey[800]
-                    
-            
-                      ),),
-                      
-            )
-
-            
-          ],
-          
-        ),
-              
-              ),
-              
-              )
-             ] )
+                Padding(
+                  padding: EdgeInsets.only(top: 0.0),
+                  child: GestureDetector(
+                    onTap: () => _signInWithGoogle()
+                        .then((FirebaseUser user) => print(user))
+                        .catchError((e) => print(e)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(height: 0),
+                        GestureDetector(
+                          onTap: () => _signInWithFB()
+                              .then((FirebaseUser user) => print(user))
+                              .catchError((e) => print(e)),
+                          child: ButtonTheme(
+                            minWidth: MediaQuery.of(context).size.width * .85,
+                            height: MediaQuery.of(context).size.height * .06,
+                            child: RaisedButton(
+                                elevation: 0.0,
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(8.0)),
+                                padding: EdgeInsets.only(
+                                    top: 7.0,
+                                    bottom: 7.0,
+                                    right: 40.0,
+                                    left: 0),
+                                onPressed: () => _signInWithFB()
+                                    .then((FirebaseUser user) => print(user))
+                                    .catchError((e) => print(e)),
+                                child: new Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    new Icon(
+                                      FontAwesomeIcons.facebookF,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .05),
+                                    Padding(
+                                        padding: EdgeInsets.only(left: 10.0),
+                                        child:
+                                            new Text("Continue with Facebook",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
+                                                )))
+                                  ],
+                                ),
+                                textColor: Color(0xFF292929),
+                                color: Colors.blue[900]),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 0.0),
+                  child: GestureDetector(
+                    onTap: () => _signInWithGoogle()
+                        .then((FirebaseUser user) => print(user))
+                        .catchError((e) => print(e)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(height: 15),
+                        GestureDetector(
+                          onTap: () => _signInWithGoogle()
+                              .then((FirebaseUser user) => print(user))
+                              .catchError((e) => print(e)),
+                          child: ButtonTheme(
+                            minWidth: MediaQuery.of(context).size.width * .85,
+                            height: MediaQuery.of(context).size.height * .06,
+                            child: RaisedButton(
+                                elevation: 0.0,
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(8.0)),
+                                padding: EdgeInsets.only(
+                                    top: 7.0,
+                                    bottom: 7.0,
+                                    right: 40.0,
+                                    left: 0),
+                                onPressed: () => _signInWithGoogle()
+                                    .then((FirebaseUser user) => print(user))
+                                    .catchError((e) => print(e)),
+                                child: new Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    new Image.asset(
+                                      "assets/images/google.png",
+                                      height: 27,
+                                      width: 27,
+                                    ),
+                                    SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .09),
+                                    Padding(
+                                        padding: EdgeInsets.only(left: 10.0),
+                                        child: new Text("Continue with Google",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                            )))
+                                  ],
+                                ),
+                                textColor: Color(0xFF292929),
+                                color: Colors.grey[800]),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ])
             ],
           ),
         ),
       ),
     );
   }
-
-
 
   @override
   void dispose() {
@@ -426,7 +352,6 @@ child: RaisedButton(
     super.dispose();
   }
 
-
   void showInSnackBar(String value) {
     FocusScope.of(context).requestFocus(new FocusNode());
     _scaffoldKey.currentState?.removeCurrentSnackBar();
@@ -435,17 +360,14 @@ child: RaisedButton(
         value,
         textAlign: TextAlign.center,
         style: TextStyle(
-            color: Colors.white,
-            fontSize: 16.0,
-          ),
+          color: Colors.white,
+          fontSize: 16.0,
+        ),
       ),
       backgroundColor: Colors.blue,
       duration: Duration(seconds: 3),
     ));
   }
-
-  
-
 
   Future<FirebaseUser> _signInWithGoogle() async {
     GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
@@ -507,94 +429,4 @@ child: RaisedButton(
     print("Username: ${user.displayName}");
     return user;
   }
-
-  Future<FirebaseUser> _signUpWithEmailPassword() async {
-    FirebaseUser user;
-    try {
-      user = (await _auth.createUserWithEmailAndPassword(
-              email: signupEmailController.text,
-              password: signupPasswordController.text))
-          .user;
-      userName = signupNameController.text;
-      if (signupNameController.text == "" ||
-          signupPasswordController.text.length < 8 ||
-          signupPasswordController.text !=
-              signupConfirmPasswordController.text) {
-        showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-                  title: Text(
-                      'ERROR! One of the following might have caused an issue:'),
-                  content: Text(
-                      '1. Invalid Name\n\n2. Invalid Email Address\n\n3. Email already in use\n\n4. Password shorter than 8 characters\n\n5. Password and Confirm Password do not match'),
-                ));
-      } else {
-        user.sendEmailVerification();
-        showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-                  title: Text('Sign Up Successful!'),
-                  content: Text(
-                      'An Email will be sent to your registered email address for verification purposes'),
-                ));
-      }
-      return user;
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
-
-  Future<FirebaseUser> _signInWithEmailPassword() async {
-    FirebaseUser user;
-    LoginPage.user = (await _auth.signInWithEmailAndPassword(
-            email: loginEmailController.text,
-            password: loginPasswordController.text))
-        .user;
-    if (LoginPage.user.isEmailVerified) {
-      try {
-        DatabaseService(uid: LoginPage.user.uid)
-            .updateUserInfo(LoginPage.user.email, userName, false);
-
-        DatabaseService(uid: LoginPage.user.uid).updateUserTokens(0);
-        DatabaseService(uid: LoginPage.user.uid).updateUserStatus(false);
-        DatabaseService(uid: LoginPage.user.uid).updateUserPoints(0);
-        DatabaseService(uid: LoginPage.user.uid).updateUserTier('Bronze');
-
-        DatabaseService(uid: LoginPage.user.uid).updateStats();
-
-        for (String store in StorePage.stores) {
-          DatabaseService(uid: LoginPage.user.uid).resetRewards(store, 0);
-        }
-
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => MainInterface()));
-        return user;
-      } catch (e) {
-        print(e.toString());
-        showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-                  title: Text(
-                      "Sorry, we couldn't find an account with that email address or password."),
-                  content: Text(
-                      "Can we help you recover your account? Click on 'Forgot Password' to reset your password"),
-                ));
-        return null;
-      }
-    } else {
-      showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-                title: Text("OOPS!"),
-                content: Text(
-                    "A verification link has been sent to your registered email. Please verify your account first."),
-              ));
-      return null;
-    }
-  }
-
-
 }

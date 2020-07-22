@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,6 +8,8 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'dart:async';
 
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+
+import '../authentication.dart';
 
 const kTextLightColor = Color(0xFFACB1C0);
 
@@ -39,7 +40,6 @@ class _Login1PageState extends State<Login1Page>
   TextEditingController loginEmailController = new TextEditingController();
   TextEditingController loginPasswordController = new TextEditingController();
 
-  bool _obscureTextLogin = true;
   bool _obscureTextSignup = true;
   bool _obscureTextSignupConfirm = true;
 
@@ -48,7 +48,7 @@ class _Login1PageState extends State<Login1Page>
   TextEditingController signupPasswordController = new TextEditingController();
   TextEditingController signupConfirmPasswordController =
       new TextEditingController();
-
+  
   PageController _pageController;
 
   Color left = Colors.black;
@@ -57,48 +57,39 @@ class _Login1PageState extends State<Login1Page>
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-    appBar: AppBar(
-          leading: IconButton(
-              icon: Icon(LineAwesomeIcons.arrow_left, color: Colors.black, ),
-              onPressed: () => {Navigator.pop(context, false)}),
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-        
-        ),
-
-      
-      body: 
-       SingleChildScrollView(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-          
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                
-                Padding(
-                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.01),
-                ),
-             
-          
-          Text("Sign Up",
-                 style: TextStyle(
-                             
-                              fontSize: 25,
-                              letterSpacing: .6,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              )),
-               _buildSignUp(context),
-                
-
-                
-              ],
+      appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(
+              LineAwesomeIcons.arrow_left,
+              color: Colors.black,
             ),
+            onPressed: () => {Navigator.pop(context, false)}),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.01),
+              ),
+              Text("Sign Up",
+                  style: TextStyle(
+                    fontSize: 25,
+                    letterSpacing: .6,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  )),
+              _buildSignUp(context),
+            ],
           ),
         ),
-      
+      ),
     );
   }
 
@@ -123,11 +114,7 @@ class _Login1PageState extends State<Login1Page>
     _pageController = PageController();
   }
 
-
-
-
   Widget _buildSignUp(BuildContext context) {
-    
     return Container(
       padding: EdgeInsets.only(top: 23.0),
       child: Column(
@@ -148,156 +135,141 @@ class _Login1PageState extends State<Login1Page>
                   child: Column(
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          focusNode: myFocusNodeName,
-                          controller: signupNameController,
-                          keyboardType: TextInputType.text,
-                          textCapitalization: TextCapitalization.words,
-                          style: TextStyle(
-                             
-                              fontSize: 16.0,
-                              color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.user,
-                              color: Colors.black,
-                            ),
-                            hintText: "Name",
-                            hintStyle: TextStyle(
-                               fontSize: 16.0),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          focusNode: myFocusNodeEmail,
-                          controller: signupEmailController,
-                          keyboardType: TextInputType.emailAddress,
-                          style: TextStyle(
-                              
-                              fontSize: 16.0,
-                              color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.envelope,
-                              color: Colors.black,
-                            ),
-                            hintText: "Email Address",
-                            hintStyle: TextStyle(
-                              fontSize: 16.0),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          focusNode: myFocusNodePassword,
-                          controller: signupPasswordController,
-                          obscureText: _obscureTextSignup,
-                          style: TextStyle(
-                           
-                              fontSize: 16.0,
-                              color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.lock,
-                              color: Colors.black,
-                            ),
-                            hintText: "Password",
-                            hintStyle: TextStyle(
-                              fontSize: 16.0),
-                            suffixIcon: GestureDetector(
-                              onTap: _toggleSignup,
-                              child: Icon(
-                                _obscureTextSignup
-                                    ? FontAwesomeIcons.eye
-                                    : FontAwesomeIcons.eyeSlash,
-                                size: 15.0,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          controller: signupConfirmPasswordController,
-                          obscureText: _obscureTextSignupConfirm,
-                          style: TextStyle(
-                             
-                              fontSize: 16.0,
-                              color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.lock,
-                              color: Colors.black,
-                            ),
-                            hintText: "Confirm Password",
-                            hintStyle: TextStyle(
-                                fontSize: 16.0),
-                            suffixIcon: GestureDetector(
-                              onTap: _toggleSignupConfirm,
-                              child: Icon(
-                                _obscureTextSignupConfirm
-                                    ? FontAwesomeIcons.eye
-                                    : FontAwesomeIcons.eyeSlash,
-                                size: 15.0,
-                                color: Colors.black,
-                              ),
-                              
-                            ),
-                          ),
-                        ),
-                      
-                      ),
-                      
-                      
+                          padding: EdgeInsets.only(
+                              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                          child: Form(
+                              key: _signupFormKey,
+                              child: Column(
+                                children: <Widget>[
+                                  TextFormField(
+                                    focusNode: myFocusNodeName,
+                                    controller: signupNameController,
+                                    keyboardType: TextInputType.text,
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    style: TextStyle(
+                                        fontSize: 16.0, color: Colors.black),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      icon: Icon(
+                                        FontAwesomeIcons.user,
+                                        color: Colors.black,
+                                      ),
+                                      hintText: "Name",
+                                      hintStyle: TextStyle(fontSize: 16.0),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 250.0,
+                                    height: 1.0,
+                                    color: Colors.grey[400],
+                                  ),
+                                  SizedBox(height: 30),
+                                  TextFormField(
+                                    focusNode: myFocusNodeEmail,
+                                    controller: signupEmailController,
+                                    keyboardType: TextInputType.emailAddress,
+                                    style: TextStyle(
+                                        fontSize: 16.0, color: Colors.black),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      icon: Icon(
+                                        FontAwesomeIcons.envelope,
+                                        color: Colors.black,
+                                      ),
+                                      hintText: "Email Address",
+                                      hintStyle: TextStyle(fontSize: 16.0),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 250.0,
+                                    height: 1.0,
+                                    color: Colors.grey[400],
+                                  ),
+                                  SizedBox(height: 30),
+                                  TextFormField(
+                                    focusNode: myFocusNodePassword,
+                                    controller: signupPasswordController,
+                                    obscureText: _obscureTextSignup,
+                                    style: TextStyle(
+                                        fontSize: 16.0, color: Colors.black),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      icon: Icon(
+                                        FontAwesomeIcons.lock,
+                                        color: Colors.black,
+                                      ),
+                                      hintText: "Password",
+                                      hintStyle: TextStyle(fontSize: 16.0),
+                                      suffixIcon: GestureDetector(
+                                        onTap: _toggleSignup,
+                                        child: Icon(
+                                          _obscureTextSignup
+                                              ? FontAwesomeIcons.eye
+                                              : FontAwesomeIcons.eyeSlash,
+                                          size: 15.0,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 250.0,
+                                    height: 1.0,
+                                    color: Colors.grey[400],
+                                  ),
+                                  SizedBox(height: 30),
+                                  TextFormField(
+                                    controller: signupConfirmPasswordController,
+                                    obscureText: _obscureTextSignupConfirm,
+                                    style: TextStyle(
+                                        fontSize: 16.0, color: Colors.black),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      icon: Icon(
+                                        FontAwesomeIcons.lock,
+                                        color: Colors.black,
+                                      ),
+                                      hintText: "Confirm Password",
+                                      hintStyle: TextStyle(fontSize: 16.0),
+                                      suffixIcon: GestureDetector(
+                                        onTap: _toggleSignupConfirm,
+                                        child: Icon(
+                                          _obscureTextSignupConfirm
+                                              ? FontAwesomeIcons.eye
+                                              : FontAwesomeIcons.eyeSlash,
+                                          size: 15.0,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 250.0,
+                                    height: 1.0,
+                                    color: Colors.grey[400],
+                                  ),
+                                ],
+                              ))),
                     ],
                   ),
                 ),
               ),
- Container(
-                margin: EdgeInsets.only(top:  MediaQuery.of(context).size.height * 0.53),
+              Container(
+                margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.53),
                 decoration: new BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: Theme.Colors.loginGradientStart,
-                      offset: Offset(1.0, 6.0),
-                      blurRadius: 10.0,
-                    ),
-                  
-                  ],
-                  color: Colors.green[900]
-                ),
+                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Theme.Colors.loginGradientStart,
+                        offset: Offset(1.0, 6.0),
+                        blurRadius: 10.0,
+                      ),
+                    ],
+                    color: Colors.green[900]),
                 child: MaterialButton(
-                     highlightColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
                     splashColor: Theme.Colors.loginGradientEnd,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -305,37 +277,31 @@ class _Login1PageState extends State<Login1Page>
                       child: Text(
                         "Sign Up".toUpperCase(),
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            ),
+                          color: Colors.white,
+                          fontSize: 20.0,
+                        ),
                       ),
                     ),
-                     onPressed: () async {
-                        _signupFormKey.currentState.validate();
-                        _signUpWithEmailPassword();
-                      }
-                    
-                    
-                    ),
+                    onPressed: () async {
+                      _signupFormKey.currentState.validate();
+                      _signUpWithEmailPassword();
+                    }),
               ),
-              SizedBox(height:MediaQuery.of(context).size.height *0.2 ),
-    
-    
-
+              SizedBox(height: MediaQuery.of(context).size.height * 0.2),
             ],
           ),
         ],
       ),
     );
-    
   }
+
   Future<FirebaseUser> _signUpWithEmailPassword() async {
-    FirebaseUser user;
     try {
-      user = (await _auth.createUserWithEmailAndPassword(
+      Login1Page.user = (await _auth.createUserWithEmailAndPassword(
               email: signupEmailController.text,
               password: signupPasswordController.text))
           .user;
+      LoginPage.userName = signupNameController.text;
       if (signupNameController.text == "" ||
           signupPasswordController.text.length < 8 ||
           signupPasswordController.text !=
@@ -349,6 +315,7 @@ class _Login1PageState extends State<Login1Page>
                       '1. Invalid Name\n\n2. Invalid Email Address\n\n3. Email already in use\n\n4. Password shorter than 8 characters\n\n5. Password and Confirm Password do not match'),
                 ));
       } else {
+        Login1Page.user.sendEmailVerification();
         showDialog(
             context: context,
             builder: (_) => AlertDialog(
@@ -357,15 +324,20 @@ class _Login1PageState extends State<Login1Page>
                       'An Email will be sent to your registered email address for verification purposes'),
                 ));
       }
-      return user;
+      return Login1Page.user;
     } catch (e) {
       print(e.toString());
+      showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+                title: Text(
+                    'ERROR! One of the following might have caused an issue:'),
+                content: Text(
+                    '1. Invalid Name\n\n2. Invalid Email Address\n\n3. Email already in use\n\n4. Password shorter than 8 characters\n\n5. Password and Confirm Password do not match'),
+              ));
       return null;
     }
   }
-
-
-  
 
   void showInSnackBar(String value) {
     FocusScope.of(context).requestFocus(new FocusNode());
@@ -377,14 +349,12 @@ class _Login1PageState extends State<Login1Page>
         style: TextStyle(
             color: Colors.white,
             fontSize: 16.0,
-            fontFamily: "WorkSansSemiBold"),
+            ),
       ),
       backgroundColor: Colors.blue,
       duration: Duration(seconds: 3),
     ));
   }
-
-
 
   void _toggleSignup() {
     setState(() {

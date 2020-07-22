@@ -1,10 +1,11 @@
-import 'package:Cycled_iOS/customWidgets/shoe_model.dart';
+import 'package:Cycled_iOS/customWidgets/exploreHere.dart';
+import 'package:Cycled_iOS/customWidgets/formPage.dart';
 import 'package:Cycled_iOS/database/DatabaseService.dart';
 import 'package:Cycled_iOS/tabs/duplicatestorePage.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../authentication.dart';
-
-List<ShoeModel> shoeList = ShoeModel.list;
+import 'HowEarnPoints.dart';
 
 class UserCard extends StatelessWidget {
   @override
@@ -17,57 +18,35 @@ class UserCard extends StatelessWidget {
             child: Container(
                 child: Stack(children: <Widget>[
       Positioned(
-        top: MediaQuery.of(context).size.height / 2.5,
         child: Container(
-          height: MediaQuery.of(context).size.height * 1.5,
+          height: MediaQuery.of(context).size.height * 3,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(0),
-            color: Colors.white,
-          ),
-        ),
-      ),
-      Positioned(
-          top: MediaQuery.of(context).size.height / 2.3,
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Text(
-            "  Membership Tier",
-            style: TextStyle(
-                fontSize: 25,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'SFProText'),
-          )),
-      Positioned(
-        child: Container(
-          height: MediaQuery.of(context).size.height * 1.1,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(0),
-            color: Colors.black,
+            color: Colors.grey[100],
           ),
         ),
       ),
       Container(
-          padding: EdgeInsets.fromLTRB(0, 25, 150, 10),
+          padding: EdgeInsets.fromLTRB(0, 25, 15, 10),
           child: Column(
             children: <Widget>[
-              SizedBox(height: 0),
               DatabaseService(uid: LoginPage.user.uid).getTier(),
             ],
           )),
+      SizedBox(height: 20),
       Container(
           padding: EdgeInsets.fromLTRB(10, 85, 20, 20),
           child: Column(
             children: <Widget>[
+              SizedBox(height: 10),
               Text(
                 "TOKENS FOR REWARDS REDEMPTION",
                 style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'SFProText'),
+                  fontSize: 13,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           )),
@@ -75,13 +54,16 @@ class UserCard extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(10, 115, 40, 20),
           child: Column(
             children: <Widget>[
-              DatabaseService(uid: LoginPage.user.uid).getMemberTokens('usercard'),
+              SizedBox(height: 10),
+              DatabaseService(uid: LoginPage.user.uid)
+                  .getMemberTokens('usercard'),
             ],
           )),
       Container(
           padding: EdgeInsets.fromLTRB(90, 105, 20, 20),
           child: Column(
             children: <Widget>[
+              SizedBox(height: 10),
               FlatButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),
@@ -93,7 +75,8 @@ class UserCard extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => DuplicateStorePage()))
+                          builder: (BuildContext context) =>
+                              DuplicateStorePage()))
                 },
                 child: Text(
                   "Rewards".toUpperCase(),
@@ -108,33 +91,35 @@ class UserCard extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(10, 180, 40, 20),
           child: Column(
             children: <Widget>[
+              SizedBox(height: 10),
               Text(
-                "TOTAL POINTS EARNED",
+                "TOTAL PONTS EARNED",
                 style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'SFProText'),
+                  fontSize: 13,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           )),
       Container(
-          padding: EdgeInsets.fromLTRB(10, 200, 40, 20),
+          padding: EdgeInsets.fromLTRB(10, 210, 40, 20),
           child: Column(
             children: <Widget>[
+              SizedBox(height: 10),
               DatabaseService(uid: LoginPage.user.uid).getPoints(),
             ],
           )),
       Container(
-        padding: EdgeInsets.fromLTRB(220, MediaQuery.of(context).size.height / 4, 0, 20),
-        child: DatabaseService(uid: LoginPage.user.uid).getStatus(),
-      ),
-      Container(
-        padding: EdgeInsets.fromLTRB(10, 250, 40, 20),
-        child: DatabaseService(uid: LoginPage.user.uid).obtainPoints(),
+        padding: EdgeInsets.fromLTRB(10, 270, 40, 20),
+        child: Column(
+          children: <Widget>[
+            DatabaseService(uid: LoginPage.user.uid).obtainPoints(),
+          ],
+        ),
       ),
       Positioned(
-        top: MediaQuery.of(context).size.height / 2.5,
+        top: MediaQuery.of(context).size.height / 2.2,
         child: Container(
           height: MediaQuery.of(context).size.height * 1.5,
           width: MediaQuery.of(context).size.width,
@@ -144,138 +129,124 @@ class UserCard extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
-          top: MediaQuery.of(context).size.height / 2.3,
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Text(
-            "  Membership Tiers",
-            style: TextStyle(
-                fontSize: 25,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'SFProText'),
-          )),
-      Positioned(
-          top: MediaQuery.of(context).size.height / 2,
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Text(
-            "   Level up when you complete the daily quiz\n   and dispose your food properly ",
-            style: TextStyle(
-                fontSize: 15, color: Colors.brown),
-          )),
-      Positioned(
-        top: MediaQuery.of(context).size.height / 1.6,
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height / 2.1,
-        child: ListView.builder(
-          itemCount: shoeList.length,
-          scrollDirection: Axis.horizontal,
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              child: Container(
-                width: 230,
-                margin: EdgeInsets.only(right: 16),
-                child: Stack(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 2),
-                      child: _buildBackground(index, 230),
+      Container(
+          padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width / 30,
+              MediaQuery.of(context).size.height / 2.099, 15, 10),
+          child: Row(
+            children: <Widget>[
+              ButtonTheme(
+                minWidth: MediaQuery.of(context).size.width / 2,
+                height: MediaQuery.of(context).size.height * .07,
+                child: RaisedButton(
+                    elevation: 0.0,
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(0)),
+                    onPressed: () => {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      FormPage()))
+                        },
+                    child: new Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        new Text("Be A Host".toUpperCase(),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: MediaQuery.of(context).size.width / 30,
+                            )),
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.18),
+                        new Icon(Icons.lightbulb_outline,
+                            color: Colors.black,
+                            size: MediaQuery.of(context).size.width * 0.066),
+                      ],
                     ),
-                    Positioned(
-                      bottom: 180,
-                      right: 10,
-                      child: Hero(
-                        tag: "hero${shoeList[index].imgPath}",
-                        child: Transform.rotate(
-                          angle: 0,
-                          child: Image(
-                            width: 150,
-                            height: 150,
-                            image:
-                                AssetImage("assets/${shoeList[index].imgPath}"),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                    textColor: Color(0xFF292929),
+                    splashColor: Colors.white,
+                    color: Colors.white),
               ),
-            );
-          },
-        ),
-      ),
+              ButtonTheme(
+                minWidth: MediaQuery.of(context).size.width / 2.35,
+                height: MediaQuery.of(context).size.height * .07,
+                child: RaisedButton(
+                    elevation: 0.0,
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(0)),
+                    onPressed: () => {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      ExploreHere()))
+                        },
+                    child: new Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        new Text("Explore here".toUpperCase(),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: MediaQuery.of(context).size.width / 30,
+                            )),
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.18),
+                        new Icon(Icons.explore,
+                            color: Colors.black,
+                            size: MediaQuery.of(context).size.width * 0.066),
+                      ],
+                    ),
+                    textColor: Color(0xFF292929),
+                    splashColor: Colors.white,
+                    color: Colors.white),
+              ),
+            ],
+          )),
+      Container(
+          padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width / 30,
+              MediaQuery.of(context).size.height / 1.75, 15, 10),
+          child: Column(
+            children: <Widget>[
+              ButtonTheme(
+                minWidth: MediaQuery.of(context).size.width * 2,
+                height: MediaQuery.of(context).size.height * .07,
+                child: RaisedButton(
+                    elevation: 0.0,
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(0)),
+                    onPressed: () => {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      HowEarnPoints()))
+                        },
+                    child: new Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Padding(
+                            padding: EdgeInsets.only(left: 0.0),
+                            child: new Text("How To Earn Points".toUpperCase(),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ))),
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.3),
+                        new Icon(
+                          FontAwesomeIcons.infoCircle,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ),
+                    textColor: Color(0xFF292929),
+                    color: Colors.grey[100]),
+              ),
+            ],
+          )),
     ]))));
   }
-}
-
-Widget _buildBackground(int index, double width) {
-  return Container(
-    child: Container(
-     
-       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
- color: shoeList[index].color,
-      ),
-      width: width,
-      child: Stack(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  height: 180,
-                  width: 200,
-                ),
-                Container(
-                  width: 200,
-                  child: Text(
-                    "${shoeList[index].name}",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Text(
-                  "${shoeList[index].price.toInt()} points",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                
-                SizedBox(height: 10),
-                Text(
-                  "${shoeList[index].brand}",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Container(
-              width: 90,
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-              ),
-            ),
-          )
-        ],
-      ),
-    ),
-  );
 }
