@@ -282,6 +282,10 @@ class _Login2PageState extends State<Login2Page>
       try {
         DatabaseService(uid: LoginPage.user.uid)
             .updateUserInfo(LoginPage.user.email, LoginPage.userName, false);
+        DatabaseService(uid: LoginPage.user.uid)
+            .updateUserPollAttempt(false, null);
+        DatabaseService(uid: LoginPage.user.uid)
+            .updateUserDisposeAttempt(false, null);
 
         DatabaseService(uid: LoginPage.user.uid).updateUserTokens(0);
         DatabaseService(uid: LoginPage.user.uid).updateUserStatus(false);

@@ -1,3 +1,4 @@
+import 'package:Cycled_iOS/customWidgets/DailyPollCard.dart';
 import 'package:Cycled_iOS/forum/reply.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -6,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../authentication.dart';
+import '../dailyPoll.dart';
 
 class DatabaseServicee extends StatefulWidget {
   static String postUID;
@@ -18,7 +20,8 @@ class DatabaseService extends State<DatabaseServicee> {
   Widget build(BuildContext context) {
     return null;
   }
- Firestore firestore = Firestore.instance;
+
+  Firestore firestore = Firestore.instance;
   final String uid;
   DatabaseService({this.uid});
 
@@ -148,10 +151,9 @@ class DatabaseService extends State<DatabaseServicee> {
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) return Container();
-            return Text(
-                snapshot.data.documents[3]['Tokens'].toString(),
+            return Text(snapshot.data.documents[3]['Tokens'].toString(),
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.bold,
                     fontSize: MediaQuery.of(context).size.height * 0.025));
           },
         );
@@ -249,6 +251,125 @@ class DatabaseService extends State<DatabaseServicee> {
                 color: Colors.black));
       },
     );
+  }
+
+  Future firstUserPollAttempt(bool attempt, int date) async {
+    var ref = userCollection
+        .document(uid)
+        .collection('Other Info')
+        .document('User Poll Attempt');
+
+    return await ref.get().then((docData) => !docData.exists
+        ? ref.setData({'hasAttempted': attempt, 'Date': date})
+        : {});
+  }
+
+  Future updateUserPollAttempt(bool attempt, int date) async {
+    var ref = userCollection
+        .document(uid)
+        .collection('Other Info')
+        .document('User Poll Attempt');
+
+    return await ref.get().then((docData) => !docData.exists
+        ? ref.setData({'hasAttempted': attempt, 'Date': date})
+        : ref.updateData({'hasAttempted': attempt, 'Date': date}));
+  }
+
+  Widget checkUserPollAttempt() {
+    return StreamBuilder(
+        stream: Firestore.instance
+            .collection('UserDatabase')
+            .document(uid)
+            .collection('Other Info')
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return Container();
+          if (int.parse(DateFormat('m').format(DateTime.now())) !=
+              snapshot.data.documents[5]['Date']) {
+            DatabaseService(uid: LoginPage.user.uid).updateUserPollAttempt(
+                false, int.parse(DateFormat('m').format(DateTime.now())));
+          }
+          return Positioned(
+            bottom: 0,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: 25),
+                  GestureDetector(
+                      onTap: !snapshot.data.documents[5]['hasAttempted']
+                          ? () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => PollQuestion(),
+                                ),
+                              );
+                            }
+                          : () {},
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: !snapshot.data.documents[5]['hasAttempted']
+                              ? Colors.teal[200]
+                              : Colors.grey,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black26,
+                              offset: Offset(1, 1),
+                              spreadRadius: 1,
+                              blurRadius: 3,
+                            )
+                          ],
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        height: 90,
+                        child: Center(
+                          child: !snapshot.data.documents[5]['hasAttempted']
+                              ? Text(
+                                  "GET STARTED",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                )
+                              : Text(
+                                  "PLEASE TRY AGAIN TOMORROW",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                        ),
+                      ))
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  Future firstUserDisposeAttempt(bool attempt, int date) async {
+    var ref = userCollection
+        .document(uid)
+        .collection('Other Info')
+        .document('User Dispose Attempt');
+
+    return await ref.get().then((docData) => !docData.exists
+        ? ref.setData({'hasAttempted': attempt, 'Date': date})
+        : {});
+  }
+
+  Future updateUserDisposeAttempt(bool attempt, int date) async {
+    var ref = userCollection
+        .document(uid)
+        .collection('Other Info')
+        .document('User Dispose Attempt');
+
+    return await ref.get().then((docData) => !docData.exists
+        ? ref.setData({'hasAttempted': attempt, 'Date': date})
+        : ref.updateData({'hasAttempted': attempt, 'Date': date}));
   }
 
   Future updateUserPoints(int points) async {
@@ -414,7 +535,7 @@ class DatabaseService extends State<DatabaseServicee> {
                         fontStyle: FontStyle.italic,
                         color: Colors.teal[800]),
                   ),
-                   SizedBox(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.5,
                   ),
                   CircleAvatar(
@@ -752,24 +873,19 @@ class DatabaseService extends State<DatabaseServicee> {
         : {});
   }
 
-  void updateThreadReplies(String titleupload, String sender, String date, String message) async {
-    
-    
+  void updateThreadReplies(
+      String titleupload, String sender, String date, String message) async {
     await firestore
         .collection('ForumDatabase')
         .document(titleupload)
         .collection('Replies')
         .document(sender)
         .setData({
-    
       'date': date,
-       'description': message, 
-      'name' : sender,
+      'description': message,
+      'name': sender,
     });
-    
-  
   }
-  
 
   Widget getThreads() {
     return StreamBuilder(
@@ -823,7 +939,7 @@ class DatabaseService extends State<DatabaseServicee> {
                                     child: Icon(Icons.reply),
                                     onTap: () {
                                       DatabaseServicee.postUID =
-                                        snapshot.data.documents[0]['postUID'];
+                                          snapshot.data.documents[0]['postUID'];
                                       showModalBottomSheet(
                                           context: context,
                                           builder: (context) {

@@ -19,7 +19,6 @@ class _FormPageState extends State<FormPage> {
   Geoflutterfire geo = Geoflutterfire();
   String _currentAddress;
 
-
   final myController = TextEditingController();
   final controller2 = TextEditingController();
 
@@ -39,13 +38,15 @@ class _FormPageState extends State<FormPage> {
           Container(
             child: Stack(
               children: <Widget>[
-                SizedBox(height:  MediaQuery.of(context).size.height / 10,),
-            Text(
-                    '  \n  Be a\n       Host Today\n',
-                    style:
-                        TextStyle(fontSize:  MediaQuery.of(context).size.width / 10, fontWeight: FontWeight.bold),
-                  ),
-                
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 10,
+                ),
+                Text(
+                  '  \n  Be a\n       Host Today\n',
+                  style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width / 10,
+                      fontWeight: FontWeight.bold),
+                ),
                 Container(
                   padding: EdgeInsets.fromLTRB(290.0, 15.0, 0.0, 0.0),
                   child: Text(
@@ -59,83 +60,85 @@ class _FormPageState extends State<FormPage> {
               ],
             ),
           ),
-          
           Container(
             child: Stack(
               children: <Widget>[
-                  Column(children: <Widget>[
-                   
-                                    Container(
-                  padding: EdgeInsets.fromLTRB(0.0, 0, MediaQuery.of(context).size.width / 1.4, 0.0),
-                  child: Text(
-                    '  Quick Tips: \n',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                Column(children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.fromLTRB(
+                        0.0, 0, MediaQuery.of(context).size.width / 1.4, 0.0),
+                    child: Text(
+                      '  Quick Tips: \n',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-
-
-                                    Container(
-                  padding: EdgeInsets.fromLTRB(0.0, 0, 0.0, 0.0),
-                  child: Text(
-                " 1) Share distinctive features for disposers to easily recognise\n (eg. Landmark, Unit No.) \n\n 2) Click the icon to confirm the location of your collection point\n\n 3) Be on the map and check to see if you are there\n\n 4) Remember your password and fav food to this collection point!",
-                style: TextStyle(fontSize: 12),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(0.0, 0, 0.0, 0.0),
+                    child: Text(
+                      " 1) Share distinctive features for disposers to easily recognise\n (eg. Landmark, Unit No.) \n\n 2) Click the icon to confirm the location of your collection point\n\n 3) Be on the map and check to see if you are there\n\n 4) Remember your password and fav food to this collection point!",
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ),
-                ),
-                 ]),
+                ]),
               ],
             ),
           ),
-         Row(children: <Widget>[
-           SizedBox(width: MediaQuery.of(context).size.width / 2.5,),
-                   if (_currentPosition != null) Text(_currentAddress),
-                    FlatButton(
-                      onPressed: () {
-                        _getCurrentLocation();
-                      },
-                      child: Column(
-                        // Replace with a Row for horizontal icon + text
-                        children: <Widget>[
-                          Icon(Icons.location_on, color: Colors.green[900]),
-                          Text("Postal Code", style: TextStyle(fontSize: 10))
-                        ],
-                      ),
-                    ),
-         ]),
-                 
+          Row(children: <Widget>[
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 2.5,
+            ),
+            if (_currentPosition != null) Text(_currentAddress),
+            FlatButton(
+              onPressed: () {
+                _getCurrentLocation();
+              },
+              child: Column(
+                // Replace with a Row for horizontal icon + text
+                children: <Widget>[
+                  Icon(Icons.location_on, color: Colors.green[900]),
+                  Text("Postal Code", style: TextStyle(fontSize: 10))
+                ],
+              ),
+            ),
+          ]),
           Container(
               padding: EdgeInsets.only(top: 2.0, left: 20.0, right: 20.0),
               child: Column(
                 children: <Widget>[
                   SizedBox(height: 10.0),
-                     Row(children: <Widget>[
-                  Container(
+                  Row(children: <Widget>[
+                    Container(
                       width: MediaQuery.of(context).size.width / 2.8,
                       child: TextFormField(
-                    decoration: InputDecoration(
-                        labelText: 'Preferred Name ',
-                        labelStyle: TextStyle(color: Colors.grey, fontSize: 15),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green))),
-                    obscureText: false,
-                    controller: myController,
-                  ),
-                  ),   SizedBox(
+                        decoration: InputDecoration(
+                            labelText: 'Preferred Name ',
+                            labelStyle:
+                                TextStyle(color: Colors.grey, fontSize: 15),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.green))),
+                        obscureText: false,
+                        controller: myController,
+                      ),
+                    ),
+                    SizedBox(
                       width: MediaQuery.of(context).size.width / 7,
                     ),
-                   Container(
+                    Container(
                       width: MediaQuery.of(context).size.width / 2.8,
                       child: TextFormField(
-                    decoration: InputDecoration(
-                        labelText: 'Favourite food! ',
-                        labelStyle: TextStyle(color: Colors.grey, fontSize: 15),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green))),
-                    obscureText: false,
-                    controller: controllerfood,
-                  ),
-                  ),
-                  SizedBox(height: 10.0),
-                     ]),
+                        decoration: InputDecoration(
+                            labelText: 'Favourite food! ',
+                            labelStyle:
+                                TextStyle(color: Colors.grey, fontSize: 15),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.green))),
+                        obscureText: false,
+                        controller: controllerfood,
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                  ]),
                   Row(children: <Widget>[
                     Container(
                       width: MediaQuery.of(context).size.width / 2.8,
@@ -176,10 +179,8 @@ class _FormPageState extends State<FormPage> {
                           onPressed: () async {
                             if (myController.text == "" ||
                                 controller2.text == "" ||
-                                controllerpw.text == ""
-                                ||
-                                controllerfood.text == ""
-                                ) {
+                                controllerpw.text == "" ||
+                                controllerfood.text == "") {
                               showDialog(
                                   context: context,
                                   builder: (_) => AlertDialog(
@@ -268,27 +269,18 @@ class _FormPageState extends State<FormPage> {
             actions: <Widget>[
               FlatButton(
                   onPressed: () {
-                    _addGeoPoint();//show alert dialog as confirmation on pressing 
+                    _addGeoPoint(); //show alert dialog as confirmation on pressing
 
                     Navigator.of(context).pop("");
-                   
-
-
-
-                   
                   },
                   child: Text('Add Me in!')),
-                  
               FlatButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text('Cancel')),
-                  
             ],
           );
         });
   }
-
-
 
   void _confirmDialog(BuildContext context) {
     showDialog(
@@ -298,7 +290,6 @@ class _FormPageState extends State<FormPage> {
             title: Text('Great! Come and Join us!'),
             content: Text(
                 'Ensure that all the details are correct (eg. Your Collection Point) and we are ready to go'),
-            
           );
         });
   }
@@ -309,38 +300,40 @@ class _FormPageState extends State<FormPage> {
         builder: (context) {
           return AlertDialog(
             title: Text('Awww we hate to see you go!'),
-            content:Row(
-                        // Replace with a Row for horizontal icon + text
-                        children: <Widget>[
-
-           Container(
-                      width: MediaQuery.of(context).size.width / 3.4,
-                      child: TextFormField(
-              decoration: InputDecoration(
-                  labelText: 'Password',
-                  labelStyle: TextStyle(color: Colors.grey, fontSize: 15),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green))),
-              obscureText: false,
-              controller: controllerpwcheck,
-            ),), 
-
-            SizedBox(width: MediaQuery.of(context).size.width / 10.8,),
- Container(
-                      width: MediaQuery.of(context).size.width / 3.8,
-                      child: TextFormField(
-             
-              decoration: InputDecoration(
-                  labelText: 'Fav Food! ',
-                  labelStyle: TextStyle(color: Colors.grey, fontSize: 15),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green))),
-              obscureText: false,
-              controller: controllerfoodcheck,
-            ),
-                      ),
-                        ]),
- actions: <Widget>[
+            content: Row(
+                // Replace with a Row for horizontal icon + text
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width / 3.4,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          labelText: 'Password',
+                          labelStyle:
+                              TextStyle(color: Colors.grey, fontSize: 15),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.green))),
+                      obscureText: false,
+                      controller: controllerpwcheck,
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 10.8,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width / 3.8,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          labelText: 'Fav Food! ',
+                          labelStyle:
+                              TextStyle(color: Colors.grey, fontSize: 15),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.green))),
+                      obscureText: false,
+                      controller: controllerfoodcheck,
+                    ),
+                  ),
+                ]),
+            actions: <Widget>[
               FlatButton(
                   onPressed: () {
                     deleteData();
@@ -351,8 +344,6 @@ class _FormPageState extends State<FormPage> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text('Cancel')),
             ],
-            
-
           );
         });
   }
@@ -374,10 +365,10 @@ class _FormPageState extends State<FormPage> {
     Text pw = Text(controllerpw.text);
     var password = pw.data;
 
-     Text pwfood = Text(controllerfood.text); 
-     var passwordfood = pwfood.data;
+    Text pwfood = Text(controllerfood.text);
+    var passwordfood = pwfood.data;
 
-     var newpassword = password + passwordfood; 
+    var newpassword = password + passwordfood;
 
     await firestore
         .collection('BinLocationDatabase')
@@ -387,24 +378,20 @@ class _FormPageState extends State<FormPage> {
       'Coordinates': point,
       'LandMark': landmark,
       'Password': newpassword,
-      'UserType' : "User",
-
+      'UserType': "User",
     });
-    
   }
 
   void deleteData() {
     Text pwcheck = Text(controllerpwcheck.text);
     var passwordcheck = pwcheck.data;
 
-
     Text foodcheck = Text(controllerfoodcheck.text);
     var fdcheck = foodcheck.data;
 
-  var passwordchecking = passwordcheck + fdcheck; 
+    var passwordchecking = passwordcheck + fdcheck;
 
     try {
-
       firestore
           .collection('BinLocationDatabase')
           .document(passwordchecking)

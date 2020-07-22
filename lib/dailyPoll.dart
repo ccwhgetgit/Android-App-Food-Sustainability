@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
+import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import 'authentication.dart';
+import 'customWidgets/DailyPollCard.dart';
 import 'database/DatabaseService.dart';
 
 class PollQuestion extends StatefulWidget {
@@ -26,7 +28,7 @@ class _PollQuestionState extends State<PollQuestion> {
   @override
   void initState() {
     super.initState();
-    random = rng.nextInt(4);
+    random = rng.nextInt(5);
   }
 
   @override
@@ -297,6 +299,16 @@ class _PollQuestionState extends State<PollQuestion> {
                                                           uid: LoginPage
                                                               .user.uid)
                                                       .addUserTokens(10);
+                                                  DatabaseService(
+                                                          uid: LoginPage
+                                                              .user.uid)
+                                                      .updateUserPollAttempt(
+                                                          true,
+                                                          int.parse(DateFormat(
+                                                                  'm')
+                                                              .format(DateTime
+                                                                  .now())));
+
                                                   Navigator.of(context).pop();
                                                   Navigator.of(context).pop();
                                                 })
@@ -314,6 +326,15 @@ class _PollQuestionState extends State<PollQuestion> {
                                             FlatButton(
                                                 child: Text("OK"),
                                                 onPressed: () {
+                                                  DatabaseService(
+                                                          uid: LoginPage
+                                                              .user.uid)
+                                                      .updateUserPollAttempt(
+                                                          true,
+                                                          int.parse(DateFormat(
+                                                                  'm')
+                                                              .format(DateTime
+                                                                  .now())));
                                                   Navigator.of(context).pop();
                                                   Navigator.of(context).pop();
                                                 })

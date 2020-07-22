@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:image_picker/image_picker.dart';
 import '../authentication.dart';
@@ -26,8 +27,8 @@ class _DisposePageState extends State<DisposePage> {
 
   Set<Marker> _markers = HashSet<Marker>();
   GoogleMapController _mapController;
-   BitmapDescriptor _markerIconA;
-   BitmapDescriptor _markerIconU;
+  BitmapDescriptor _markerIconA;
+  BitmapDescriptor _markerIconU;
   final FirebaseStorage _storage =
       FirebaseStorage(storageBucket: 'gs://cycledorbital-ab3ff.appspot.com');
   StorageUploadTask _uploadTask;
@@ -53,6 +54,8 @@ class _DisposePageState extends State<DisposePage> {
       setState(() {
         qrCodeResult = codeScanner.rawContent;
       });
+      DatabaseService(uid: LoginPage.user.uid).updateUserDisposeAttempt(
+          true, int.parse(DateFormat('m').format(DateTime.now())));
     }
     Navigator.of(context).pop();
   }
@@ -68,6 +71,8 @@ class _DisposePageState extends State<DisposePage> {
       setState(() {
         qrCodeResult = codeScanner.rawContent;
       });
+      DatabaseService(uid: LoginPage.user.uid).updateUserDisposeAttempt(
+          true, int.parse(DateFormat('m').format(DateTime.now())));
     }
     Navigator.of(context).pop();
   }
@@ -77,7 +82,9 @@ class _DisposePageState extends State<DisposePage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-              title: Center(child: Text("Share your food waste"),),
+              title: Center(
+                child: Text("Share your food waste"),
+              ),
               content: SingleChildScrollView(
                   child: ListBody(
                 children: <Widget>[
@@ -114,45 +121,46 @@ class _DisposePageState extends State<DisposePage> {
         .then((docs) {
       if (docs.documents.isNotEmpty) {
         for (int i = 0; i < docs.documents.length; i++) {
-            if (docs.documents[i]['UserType'] == "User"){
-          setState(() {
-            bins.add(docs.documents[i].data);
-            binsFlag = true;
+          if (docs.documents[i]['UserType'] == "User") {
+            setState(() {
+              bins.add(docs.documents[i].data);
+              binsFlag = true;
               _markers.add(
-              Marker(
-                markerId: MarkerId(i.toString()),
-                position: LatLng(docs.documents[i]['Coordinates'].latitude,
-                    docs.documents[i]['Coordinates'].longitude),
-                infoWindow: InfoWindow(
-                  title: docs.documents[i]['Address'],
-                  snippet: docs.documents[i]['LandMark'],
+                Marker(
+                  markerId: MarkerId(i.toString()),
+                  position: LatLng(docs.documents[i]['Coordinates'].latitude,
+                      docs.documents[i]['Coordinates'].longitude),
+                  infoWindow: InfoWindow(
+                    title: docs.documents[i]['Address'],
+                    snippet: docs.documents[i]['LandMark'],
+                  ),
+                  icon: _markerIconU,
                 ),
-                icon: _markerIconU,
-              ),
-            );
-          });
-          } else  if (docs.documents[i]['UserType'] == "Admin"){
-          setState(() {
-            bins.add(docs.documents[i].data);
-            binsFlag = true;
-            _markers.add(
-              Marker(
-                markerId: MarkerId(i.toString()),
-                position: LatLng(docs.documents[i]['Coordinates'].latitude,
-                    docs.documents[i]['Coordinates'].longitude),
-                infoWindow: InfoWindow(
-                  title: docs.documents[i]['Address'],
-                  snippet: docs.documents[i]['LandMark'],
+              );
+            });
+          } else if (docs.documents[i]['UserType'] == "Admin") {
+            setState(() {
+              bins.add(docs.documents[i].data);
+              binsFlag = true;
+              _markers.add(
+                Marker(
+                  markerId: MarkerId(i.toString()),
+                  position: LatLng(docs.documents[i]['Coordinates'].latitude,
+                      docs.documents[i]['Coordinates'].longitude),
+                  infoWindow: InfoWindow(
+                    title: docs.documents[i]['Address'],
+                    snippet: docs.documents[i]['LandMark'],
+                  ),
+                  icon: _markerIconA,
                 ),
-                icon: _markerIconA,
-            ),
-            );
-          });
+              );
+            });
           }
         }
       }
     });
   }
+
   _zoomInMarker(elem) {
     _mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target:
@@ -177,15 +185,16 @@ class _DisposePageState extends State<DisposePage> {
         ImageConfiguration(), 'assets/images/bin.png');
   }
 
-   void _setMarkerIconUser() async {
+  void _setMarkerIconUser() async {
     _markerIconU = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(0.0000003,0.0000003)), 'assets/images/hi.png')
-         .then((onValue) {
-       _markerIconU = onValue;
+            ImageConfiguration(size: Size(0.0000003, 0.0000003)),
+            'assets/images/hi.png')
+        .then((onValue) {
+      _markerIconU = onValue;
     });
   }
 
- void filterMarkers(dist) async {
+  void filterMarkers(dist) async {
     final position = await Geolocator().getCurrentPosition();
     double nearest = 999000.0;
 
@@ -208,46 +217,33 @@ class _DisposePageState extends State<DisposePage> {
               nearestBinIndex = i;
             }
 
-           if (bins[i]['UserType'] == "User"){
-            _markers.add(
-
-              
-              
-              Marker(
-                markerId: MarkerId(i.toString()),
-                position: LatLng(bins[i]['Coordinates'].latitude,
-                    bins[i]['Coordinates'].longitude),
-                infoWindow: InfoWindow(
-                  title: bins[i]['LandMark'],
-                  snippet: bins[i]['Address'],
-                ),
-                
-                icon: _markerIconA,
-              ),
-            );
-
-           } else if (bins[i]['UserType'] == "Admin"){
+            if (bins[i]['UserType'] == "User") {
               _markers.add(
-
-              
-              
-              Marker(
-                markerId: MarkerId(i.toString()),
-                position: LatLng(bins[i]['Coordinates'].latitude,
-                    bins[i]['Coordinates'].longitude),
-                infoWindow: InfoWindow(
-                  title: bins[i]['LandMark'],
-                  snippet: bins[i]['Address'],
+                Marker(
+                  markerId: MarkerId(i.toString()),
+                  position: LatLng(bins[i]['Coordinates'].latitude,
+                      bins[i]['Coordinates'].longitude),
+                  infoWindow: InfoWindow(
+                    title: bins[i]['LandMark'],
+                    snippet: bins[i]['Address'],
+                  ),
+                  icon: _markerIconA,
                 ),
-                
-                icon: _markerIconA,
-              ),
-            );
-
-
-             
-           }
-
+              );
+            } else if (bins[i]['UserType'] == "Admin") {
+              _markers.add(
+                Marker(
+                  markerId: MarkerId(i.toString()),
+                  position: LatLng(bins[i]['Coordinates'].latitude,
+                      bins[i]['Coordinates'].longitude),
+                  infoWindow: InfoWindow(
+                    title: bins[i]['LandMark'],
+                    snippet: bins[i]['Address'],
+                  ),
+                  icon: _markerIconA,
+                ),
+              );
+            }
           }
         });
       });
@@ -327,63 +323,84 @@ class _DisposePageState extends State<DisposePage> {
                         onTap: () => getDist(),
                       ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.025),
-                Container(
-                  height: 60,
-                  margin: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.17,
-                  ).copyWith(
-                    bottom: 20,
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.06,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: Colors.blueGrey[500],
-                  ),
-                  child: MaterialButton(
-                    child: Row(children: <Widget>[
-                      Icon(
-                        Icons.camera_alt,
-                        color: Colors.white,
-                      ),
-                      SizedBox(width: 35),
-                     Center( child: Text("Drop it off",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                            fontSize: 18,
-                          ))
-                          ,
-                     )
-                    ]),
-                    onPressed: () async {
-                      await _showChoiceDialog(context);
-                      if (file != null && qrCodeResult != "") {
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                            qrCodeResult,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16.0,
-                                fontFamily: "WorkSansSemiBold"),
-                          ),
-                          backgroundColor: Colors.blue,
-                          duration: Duration(seconds: 3),
-                        ));
+                StreamBuilder(
+                    stream: Firestore.instance
+                        .collection('UserDatabase')
+                        .document(LoginPage.user.uid)
+                        .collection('Other Info')
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) return Container();
+                      if (int.parse(DateFormat('m').format(DateTime.now())) !=
+                          snapshot.data.documents[4]['Date']) {
                         DatabaseService(uid: LoginPage.user.uid)
-                            .addUserTokens(500);
-                        DatabaseService(uid: LoginPage.user.uid)
-                            .addUserPoints(50);
-                        DatabaseService(uid: LoginPage.user.uid)
-                            .updateUserStatus(true);
-                        DatabaseService(uid: LoginPage.user.uid)
-                            .updateStatsOnDispose();
+                            .updateUserDisposeAttempt(
+                                false,
+                                int.parse(
+                                    DateFormat('m').format(DateTime.now())));
                       }
-                    },
-                  ),
-                ),
+                      return Container(
+                        height: 60,
+                        margin: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.17,
+                        ).copyWith(
+                          bottom: 20,
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.06,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: !snapshot.data.documents[4]['hasAttempted']
+                              ? Colors.blueGrey[500]
+                              : Colors.grey,
+                        ),
+                        child: MaterialButton(
+                          child: Row(children: <Widget>[
+                            Icon(
+                              Icons.camera_alt,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 35),
+                            Center(
+                              child: Text("Drop it off",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                  )),
+                            )
+                          ]),
+                          onPressed: !snapshot.data.documents[4]['hasAttempted']
+                              ? () async {
+                                  await _showChoiceDialog(context);
+                                  if (file != null && qrCodeResult != "") {
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text(
+                                        qrCodeResult,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16.0,
+                                            fontFamily: "WorkSansSemiBold"),
+                                      ),
+                                      backgroundColor: Colors.blue,
+                                      duration: Duration(seconds: 3),
+                                    ));
+                                    DatabaseService(uid: LoginPage.user.uid)
+                                        .addUserTokens(500);
+                                    DatabaseService(uid: LoginPage.user.uid)
+                                        .addUserPoints(50);
+                                    DatabaseService(uid: LoginPage.user.uid)
+                                        .updateUserStatus(true);
+                                    DatabaseService(uid: LoginPage.user.uid)
+                                        .updateStatsOnDispose();
+                                  }
+                                }
+                              : () {},
+                        ),
+                      );
+                    }),
               ],
             ))
           ],
