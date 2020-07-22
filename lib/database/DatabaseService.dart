@@ -283,6 +283,8 @@ class DatabaseService extends State<DatabaseServicee> {
             .collection('Other Info')
             .snapshots(),
         builder: (context, snapshot) {
+          print(int.parse(DateFormat('d').format(DateTime.now())));
+          print(snapshot.data.documents[5]['Date']);
           if (!snapshot.hasData) return Container();
           if (int.parse(DateFormat('d').format(DateTime.now())) !=
               snapshot.data.documents[5]['Date']) {

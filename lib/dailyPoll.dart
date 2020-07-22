@@ -305,7 +305,7 @@ class _PollQuestionState extends State<PollQuestion> {
                                                       .updateUserPollAttempt(
                                                           true,
                                                           int.parse(DateFormat(
-                                                                  'm')
+                                                                  'd')
                                                               .format(DateTime
                                                                   .now())));
 
@@ -332,7 +332,7 @@ class _PollQuestionState extends State<PollQuestion> {
                                                       .updateUserPollAttempt(
                                                           true,
                                                           int.parse(DateFormat(
-                                                                  'm')
+                                                                  'd')
                                                               .format(DateTime
                                                                   .now())));
                                                   Navigator.of(context).pop();
