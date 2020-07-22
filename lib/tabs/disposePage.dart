@@ -55,7 +55,7 @@ class _DisposePageState extends State<DisposePage> {
         qrCodeResult = codeScanner.rawContent;
       });
       DatabaseService(uid: LoginPage.user.uid).updateUserDisposeAttempt(
-          true, int.parse(DateFormat('m').format(DateTime.now())));
+          true, int.parse(DateFormat('d').format(DateTime.now())));
     }
     Navigator.of(context).pop();
   }
@@ -72,7 +72,7 @@ class _DisposePageState extends State<DisposePage> {
         qrCodeResult = codeScanner.rawContent;
       });
       DatabaseService(uid: LoginPage.user.uid).updateUserDisposeAttempt(
-          true, int.parse(DateFormat('m').format(DateTime.now())));
+          true, int.parse(DateFormat('d').format(DateTime.now())));
     }
     Navigator.of(context).pop();
   }
@@ -331,13 +331,13 @@ class _DisposePageState extends State<DisposePage> {
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) return Container();
-                      if (int.parse(DateFormat('m').format(DateTime.now())) !=
+                      if (int.parse(DateFormat('d').format(DateTime.now())) !=
                           snapshot.data.documents[4]['Date']) {
                         DatabaseService(uid: LoginPage.user.uid)
                             .updateUserDisposeAttempt(
                                 false,
                                 int.parse(
-                                    DateFormat('m').format(DateTime.now())));
+                                    DateFormat('d').format(DateTime.now())));
                       }
                       return Container(
                         height: 60,

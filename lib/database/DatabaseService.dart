@@ -284,10 +284,10 @@ class DatabaseService extends State<DatabaseServicee> {
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) return Container();
-          if (int.parse(DateFormat('m').format(DateTime.now())) !=
+          if (int.parse(DateFormat('d').format(DateTime.now())) !=
               snapshot.data.documents[5]['Date']) {
             DatabaseService(uid: LoginPage.user.uid).updateUserPollAttempt(
-                false, int.parse(DateFormat('m').format(DateTime.now())));
+                false, int.parse(DateFormat('d').format(DateTime.now())));
           }
           return Positioned(
             bottom: 0,
