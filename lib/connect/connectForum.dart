@@ -11,41 +11,38 @@ class ConnectForum extends StatefulWidget {
 class _ConnectForumState extends State<ConnectForum> {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(
-          MediaQuery.of(context).size.height / 6.5,
-        ),
-        child: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          title: PreferredSize(
-              preferredSize: Size.fromHeight(
-                0,
-              ),
-              child: TextField(
-                  decoration: InputDecoration(
-                      icon: Icon(Icons.search, color: Colors.black),
-                      hintText: "Search Thread"))),
-          bottom: PreferredSize(
-              preferredSize: Size.fromHeight(
-                0,
-              ),
-              child: Padding(
-                  padding: EdgeInsets.only(top: 2.0),
-                  child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: MediaQuery.of(context).size.width * 0.12,
-                      child: RaisedButton(
-                          color: Colors.white,
-                          child: Row(
+   return Container(
+        child: Container(
+            child: Stack(children: <Widget>[
+      
+           DatabaseService(uid: LoginPage.user.uid).getThreads(),
+
+
+      Positioned(
+        top: MediaQuery.of(context).size.height /1.55,
+        left: MediaQuery.of(context).size.width / 1.2,
+        //to infinite to align in centre
+
+        height: MediaQuery.of(context).size.height,
+        child: Column(children: <Widget>[
+          Row(
+            children: <Widget>[
+              ButtonTheme(
+  minWidth:MediaQuery.of(context).size.width/7.5,
+  height: MediaQuery.of(context).size.height/10,
+  child:
+           MaterialButton( 
+           
+                       color: Colors.teal[200],
+                       
+                        splashColor: Colors.green[900],
+                          child: Column(
                             children: <Widget>[
-                              Icon(Icons.create),
-                              SizedBox(width: 10),
-                              Text("Start A Discussion",
-                                  style: TextStyle(fontSize: 18)),
+                              Icon(Icons.add,size:20),
+                            
                             ],
                           ),
+                 shape :CircleBorder(),
                           onPressed: () {
                             showModalBottomSheet(
                                 context: context,
@@ -62,17 +59,17 @@ class _ConnectForumState extends State<ConnectForum> {
                                                   topRight:
                                                       Radius.circular(30)))));
                                 });
-                          })))),
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.cancel, color: Colors.black),
-                onPressed: () {
-                  setState(() {});
-                })
-          ],
-        ),
-      ),
-      body: DatabaseService(uid: LoginPage.user.uid).getThreads(),
-    );
+                          }))
+            ]
+          )
+        ]
+        )
+      )
+
+            ]
+        )
+   ));
   }
 }
+
+
