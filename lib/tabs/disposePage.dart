@@ -338,6 +338,8 @@ class _DisposePageState extends State<DisposePage> {
                                 false,
                                 int.parse(
                                     DateFormat('d').format(DateTime.now())));
+                        DatabaseService(uid: LoginPage.user.uid)
+                            .updateUserStatus(false);
                       }
                       return Container(
                         height: 60,
@@ -388,9 +390,9 @@ class _DisposePageState extends State<DisposePage> {
                                       duration: Duration(seconds: 3),
                                     ));
                                     DatabaseService(uid: LoginPage.user.uid)
-                                        .addUserTokens(500);
+                                        .addUserTokens(20);
                                     DatabaseService(uid: LoginPage.user.uid)
-                                        .addUserPoints(50);
+                                        .addUserPoints(5);
                                     DatabaseService(uid: LoginPage.user.uid)
                                         .updateUserStatus(true);
                                     DatabaseService(uid: LoginPage.user.uid)

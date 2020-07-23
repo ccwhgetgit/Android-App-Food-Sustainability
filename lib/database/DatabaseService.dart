@@ -1,4 +1,4 @@
-import 'package:Cycled_iOS/connect/reply.dart';
+import 'package:Cycled_iOS/helper/helperFunctions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
@@ -53,10 +53,8 @@ class DatabaseService extends State<DatabaseServicee> {
 
   // =========== USER INFO ===========
   Future updateUserInfo(String email, String name, bool displayPic) async {
-    var ref = userCollection
-        .document(uid)
-        .collection('User Info')
-        .document('Personal Info');
+    var ref = userCollection.document(uid);
+    HelperFunctions.saveUserNameSharedPreference(name);
 
     return await ref.get().then((docData) => !docData.exists
         ? ref.setData({'email': email, 'name': name, 'displayPic': displayPic})
@@ -217,6 +215,16 @@ class DatabaseService extends State<DatabaseServicee> {
     return null;
   }
 
+  Future firstUserStatus(bool status) async {
+    var ref = userCollection
+        .document(uid)
+        .collection('Other Info')
+        .document('Status');
+
+    return await ref.get().then(
+        (docData) => !docData.exists ? ref.setData({'Status': status}) : {});
+  }
+
   Future updateUserStatus(bool status) async {
     var ref = userCollection
         .document(uid)
@@ -282,8 +290,6 @@ class DatabaseService extends State<DatabaseServicee> {
             .collection('Other Info')
             .snapshots(),
         builder: (context, snapshot) {
-          print(int.parse(DateFormat('d').format(DateTime.now())));
-          print(snapshot.data.documents[5]['Date']);
           if (!snapshot.hasData) return Container();
           if (int.parse(DateFormat('d').format(DateTime.now())) !=
               snapshot.data.documents[5]['Date']) {
@@ -858,7 +864,33 @@ class DatabaseService extends State<DatabaseServicee> {
 
   void writeCollector(name, coordinate, landmark) {}
 
-  // =========== DAILY POLL Q&A RANDOM GENERATOR ===========
+  // =========== CONNECT FORUM / CHAT (NEW) ===========
+  Future getUserByEmail(String email) async {
+    return await userCollection.where("email", isEqualTo: email).getDocuments();
+  }
+
+  Future getUserByName(String name) async {
+    return await userCollection.where("name", isEqualTo: name).getDocuments();
+  }
+
+  createChatRoom(String chatRoomUID, chatRoomMap) {
+    Firestore.instance
+        .collection("ChatRoom")
+        .document(chatRoomUID)
+        .setData(chatRoomMap)
+        .catchError((e) => print(e.toString()));
+  }
+
+  getConversationMessages(String chatRoomUID, messageMap) {
+    Firestore.instance
+        .collection("ChatRoom")
+        .document(chatRoomUID)
+        .collection("Chats")
+        .add(messageMap)
+        .catchError((e) => print(e.toString()));
+  }
+
+  // =========== CONNECT FORUM / CHAT (OLD) ===========
   Future updateForumThread(String postUID, String author, String date,
       String title, String description) async {
     var ref = forumCollection.document(uid);
@@ -931,19 +963,15 @@ class DatabaseService extends State<DatabaseServicee> {
                               padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                               child: Row(children: <Widget>[
                                 GestureDetector(
-                                    child: Icon(Icons.thumb_up), onTap: () {
-
-                                 
-
-                                    }),
-                                     SizedBox(width: 0),
-                               //follow the voting count 
-                                    Text(
-                                  snapshot.data.documents[index]['count'].toString(),
+                                    child: Icon(Icons.thumb_up), onTap: () {}),
+                                SizedBox(width: 0),
+                                //follow the voting count
+                                Text(
+                                  snapshot.data.documents[index]['count']
+                                      .toString(),
                                 ),
                                 SizedBox(width: 20),
-                               
-                                
+
                                 GestureDetector(
                                     child: Icon(Icons.share),
                                     onTap: () => {} //share(context)

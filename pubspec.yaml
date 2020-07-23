@@ -45,6 +45,7 @@ dependencies:
   location: ^3.0.0
   barcode_scan:
   qr_flutter:
+  shared_preferences:
 
   cloud_firestore:
   curved_navigation_bar: ^0.3.3

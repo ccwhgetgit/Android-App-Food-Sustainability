@@ -385,7 +385,7 @@ class _LoginPageState extends State<LoginPage>
     DatabaseService(uid: LoginPage.user.uid).firstUserDisposeAttempt(false, 0);
 
     DatabaseService(uid: LoginPage.user.uid).updateUserTokens(0);
-    DatabaseService(uid: LoginPage.user.uid).updateUserStatus(false);
+    DatabaseService(uid: LoginPage.user.uid).firstUserStatus(false);
     DatabaseService(uid: LoginPage.user.uid).updateUserPoints(0);
     DatabaseService(uid: LoginPage.user.uid).updateUserTier('Bronze');
 

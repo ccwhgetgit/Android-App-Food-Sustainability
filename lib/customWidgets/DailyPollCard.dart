@@ -2,8 +2,6 @@ import 'package:Cycled_iOS/authentication.dart';
 import 'package:Cycled_iOS/database/DatabaseService.dart';
 import 'package:flutter/material.dart';
 
-import '../dailyPoll.dart';
-
 class DailyPollCard extends StatefulWidget {
   @override
   _DailyPollCard createState() => _DailyPollCard();
