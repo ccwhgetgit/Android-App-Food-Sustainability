@@ -381,6 +381,8 @@ class _LoginPageState extends State<LoginPage>
 
     DatabaseService(uid: LoginPage.user.uid).updateUserInfo(
         LoginPage.user.email, LoginPage.user.displayName, false);
+    DatabaseService(uid: LoginPage.user.uid).firstUserPollAttempt(false, 0);
+    DatabaseService(uid: LoginPage.user.uid).firstUserDisposeAttempt(false, 0);
 
     DatabaseService(uid: LoginPage.user.uid).updateUserTokens(0);
     DatabaseService(uid: LoginPage.user.uid).updateUserStatus(false);

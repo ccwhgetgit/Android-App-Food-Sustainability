@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Cycled_iOS/forum/trending.dart';
-import 'package:Cycled_iOS/forum/latest.dart';
-import 'package:Cycled_iOS/forum/myThreads.dart';
+
 import 'package:Cycled_iOS/forum/favourites.dart';
 
 class ForumPage extends StatefulWidget {
@@ -15,7 +14,7 @@ class _ForumPageState extends State<ForumPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    controller = new TabController(vsync: this, length: 4);
+    controller = new TabController(vsync: this, length: 2);
   }
 
   @override
@@ -65,22 +64,7 @@ class _ForumPageState extends State<ForumPage> with TickerProviderStateMixin {
                         fontSize: 12.0,
                       ),
                     )),
-                    new Tab(
-                        icon: new Text(
-                      "Latest".toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        color: Colors.black,
-                      ),
-                    )),
-                    new Tab(
-                        icon: new Text(
-                      "My Threads".toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        color: Colors.black,
-                      ),
-                    )),
+                   
                     new Tab(
                         icon: new Text(
                       "Favourites".toUpperCase(),
@@ -97,8 +81,7 @@ class _ForumPageState extends State<ForumPage> with TickerProviderStateMixin {
         },
         child: new TabBarView(controller: controller, children: <Widget>[
           new Trending(),
-          new Latest(),
-          new MyThreads(),
+        
           new Favourites(),
         ]),
       ),

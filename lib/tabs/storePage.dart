@@ -10,7 +10,6 @@ import '../authentication.dart';
 Issue : Count does not reset to 0 upon exiting the tabs
 */
 
-
 class StorePage extends StatefulWidget {
   static final stores = ['Giant', 'NTUC', 'Popular', 'Sheng Siong'];
   @override
@@ -31,6 +30,14 @@ class _StorePageState extends State<StorePage> {
         .then((val) {
       userTokens.addAll(val.data);
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    for (String store in StorePage.stores) {
+      DatabaseService(uid: LoginPage.user.uid).resetRewards(store, 0);
+    }
   }
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
@@ -58,15 +65,9 @@ class _StorePageState extends State<StorePage> {
               )),
               SizedBox(height: 7.0),
               Text(document['Tokens'].toString() + " Tokens",
-                  style: TextStyle(
-                      color: Color(0xFFCC8053),
-                      
-                      fontSize: 16.0)),
+                  style: TextStyle(color: Color(0xFFCC8053), fontSize: 16.0)),
               Text(document['Description'],
-                  style: TextStyle(
-                      color: Color(0xFF575E67),
-                     
-                      fontSize: 14.0)),
+                  style: TextStyle(color: Color(0xFF575E67), fontSize: 14.0)),
               Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Container(color: Color(0xFFEBEBEB), height: 1.0)),
@@ -139,7 +140,6 @@ class _StorePageState extends State<StorePage> {
               style: TextStyle(
                 fontSize: 23,
                 color: Colors.black,
-               
               )),
           //add a back
         ),
@@ -196,41 +196,33 @@ class _StorePageState extends State<StorePage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: <Widget>[
+                    Row(children: <Widget>[
+                      Text("Tokens  ".toUpperCase(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.02)),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.63),
+                      DatabaseService(uid: LoginPage.user.uid)
+                          .getTokens('rewards'),
+                    ]),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                    Row(children: <Widget>[
+                      Text("Cart ".toUpperCase(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.02)),
 
-   Row(
-                  children: <Widget>[
-  Text("Tokens  ".toUpperCase(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.02)),
-     SizedBox(width: MediaQuery.of(context).size.width * 0.63),
-
-                    DatabaseService(uid: LoginPage.user.uid)
-                        .getTokens('rewards'),
-                    
-                
-                  ]), 
-                
-                   SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                
-                
-                   Row(
-                  children: <Widget>[
-
-                     Text("Cart ".toUpperCase(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.02)),
-     SizedBox(width: MediaQuery.of(context).size.width * 0.694),
-                   
-                    Text(cartVal.toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.025)),
-                  ]),
+                      Icon(Icons.shopping_cart),
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.63),
+                      Text(cartVal.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.025)),
+                    ]),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                     Container(
                       height: 50,
@@ -243,14 +235,15 @@ class _StorePageState extends State<StorePage> {
                       ),
                       child: MaterialButton(
                         child: Row(children: <Widget>[
-                             Text("Checkout".toUpperCase(),
+                          Text("Checkout".toUpperCase(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize:
                                     MediaQuery.of(context).size.width * 0.04,
                                 color: Colors.white,
                               )),
-                          SizedBox(width:  MediaQuery.of(context).size.width * 0.534),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.534),
                           Icon(
                             Icons.arrow_forward,
                             color: Colors.white,

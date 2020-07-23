@@ -100,10 +100,9 @@ flutter:
     - assets/images/pollBG.png
     - assets/images/quiz1.png
     - assets/images/quiz2.png
-    
+
     - assets/images/quiz3.png
     - assets/images/quiz4.png
-
 
     - assets/images/1.png
     - assets/images/2.png
@@ -119,10 +118,7 @@ flutter:
     - assets/images/instructions.png
     - assets/images/recycling-point.png
     - assets/images/explore.png
-<<<<<<< HEAD
     - assets/images/hi.png
-=======
->>>>>>> 5d542754d68a86c94f5727f1cee09b12f2fc79a9
     - assets/images/cycler.png
     - assets/images/grass.png
     - assets/images/store.jpg

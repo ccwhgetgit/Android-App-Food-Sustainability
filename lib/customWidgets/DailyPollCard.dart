@@ -1,3 +1,5 @@
+import 'package:Cycled_iOS/authentication.dart';
+import 'package:Cycled_iOS/database/DatabaseService.dart';
 import 'package:flutter/material.dart';
 
 import '../dailyPoll.dart';
@@ -13,6 +15,7 @@ class _DailyPollCard extends State<DailyPollCard> {
     return Container(
         child: Container(
             child: Stack(children: <Widget>[
+      DatabaseService(uid: LoginPage.user.uid).checkUserPollAttempt(),
       Container(
         child: Container(
           height: MediaQuery.of(context).size.height / 1.7,
@@ -115,7 +118,7 @@ class _DailyPollCard extends State<DailyPollCard> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                     Text(
+                    Text(
                       "a day",
                       style: TextStyle(
                         fontSize: 13,
@@ -246,56 +249,11 @@ class _DailyPollCard extends State<DailyPollCard> {
         ]),
       ),
 
-      _buildFooter(context),
+      _buildFooter(),
     ])));
   }
 }
 
-Widget _buildFooter(BuildContext context) {
-  return Positioned(
-    bottom: 0,
-    child: Container(
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(height: 25),
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => PollQuestion(),
-                ),
-              );
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.teal[200],
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    offset: Offset(1, 1),
-                    spreadRadius: 1,
-                    blurRadius: 3,
-                  )
-                ],
-              ),
-              width: MediaQuery.of(context).size.width,
-              height: 90,
-              child: Center(
-                child: Text(
-                  "GET STARTED",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
-    ),
-  );
+Widget _buildFooter() {
+  return DatabaseService(uid: LoginPage.user.uid).checkUserPollAttempt();
 }
