@@ -906,7 +906,7 @@ class DatabaseService extends State<DatabaseServicee> {
                               padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                               child: Row(children: <Widget>[
                                 Text(snapshot.data.documents[index]['author']),
-                                Text(" - "),
+                                Text("  "),
                                 Text(snapshot.data.documents[index]['date']),
                               ]),
                             ),
@@ -931,41 +931,19 @@ class DatabaseService extends State<DatabaseServicee> {
                               padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                               child: Row(children: <Widget>[
                                 GestureDetector(
-                                    child: Icon(Icons.thumb_up), onTap: () {}),
-                                SizedBox(width: 20),
-                                GestureDetector(
-                                    child: Icon(Icons.comment), onTap: () {}),
-                                SizedBox(width: 20),
-                                GestureDetector(
-                                    child: Icon(Icons.reply),
-                                    onTap: () {
-                                      DatabaseServicee.postUID =
-                                          snapshot.data.documents[0]['postUID'];
-                                      showModalBottomSheet(
-                                          context: context,
-                                          builder: (context) {
-                                            return Container(
-                                                color: Color(0xFF737373),
-                                                child: Container(
-                                                    child: Reply(),
-                                                    decoration: BoxDecoration(
-                                                        color: Theme.of(context)
-                                                            .canvasColor,
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        30),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        30)))));
-                                          });
+                                    child: Icon(Icons.thumb_up), onTap: () {
+
+                                 
+
                                     }),
-                                SizedBox(width: 180),
-                                GestureDetector(
-                                    child: Icon(Icons.star_border),
-                                    onTap: () {}),
+                                     SizedBox(width: 0),
+                               //follow the voting count 
+                                    Text(
+                                  snapshot.data.documents[index]['count'].toString(),
+                                ),
                                 SizedBox(width: 20),
+                               
+                                
                                 GestureDetector(
                                     child: Icon(Icons.share),
                                     onTap: () => {} //share(context)
