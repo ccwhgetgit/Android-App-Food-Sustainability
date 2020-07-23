@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../authentication.dart';
 import 'startDiscussion.dart';
 
-class Trending extends StatefulWidget {
+class ConnectForum extends StatefulWidget {
   @override
-  _TrendingState createState() => new _TrendingState();
+  _ConnectForumState createState() => new _ConnectForumState();
 }
 
-class _TrendingState extends State<Trending> {
+class _ConnectForumState extends State<ConnectForum> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(

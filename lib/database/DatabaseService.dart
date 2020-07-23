@@ -1,5 +1,4 @@
-import 'package:Cycled_iOS/customWidgets/DailyPollCard.dart';
-import 'package:Cycled_iOS/forum/reply.dart';
+import 'package:Cycled_iOS/connect/reply.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
