@@ -4,6 +4,7 @@ import 'package:Cycled_iOS/database/DatabaseService.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../authentication.dart';
+import 'storePage.dart';
 
 class DuplicateStorePage extends StatefulWidget {
   static final stores = ['Giant', 'NTUC', 'Popular', 'Sheng Siong'];
@@ -14,6 +15,14 @@ class DuplicateStorePage extends StatefulWidget {
 class _DuplicateStorePageState extends State<DuplicateStorePage> {
   int cartVal = 0;
   Map<String, dynamic> userTokens = {};
+
+  @override
+  void initState() {
+    super.initState();
+    for (String store in StorePage.stores) {
+      DatabaseService(uid: LoginPage.user.uid).resetRewards(store, 0);
+    }
+  }
 
   Future getUserTokens() async {
     await Firestore.instance
@@ -52,15 +61,9 @@ class _DuplicateStorePageState extends State<DuplicateStorePage> {
               )),
               SizedBox(height: 7.0),
               Text(document['Tokens'].toString() + " Tokens",
-                  style: TextStyle(
-                      color: Color(0xFFCC8053),
-                      
-                      fontSize: 16.0)),
+                  style: TextStyle(color: Color(0xFFCC8053), fontSize: 16.0)),
               Text(document['Description'],
-                  style: TextStyle(
-                      color: Color(0xFF575E67),
-                     
-                      fontSize: 14.0)),
+                  style: TextStyle(color: Color(0xFF575E67), fontSize: 14.0)),
               Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Container(color: Color(0xFFEBEBEB), height: 1.0)),
@@ -124,23 +127,22 @@ class _DuplicateStorePageState extends State<DuplicateStorePage> {
   @override
   Widget build(BuildContext build) {
     return Scaffold(
-      appBar: AppBar(
+        appBar: AppBar(
           leading: IconButton(
-              icon: Icon(LineAwesomeIcons.arrow_left,  color: Colors.black,),
+              icon: Icon(
+                LineAwesomeIcons.arrow_left,
+                color: Colors.black,
+              ),
               onPressed: () => {Navigator.pop(context, false)}),
-      centerTitle: true,
+          centerTitle: true,
           backgroundColor: Colors.transparent,
-         title: Text('\nReward Yourself',
+          title: Text('\nReward Yourself',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 23,
                 color: Colors.black,
-               
               )),
-      ), 
-    
-
-        
+        ),
         body: new Container(
           decoration: BoxDecoration(
             image: new DecorationImage(
@@ -194,41 +196,31 @@ class _DuplicateStorePageState extends State<DuplicateStorePage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: <Widget>[
-
-   Row(
-                  children: <Widget>[
-  Text("Tokens  ".toUpperCase(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.02)),
-     SizedBox(width: MediaQuery.of(context).size.width * 0.63),
-
-                    DatabaseService(uid: LoginPage.user.uid)
-                        .getTokens('rewards'),
-                    
-                
-                  ]), 
-                
-                   SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                
-                
-                   Row(
-                  children: <Widget>[
-
-                     Text("Cart ".toUpperCase(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.02)),
-     SizedBox(width: MediaQuery.of(context).size.width * 0.694),
-                   
-                    Text(cartVal.toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.025)),
-                  ]),
+                    Row(children: <Widget>[
+                      Text("Tokens  ".toUpperCase(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.02)),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.63),
+                      DatabaseService(uid: LoginPage.user.uid)
+                          .getTokens('rewards'),
+                    ]),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                    Row(children: <Widget>[
+                      Text("Cart ".toUpperCase(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.02)),
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.694),
+                      Text(cartVal.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.025)),
+                    ]),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                     Container(
                       height: 50,
@@ -241,14 +233,15 @@ class _DuplicateStorePageState extends State<DuplicateStorePage> {
                       ),
                       child: MaterialButton(
                         child: Row(children: <Widget>[
-                             Text("Checkout".toUpperCase(),
+                          Text("Checkout".toUpperCase(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize:
                                     MediaQuery.of(context).size.width * 0.04,
                                 color: Colors.white,
                               )),
-                          SizedBox(width:  MediaQuery.of(context).size.width * 0.534),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.534),
                           Icon(
                             Icons.arrow_forward,
                             color: Colors.white,
@@ -307,7 +300,8 @@ class _DuplicateStorePageState extends State<DuplicateStorePage> {
                                               ));
                                               cartVal = 0;
                                               for (String store
-                                                  in DuplicateStorePage.stores) {
+                                                  in DuplicateStorePage
+                                                      .stores) {
                                                 DatabaseService(
                                                         uid: LoginPage.user.uid)
                                                     .resetRewards(store, 0);

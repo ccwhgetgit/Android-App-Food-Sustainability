@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:Cycled_iOS/forum/trending.dart';
+import 'package:Cycled_iOS/connect/connectForum.dart';
 
-import 'package:Cycled_iOS/forum/favourites.dart';
-
-class ForumPage extends StatefulWidget {
+class ConnectPage extends StatefulWidget {
   @override
-  _ForumPageState createState() => new _ForumPageState();
+  _ConnectPageState createState() => new _ConnectPageState();
 }
 
-class _ForumPageState extends State<ForumPage> with TickerProviderStateMixin {
+class _ConnectPageState extends State<ConnectPage>
+    with TickerProviderStateMixin {
   TabController controller;
 
   @override
@@ -34,7 +33,7 @@ class _ForumPageState extends State<ForumPage> with TickerProviderStateMixin {
               centerTitle: true,
               backgroundColor: Colors.white,
               title:
-                  Text("Cycled Forum", style: TextStyle(color: Colors.black)),
+                  Text("Cycled Connect", style: TextStyle(color: Colors.black)),
               actions: <Widget>[
                 Padding(
                     padding: EdgeInsets.only(right: 20.0),
@@ -43,7 +42,7 @@ class _ForumPageState extends State<ForumPage> with TickerProviderStateMixin {
                         onTap: () {}))
               ],
               bottom: TabBar(
-                  labelPadding: EdgeInsets.symmetric(horizontal: 30.0),
+                  labelPadding: EdgeInsets.symmetric(horizontal: 80.0),
                   controller: controller,
                   indicator: UnderlineTabIndicator(
                       insets: EdgeInsets.symmetric(horizontal: 10.0),
@@ -58,16 +57,15 @@ class _ForumPageState extends State<ForumPage> with TickerProviderStateMixin {
                   tabs: <Tab>[
                     new Tab(
                         icon: new Text(
-                      "Trending".toUpperCase(),
+                      "Forum".toUpperCase(),
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 12.0,
                       ),
                     )),
-                   
                     new Tab(
                         icon: new Text(
-                      "Favourites".toUpperCase(),
+                      "Chat".toUpperCase(),
                       style: TextStyle(
                         fontSize: 12.0,
                         color: Colors.black,
@@ -80,9 +78,8 @@ class _ForumPageState extends State<ForumPage> with TickerProviderStateMixin {
           return;
         },
         child: new TabBarView(controller: controller, children: <Widget>[
-          new Trending(),
-        
-          new Favourites(),
+          new ConnectForum(),
+          new ConnectForum()
         ]),
       ),
     );

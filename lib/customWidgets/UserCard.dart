@@ -1,31 +1,28 @@
-import 'package:Cycled_iOS/customWidgets/exploreHere.dart';
-import 'package:Cycled_iOS/customWidgets/formPage.dart';
+
 import 'package:Cycled_iOS/database/DatabaseService.dart';
 import 'package:Cycled_iOS/tabs/duplicatestorePage.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../authentication.dart';
-import 'HowEarnPoints.dart';
+import '../tabs/disposePage.dart';
+import 'DailyPollCard.dart';
 
 class UserCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
-        //add app bar
-
-        body: SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
-            child: Container(
-                child: Stack(children: <Widget>[
+    return new Container( 
+            child:  Stack(
+              children:<Widget>[  
               Positioned(
                 child: Container(
                   height: MediaQuery.of(context).size.height * 3,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(0),
-                    color: Colors.grey[100],
-                  ),
+            image: DecorationImage(
+                image: AssetImage("assets/images/member.png"), 
+                 colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.25), BlendMode.dstATop),
+             
+             fit: BoxFit.fitWidth            )),
+       
                 ),
               ),
               Container(
@@ -130,140 +127,277 @@ class UserCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                  padding: EdgeInsets.fromLTRB(
-                      MediaQuery.of(context).size.width / 30,
-                      MediaQuery.of(context).size.height / 2.099,
-                      15,
-                      10),
-                  child: Row(
-                    children: <Widget>[
-                      ButtonTheme(
-                        minWidth: MediaQuery.of(context).size.width / 2,
-                        height: MediaQuery.of(context).size.height * .07,
-                        child: RaisedButton(
-                            elevation: 0.0,
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(0)),
-                            onPressed: () => {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              FormPage()))
-                                },
-                            child: new Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                new Text("Be A Host".toUpperCase(),
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width /
-                                              30,
-                                    )),
-                                SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.18),
-                                new Icon(Icons.lightbulb_outline,
-                                    color: Colors.black,
-                                    size: MediaQuery.of(context).size.width *
-                                        0.066),
-                              ],
-                            ),
-                            textColor: Color(0xFF292929),
-                            splashColor: Colors.white,
-                            color: Colors.white),
-                      ),
-                      ButtonTheme(
-                        minWidth: MediaQuery.of(context).size.width / 2.35,
-                        height: MediaQuery.of(context).size.height * .07,
-                        child: RaisedButton(
-                            elevation: 0.0,
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(0)),
-                            onPressed: () => {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              ExploreHere()))
-                                },
-                            child: new Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                new Text("Explore here".toUpperCase(),
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width /
-                                              30,
-                                    )),
-                                SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.18),
-                                new Icon(Icons.explore,
-                                    color: Colors.black,
-                                    size: MediaQuery.of(context).size.width *
-                                        0.066),
-                              ],
-                            ),
-                            textColor: Color(0xFF292929),
-                            splashColor: Colors.white,
-                            color: Colors.white),
-                      ),
-                    ],
-                  )),
-              Container(
-                  padding: EdgeInsets.fromLTRB(
-                      MediaQuery.of(context).size.width / 30,
-                      MediaQuery.of(context).size.height / 1.75,
-                      15,
-                      10),
-                  child: Column(
-                    children: <Widget>[
-                      ButtonTheme(
-                        minWidth: MediaQuery.of(context).size.width * 2,
-                        height: MediaQuery.of(context).size.height * .07,
-                        child: RaisedButton(
-                            elevation: 0.0,
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(0)),
-                            onPressed: () => {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              HowEarnPoints()))
-                                },
-                            child: new Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Padding(
-                                    padding: EdgeInsets.only(left: 0.0),
-                                    child: new Text(
-                                        "How To Earn Points".toUpperCase(),
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ))),
-                                SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.3),
-                                new Icon(
-                                  FontAwesomeIcons.infoCircle,
-                                  color: Colors.black,
-                                ),
-                              ],
-                            ),
-                            textColor: Color(0xFF292929),
-                            color: Colors.grey[100]),
-                      ),
-                    ],
-                  )),
-            ]))));
+            
+            Container(
+                  padding: EdgeInsets.fromLTRB( MediaQuery.of(context).size.width * 0.04,  MediaQuery.of(context).size.height * 0.46,  MediaQuery.of(context).size.width * 0.04, 20),
+              child: GridView.count(
+          primary: false,
+          padding: const EdgeInsets.all(10),
+          crossAxisSpacing: MediaQuery.of(context).size.width * 0.03,
+          mainAxisSpacing:  MediaQuery.of(context).size.width * 0.03,
+          crossAxisCount: 2,
+          children: [
+        
+         
+        new GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DailyPollCard(),
+                  ),
+            );
+          },
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30.0),
+          child: Container(
+          width: 200,
+          height: 200,
+            decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/knowledgepic.png"), 
+                 colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
+             
+             fit: BoxFit.cover)),
+          child: Column(
+            children:<Widget>[
+              
+
+             DatabaseService(uid: LoginPage.user.uid).obtainPollGraph(),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+        
+        
+          Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        
+      child: Row(
+         children:<Widget>[
+            SizedBox(width: MediaQuery.of(context).size.width * 0.018),
+           DatabaseService(uid: LoginPage.user.uid).obtainPollAttempt(),
+         ]
+      ),
+      )
+          ),
+      SizedBox(height: MediaQuery.of(context).size.height * 0.012),
+     Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+      child: Row(
+         children:<Widget>[
+            SizedBox(width: MediaQuery.of(context).size.width * 0.018),
+     Text(
+          "  Knowledge", style: TextStyle(color:Colors.black, fontWeight: FontWeight.bold, fontSize: MediaQuery.of(context).size.width * 0.048),
+        ),
+         ]),
+      ),
+    ),
+
+
+            ]),
+  ),
+  
+        ),     
+    ),
+    
+
+          new GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DisposePage(),
+                  ),
+            );
+          },
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30.0),
+          child: Container(
+              decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/disposalpic.png"), 
+                 colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.25), BlendMode.dstATop),
+             
+             fit: BoxFit.cover)),
+       
+          width: 200,
+          height: 200,
+          child: Column(
+            children:<Widget>[
+              
+
+             DatabaseService(uid: LoginPage.user.uid).obtainDisposalGraph(),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+        
+        
+          Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+      child: Row(
+         children:<Widget>[
+            SizedBox(width: MediaQuery.of(context).size.width * 0.018),
+           DatabaseService(uid: LoginPage.user.uid).obtainDisposalAttempt(),
+         ]
+      ),
+      )
+          ),
+      SizedBox(height: MediaQuery.of(context).size.height * 0.012),
+     Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+      child: Row(
+         children:<Widget>[
+            SizedBox(width: MediaQuery.of(context).size.width * 0.018),
+     Text(
+          "  Disposal", style: TextStyle(color:Colors.black, fontWeight: FontWeight.bold, fontSize: MediaQuery.of(context).size.width * 0.048),
+         ),
+         ]),
+      ),
+    ),
+
+
+            ]),
+  ),
+  
+        ),     
+    ),
+      
+
+
+             ]),)
+            ]));
   }
 }
+
+
+/*
+
+              GridView.count(
+          primary: false,
+          padding: const EdgeInsets.all(20),
+          crossAxisSpacing: MediaQuery.of(context).size.width * 0.02,
+          mainAxisSpacing:  MediaQuery.of(context).size.width * 0.04,
+          crossAxisCount: 2,
+          children: [
+        
+         
+        new GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DailyPollCard(),
+                  ),
+            );
+          },
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30.0),
+          child: Container(
+          color: Colors.teal[200],
+          width: 200,
+          height: 200,
+          child: Column(
+            children:<Widget>[
+              
+
+             DatabaseService(uid: LoginPage.user.uid).obtainPollGraph(),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+        
+        
+          Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+      child: Row(
+         children:<Widget>[
+            SizedBox(width: MediaQuery.of(context).size.width * 0.018),
+           DatabaseService(uid: LoginPage.user.uid).obtainPollAttempt(),
+         ]
+      ),
+      )
+          ),
+      SizedBox(height: MediaQuery.of(context).size.height * 0.012),
+     Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+      child: Row(
+         children:<Widget>[
+            SizedBox(width: MediaQuery.of(context).size.width * 0.018),
+     Text(
+          "  Knowledge", style: TextStyle(color:Colors.white, fontSize: 18),
+        ),
+         ]),
+      ),
+    ),
+
+
+            ]),
+  ),
+  
+        ),     
+    ),
+    
+
+          new GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DailyPollCard(),
+                  ),
+            );
+          },
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30.0),
+          child: Container(
+          color: Colors.blueGrey[500],
+          width: 200,
+          height: 200,
+          child: Column(
+            children:<Widget>[
+              
+
+             DatabaseService(uid: LoginPage.user.uid).obtainDisposalGraph(),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+        
+        
+          Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+      child: Row(
+         children:<Widget>[
+            SizedBox(width: MediaQuery.of(context).size.width * 0.018),
+           DatabaseService(uid: LoginPage.user.uid).obtainDisposalAttempt(),
+         ]
+      ),
+      )
+          ),
+      SizedBox(height: MediaQuery.of(context).size.height * 0.012),
+     Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+      child: Row(
+         children:<Widget>[
+            SizedBox(width: MediaQuery.of(context).size.width * 0.018),
+     Text(
+          "  Disposal", style: TextStyle(color:Colors.white, fontSize: 18),
+        ),
+         ]),
+      ),
+    ),
+
+
+            ]),
+  ),
+  
+        ),     
+    ),
+      
+
+
+             ]),
+              ]
+            )
+                  ),
+
+                  
+*/

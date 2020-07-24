@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import 'authentication.dart';
-import 'customWidgets/DailyPollCard.dart';
 import 'database/DatabaseService.dart';
 
 class PollQuestion extends StatefulWidget {

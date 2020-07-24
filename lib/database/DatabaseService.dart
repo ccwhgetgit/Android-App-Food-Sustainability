@@ -1,7 +1,5 @@
-import 'package:Cycled_iOS/customWidgets/DailyPollCard.dart';
-import 'package:Cycled_iOS/forum/reply.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -73,12 +71,23 @@ class DatabaseService extends State<DatabaseServicee> {
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return Text("");
-        return Text(snapshot.data.documents[0]['name'],
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ));
+        DateTime now = DateTime.now();
+    var timeNow = int.parse(DateFormat('kk').format(now));
+    var message = '';
+    if (timeNow < 12 || timeNow == 24) {
+      message = 'Good Morning';
+    } else if ((timeNow >= 12) && (timeNow <= 16)) {
+      message = 'Good Afternoon';
+    } else {
+      message = 'Good Evening';
+    }
+        return Text("\n"+message +" "+ snapshot.data.documents[0]['name']+",",
+          
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.055,
+                       
+                        color: Colors.black)
+        );
       },
     );
   }
@@ -253,6 +262,19 @@ class DatabaseService extends State<DatabaseServicee> {
     );
   }
 
+
+  Future firstUserStatus(bool status) async {
+    var ref = userCollection
+        .document(uid)
+        .collection('Other Info')
+        .document('Status');
+
+    return await ref.get().then(
+        (docData) => !docData.exists ? ref.setData({'Status': status}) : {});
+  }
+
+
+
   Future firstUserPollAttempt(bool attempt, int date) async {
     var ref = userCollection
         .document(uid)
@@ -363,6 +385,7 @@ class DatabaseService extends State<DatabaseServicee> {
         : {});
   }
 
+
   Future updateUserDisposeAttempt(bool attempt, int date) async {
     var ref = userCollection
         .document(uid)
@@ -372,6 +395,303 @@ class DatabaseService extends State<DatabaseServicee> {
     return await ref.get().then((docData) => !docData.exists
         ? ref.setData({'hasAttempted': attempt, 'Date': date})
         : ref.updateData({'hasAttempted': attempt, 'Date': date}));
+  }
+
+
+  Widget obtainDisposalAttempt() {
+    return StreamBuilder(
+      stream: Firestore.instance
+          .collection('UserDatabase')
+          .document(uid)
+          .collection('Other Info')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return Text("");
+        
+        if (snapshot.data.documents[4]['hasAttempted'] == true){
+        return Text(" 1/1",
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width * 0.08,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+           
+            ));
+        }
+
+        else if (snapshot.data.documents[4]['hasAttempted'] == false){
+ return Text(" 0/1",
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width * 0.08,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+           
+            ));
+
+        }
+      },
+    );
+  }
+
+
+
+
+  Widget obtainPollAttempt() {
+    return StreamBuilder(
+      stream: Firestore.instance
+          .collection('UserDatabase')
+          .document(uid)
+          .collection('Other Info')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return Text("");
+        
+        if (snapshot.data.documents[5]['hasAttempted'] == true){
+        return Text(" 1/1",
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width * 0.08,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+           
+            ));
+        }
+
+        else if (snapshot.data.documents[5]['hasAttempted'] == false){
+ return Text(" 0/1",
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width * 0.08,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+           
+            ));
+
+        }
+      },
+    );
+  }
+
+
+  Widget obtainOverallAttempt() {
+    return StreamBuilder(
+      stream: Firestore.instance
+          .collection('UserDatabase')
+          .document(uid)
+          .collection('Other Info')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return Text("");
+        
+        if (snapshot.data.documents[5]['hasAttempted'] == true && 
+        snapshot.data.documents[4]['hasAttempted'] == true){
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:<Widget>[
+          Text("Great Job! You're done for the day",
+            style: TextStyle(
+              
+              fontSize: MediaQuery.of(context).size.width * 0.04,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+           
+            )), 
+                      
+           
+        CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.05,
+                    backgroundColor: Colors.white,
+                    child: CircleAvatar(
+                      radius: MediaQuery.of(context).size.width * 0.05,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: AssetImage('assets/images/home1.png'),
+                    )            ),
+        ]);
+        }
+
+        else if (snapshot.data.documents[4]['hasAttempted'] == false && snapshot.data.documents[5]['hasAttempted'] == true){
+  return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children:<Widget>[Text(" You haven't recycled your food waste!",
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width * 0.04,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+           
+            )), 
+           
+        CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.05,
+                    backgroundColor: Colors.transparent,
+                    child: CircleAvatar(
+                      radius: MediaQuery.of(context).size.width * 0.05,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: AssetImage('assets/images/home2.png'),
+                    )            ),
+        ]);
+
+        
+        }else if (snapshot.data.documents[4]['hasAttempted'] == true && snapshot.data.documents[5]['hasAttempted'] == false){
+ return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children:<Widget>[Text(" You haven't done the quiz!",
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width * 0.04,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+           
+            )), 
+           
+        CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.05,
+                    backgroundColor: Colors.transparent,
+                    child: CircleAvatar(
+                      radius: MediaQuery.of(context).size.width * 0.05,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: AssetImage('assets/images/home2.png'),
+                    )            ),
+        ]);
+
+        } else {
+          return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children:<Widget>[Text(" Come on! Let's Do Our Part!",
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width * 0.04,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+           
+            )), 
+             SizedBox(width: MediaQuery.of(context).size.width * 0.025),
+        CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.05,
+                    backgroundColor: Colors.white,
+                    child: CircleAvatar(
+                      radius: MediaQuery.of(context).size.width * 0.05,
+                      backgroundColor: Colors.white,
+                      backgroundImage: AssetImage('assets/images/home3.png'),
+                    )            ),
+        ]);
+        }
+      },
+    );
+  }
+
+
+  Widget obtainPollGraph() {
+    return StreamBuilder(
+      stream: Firestore.instance
+          .collection('UserDatabase')
+          .document(uid)
+          .collection('Other Info')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return Text("");
+        
+        if (snapshot.data.documents[5]['hasAttempted'] == true){
+        return Row(children: <Widget>[
+         SizedBox(width: MediaQuery.of(context).size.width * 0.045),
+       SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+        
+        CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.03,
+                    backgroundColor: Colors.white,
+                    child: CircleAvatar(
+                      radius: MediaQuery.of(context).size.width * 0.028,
+                      backgroundColor: Colors.white,
+                      backgroundImage: AssetImage('assets/images/tick.png'),
+                    )            ),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+      
+                     Text("Completed", style: TextStyle(color:Colors.black,
+                     fontSize:  MediaQuery.of(context).size.width * 0.035,
+                    fontWeight: FontWeight.bold)),
+        
+        ]
+        ) ;      
+        }
+
+        else if (snapshot.data.documents[5]['hasAttempted'] == false){
+ return Row(children: <Widget>[
+         SizedBox(width: MediaQuery.of(context).size.width * 0.045),
+       SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+        
+        CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.04,
+                    backgroundColor: Colors.black,
+                    child: CircleAvatar(
+                      radius: MediaQuery.of(context).size.width * 0.04,
+                      backgroundColor: Colors.white,
+                    backgroundImage: AssetImage('assets/images/tick.png'),
+                              )            ),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+      
+                    Text("Uncompleted", style: TextStyle(color:Colors.black,
+                     fontSize:  MediaQuery.of(context).size.width * 0.035,
+                    fontWeight: FontWeight.bold)),
+        
+        ]
+        ) ;      
+        }
+      },
+    );
+  }
+
+
+  Widget obtainDisposalGraph() {
+    return StreamBuilder(
+      stream: Firestore.instance
+          .collection('UserDatabase')
+          .document(uid)
+          .collection('Other Info')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return Text("");
+        
+        if (snapshot.data.documents[4]['hasAttempted'] == true){
+        return Row(children: <Widget>[
+         SizedBox(width: MediaQuery.of(context).size.width * 0.045),
+       SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+        
+        CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.04,
+                    backgroundColor: Colors.white,
+                    child: CircleAvatar(
+                      radius: MediaQuery.of(context).size.width * 0.04,
+                      backgroundColor: Colors.white,
+                      backgroundImage: AssetImage('assets/images/tick.png'),
+                    )            ),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+      
+                      Text("Completed", style: TextStyle(color:Colors.black,
+                     fontSize:  MediaQuery.of(context).size.width * 0.035,
+                    fontWeight: FontWeight.bold)),
+        
+        ]
+        ) ;      
+        }
+
+        else if (snapshot.data.documents[4]['hasAttempted'] == false){
+ return Row(children: <Widget>[
+         SizedBox(width: MediaQuery.of(context).size.width * 0.045),
+       SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+        
+        CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.04,
+                    backgroundColor: Colors.white,
+                    child: CircleAvatar(
+                      radius: MediaQuery.of(context).size.width * 0.04,
+                      backgroundColor: Colors.white,
+                    backgroundImage: AssetImage('assets/images/tick.png'),
+                              )            ),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+      
+                    Text("Uncompleted", style: TextStyle(color:Colors.black,
+                     fontSize:  MediaQuery.of(context).size.width * 0.035,
+                    fontWeight: FontWeight.bold)),
+        
+        ]
+        ) ;      
+        }
+      },
+    );
   }
 
   Future updateUserPoints(int points) async {
@@ -416,7 +736,7 @@ class DatabaseService extends State<DatabaseServicee> {
               lineHeight: 23.0,
               animationDuration: 4000,
 
-              percent: snapshot.data.documents[0]['Points'] / 500,
+              percent: snapshot.data.documents[0]['Points'] / 700,
 
               //need to set for the various levels
               center: Text("Next Level: Cycler"),
@@ -425,17 +745,19 @@ class DatabaseService extends State<DatabaseServicee> {
             );
           }
           return LinearPercentIndicator(
-            animation: true,
-            lineHeight: 23.0,
-            animationDuration: 4000,
+              animation: true,
+              lineHeight: 23.0,
+              animationDuration: 4000,
 
-            percent: snapshot.data.documents[0]['Points'] / 700,
+              percent: 1,
 
-            //need to set for the various levels
-            center: Text("You are the Gold Standard"),
-            linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor: Colors.teal[300],
-          );
+              //need to set for the various levels
+              center: Text("Environmental Champion!"),
+              linearStrokeCap: LinearStrokeCap.roundAll,
+              progressColor: Colors.teal[300],
+            );
+          
+
         });
   }
 
@@ -466,6 +788,33 @@ class DatabaseService extends State<DatabaseServicee> {
     );
   }
 
+
+  Widget getHomePoints() {
+    return StreamBuilder(
+      stream: Firestore.instance
+          .collection('UserDatabase')
+          .document(uid)
+          .collection('Other Info')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return Container();
+        if (snapshot.data.documents[0]['Points'] >= 0 &&
+            snapshot.data.documents[0]['Points'] < 300) {
+          setTier('BRONZE');
+        } else if (snapshot.data.documents[0]['Points'] > 299 &&
+            snapshot.data.documents[0]['Points'] < 700) {
+          setTier('SILVER');
+        } else {
+          setTier('GOLD');
+        }
+        return Text(snapshot.data.documents[0]['Points'].toString(),
+            style: TextStyle(
+                fontSize: MediaQuery.of(context).size.width * 0.08,
+                fontWeight: FontWeight.bold,
+                color: Colors.white));
+      },
+    );
+  }
   Future addUserPoints(int val) async {
     var ref = userCollection
         .document(uid)
@@ -501,11 +850,11 @@ class DatabaseService extends State<DatabaseServicee> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    " Challenger".toUpperCase(),
+                    "  Challenger",
                     style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.06,
+                        fontSize: MediaQuery.of(context).size.width * 0.059,
                         fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
+                      
                         color: Colors.teal[700]),
                   ),
                   SizedBox(
@@ -513,9 +862,10 @@ class DatabaseService extends State<DatabaseServicee> {
                   ),
                   CircleAvatar(
                     radius: MediaQuery.of(context).size.width * 0.07,
-                    backgroundColor: Colors.grey[100],
+                    backgroundColor: Colors.white,
                     child: CircleAvatar(
                       radius: MediaQuery.of(context).size.width * 0.07,
+                       backgroundColor: Colors.white,
                       backgroundImage:
                           AssetImage('assets/images/challenger.png'),
                     ),
@@ -527,24 +877,25 @@ class DatabaseService extends State<DatabaseServicee> {
               padding: EdgeInsets.only(
                   right: MediaQuery.of(context).size.width * 0.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    " Changer ",
+                    "  Changer ",
                     style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.06,
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
+                        fontSize: MediaQuery.of(context).size.width * 0.058,
+                         fontWeight: FontWeight.bold,
+                      
                         color: Colors.teal[800]),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.5,
+                    width: MediaQuery.of(context).size.width * 0.4,
                   ),
                   CircleAvatar(
-                    radius: MediaQuery.of(context).size.width * 0.03,
-                    backgroundColor: Colors.black,
+                    radius: MediaQuery.of(context).size.width * 0.07,
+                    backgroundColor: Colors.white,
                     child: CircleAvatar(
                       radius: MediaQuery.of(context).size.width * 0.7,
+                       backgroundColor: Colors.white,
                       backgroundImage: AssetImage('assets/images/Changer.png'),
                     ),
                   ),
@@ -555,14 +906,14 @@ class DatabaseService extends State<DatabaseServicee> {
               padding: EdgeInsets.only(
                   right: MediaQuery.of(context).size.width * 0.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Cycler".toUpperCase(),
+                    "  Cycler",
                     style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.06,
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
+                      fontSize: MediaQuery.of(context).size.width * 0.06,
+                          fontWeight: FontWeight.bold,
+                        
                         color: Colors.teal[900]),
                   ),
                   SizedBox(
@@ -570,12 +921,174 @@ class DatabaseService extends State<DatabaseServicee> {
                   ),
                   CircleAvatar(
                     radius: MediaQuery.of(context).size.width * 0.07,
-                    backgroundColor: Colors.grey[100],
+                    backgroundColor: Colors.white,
                     child: CircleAvatar(
                       radius: MediaQuery.of(context).size.width * 0.07,
+                       backgroundColor: Colors.white,
                       backgroundImage: AssetImage('assets/images/cycler.png'),
                     ),
                   ),
+                ],
+              ));
+        }
+      },
+    );
+  }
+
+  Widget getTierDisplayHome() {
+ return StreamBuilder(
+      stream: Firestore.instance
+          .collection('UserDatabase')
+          .document(uid)
+          .collection('Other Info')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return Container();
+        if (snapshot.data.documents[2]['Tier'] == 'BRONZE') {
+          return Container(
+              padding:
+                  EdgeInsets.only(right: MediaQuery.of(context).size.width * 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                
+                  CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.04,
+                    backgroundColor: Colors.grey[100],
+                    child: CircleAvatar(
+                      radius: MediaQuery.of(context).size.width * 0.03,
+                      backgroundImage:
+                          AssetImage('assets/images/challenger.png'),
+                    ),
+                  ),
+                   Text(
+                    " Challenger",
+                  style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.046,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
+              ));
+        } else if (snapshot.data.documents[2]['Tier'] == 'SILVER') {
+          return Container(
+              padding: EdgeInsets.only(
+                  right: MediaQuery.of(context).size.width * 0.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                 
+                  CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.04,
+                    backgroundColor: Colors.black,
+                    child: CircleAvatar(
+                      radius: MediaQuery.of(context).size.width * 0.3,
+                      backgroundImage: AssetImage('assets/images/Changer.png'),
+                    ),
+                  ),
+                   Text(
+                    " Change",
+                  style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.046,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
+              ));
+        } else {
+          return Container(
+              padding: EdgeInsets.only(
+                  right: MediaQuery.of(context).size.width * 0.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  
+                  CircleAvatar(
+                    radius: MediaQuery.of(context).size.width * 0.04,
+                    backgroundColor: Colors.grey[100],
+                    child: CircleAvatar(
+                      radius: MediaQuery.of(context).size.width * 0.03,
+                      backgroundImage: AssetImage('assets/images/cycler.png'),
+                    ),
+                  ),
+                   Text(
+                    " Cycler",
+                  style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.046,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
+              ));
+        }
+      },
+    );
+  }
+
+
+  Widget getTierHome() {
+    return StreamBuilder(
+      stream: Firestore.instance
+          .collection('UserDatabase')
+          .document(uid)
+          .collection('Other Info')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return Container();
+        if (snapshot.data.documents[2]['Tier'] == 'BRONZE') {
+          return Container(
+              padding:
+                  EdgeInsets.only(right: MediaQuery.of(context).size.width * 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    " Challenger",
+                  style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.046,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                   SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.02,
+                  ),
+                  
+                ],
+              ));
+        } else if (snapshot.data.documents[2]['Tier'] == 'SILVER') {
+          return Container(
+              padding: EdgeInsets.only(
+                  right: MediaQuery.of(context).size.width * 0.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(
+                    " Changer ",
+                   style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.046,
+                        fontWeight: FontWeight.bold,
+                       
+                        color: Colors.white),
+                  ),
+                  
+                ],
+              ));
+        } else {
+          return Container(
+              padding: EdgeInsets.only(
+                  right: MediaQuery.of(context).size.width * 0.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(
+                    "Cycler",
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.046,
+                        fontWeight: FontWeight.bold,
+                       
+                        color: Colors.white),
+                  ),
+                  
                 ],
               ));
         }
@@ -859,7 +1372,33 @@ class DatabaseService extends State<DatabaseServicee> {
 
   void writeCollector(name, coordinate, landmark) {}
 
-  // =========== DAILY POLL Q&A RANDOM GENERATOR ===========
+  // =========== CONNECT FORUM / CHAT (NEW) ===========
+  Future getUserByEmail(String email) async {
+    return await userCollection.where("email", isEqualTo: email).getDocuments();
+  }
+
+  Future getUserByName(String name) async {
+    return await userCollection.where("name", isEqualTo: name).getDocuments();
+  }
+
+  createChatRoom(String chatRoomUID, chatRoomMap) {
+    Firestore.instance
+        .collection("ChatRoom")
+        .document(chatRoomUID)
+        .setData(chatRoomMap)
+        .catchError((e) => print(e.toString()));
+  }
+
+  getConversationMessages(String chatRoomUID, messageMap) {
+    Firestore.instance
+        .collection("ChatRoom")
+        .document(chatRoomUID)
+        .collection("Chats")
+        .add(messageMap)
+        .catchError((e) => print(e.toString()));
+  }
+
+  // =========== CONNECT FORUM / CHAT (OLD) ===========
   Future updateForumThread(String postUID, String author, String date,
       String title, String description) async {
     var ref = forumCollection.document(uid);
@@ -932,18 +1471,15 @@ class DatabaseService extends State<DatabaseServicee> {
                               padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                               child: Row(children: <Widget>[
                                 GestureDetector(
-                                    child: Icon(Icons.thumb_up), onTap: () {
-
-                     
-                                    }),
-                                     SizedBox(width: 10),
-                               //follow the voting count 
-                                    Text(
-                                  snapshot.data.documents[index]['count'].toString(),
+                                    child: Icon(Icons.thumb_up), onTap: () {}),
+                                SizedBox(width: 0),
+                                //follow the voting count
+                                Text(
+                                  snapshot.data.documents[index]['count']
+                                      .toString(),
                                 ),
                                 SizedBox(width: 20),
-                               
-                                
+
                                 GestureDetector(
                                     child: Icon(Icons.share),
                                     onTap: () => {} //share(context)

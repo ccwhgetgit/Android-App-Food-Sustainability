@@ -92,22 +92,19 @@ class _StartDiscussionState extends State<StartDiscussion> {
     Text txt2 = Text( descController.text);
    var desc = txt2.data;
    
-   int count = 0 ; 
-   var counting = count;
 
     await firestore
         .collection('ForumDatabase')
         .document(titleupload) //based on the uid 
         .setData({
       'author':  LoginPage.user.displayName,
-      'date': DateFormat('dd MM yyyy')
+      'date': DateFormat('dd-MM-yyyy @ kk:mm')
                                       .format(DateTime.now())
                                       .toString(),
        'description': desc, 
        'title': titleupload, 
        'postUID':  LoginPage.user.uid,
-       'count' : counting,
-       //like count
+       
        
 
     });

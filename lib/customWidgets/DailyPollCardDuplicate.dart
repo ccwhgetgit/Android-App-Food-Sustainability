@@ -1,7 +1,6 @@
 import 'package:Cycled_iOS/authentication.dart';
 import 'package:Cycled_iOS/database/DatabaseService.dart';
 import 'package:flutter/material.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class DailyPollCard extends StatefulWidget {
   @override
@@ -11,18 +10,24 @@ class DailyPollCard extends StatefulWidget {
 class _DailyPollCard extends State<DailyPollCard> {
   @override
   Widget build(BuildContext context) {
+    return Container(
+        child: Container(
+            child: Stack(children: <Widget>[
+      DatabaseService(uid: LoginPage.user.uid).checkUserPollAttempt(),
+      Container(
+        child: Container(
+          height: MediaQuery.of(context).size.height / 1.7,
+          width: MediaQuery.of(context).size.width - 2,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(0.0)),
+          ),
+        ),
+      ),
 
-    return Scaffold(
-        
-        body: Stack(
-          children: <Widget>[
-            Container(
-                child: Column(
-              children: <Widget>[
-       
       Positioned(
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.23,
+          height: MediaQuery.of(context).size.height * 0.14,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             borderRadius: new BorderRadius.only(
@@ -30,45 +35,48 @@ class _DailyPollCard extends State<DailyPollCard> {
                 bottomRight: const Radius.circular(20.0)),
             color: Colors.blueGrey[100],
           ),
-          child: Column(children: <Widget>[
-            SizedBox(height
-            : MediaQuery.of(context).size.height / 25),
-        
-            Row(
-            children: <Widget>[
-              
-            IconButton(
-              icon: Icon(
-                LineAwesomeIcons.arrow_left,
-                color: Colors.black,
-              ),
-              onPressed: () => {Navigator.pop(context, false)}),
-            ]),
-          
+        ),
+      ),
+      Positioned(
+        top: MediaQuery.of(context).size.height / 39,
+        //to infinite to align in centre
+
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width / 1.16,
+        child: Column(children: <Widget>[
           Center(
               child: Text(
             "LEARN and earn              ".toUpperCase(),
             textAlign: TextAlign.left,
             style: TextStyle(
               fontSize: MediaQuery.of(context).size.width / 14,
-           
+              fontFamily: "Arial",
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
           )),
- Row(
-            children: <Widget>[
-              SizedBox(width: MediaQuery.of(context).size.width / 35),
-           Image.asset("assets/images/PollDetails.png",
-                  width: MediaQuery.of(context).size.width / 1.4),
-            ]),
-
-
-
-            
         ]),
-        ),
       ),
+
+      Positioned(
+        top: MediaQuery.of(context).size.height / 12,
+
+        //to infinite to align in centre
+
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width / 1.38,
+        child: Column(children: <Widget>[
+          Row(
+            children: <Widget>[
+              Image.asset("assets/images/PollDetails.png",
+                  width: MediaQuery.of(context).size.width / 1.4),
+            ],
+          )
+        ]),
+      ),
+
+      //build a container with grey
+      //small graphic with quote
 
       Positioned(
         top: MediaQuery.of(context).size.height / 6.5,
@@ -80,9 +88,6 @@ class _DailyPollCard extends State<DailyPollCard> {
         child: Column(children: <Widget>[
           Column(
             children: <Widget>[
-               SizedBox(height
-            : MediaQuery.of(context).size.height / 15),
-        
               Row(
                 children: <Widget>[
                   Container(
@@ -122,7 +127,7 @@ class _DailyPollCard extends State<DailyPollCard> {
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height / 60,
+                height: MediaQuery.of(context).size.height / 70,
               ),
               Row(
                 children: <Widget>[
@@ -156,9 +161,8 @@ class _DailyPollCard extends State<DailyPollCard> {
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height / 60,
+                height: MediaQuery.of(context).size.height / 70,
               ),
-
               Row(
                 children: <Widget>[
                   Container(
@@ -198,7 +202,7 @@ class _DailyPollCard extends State<DailyPollCard> {
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height /60,
+                height: MediaQuery.of(context).size.height / 70,
               ),
               Row(
                 children: <Widget>[
@@ -239,16 +243,12 @@ class _DailyPollCard extends State<DailyPollCard> {
                 ],
               ),
             ],
-          ),
-           SizedBox(height
-            : MediaQuery.of(context).size.height / 10.45),
-        
+          )
         ]),
       ),
-      
 
       _buildFooter(),
-    ]))]));
+    ])));
   }
 }
 

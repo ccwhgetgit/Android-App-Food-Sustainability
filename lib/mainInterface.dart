@@ -6,7 +6,7 @@ import 'package:Cycled_iOS/tabs/disposePage.dart';
 
 import 'package:Cycled_iOS/tabs/profilePage.dart';
 
-import 'tabs/forumPage.dart';
+import 'tabs/connectPage.dart';
 
 class MainInterface extends StatefulWidget {
   @override
@@ -21,7 +21,7 @@ class _MainInterfaceState extends State<MainInterface> {
     HomePage(),
     StorePage(),
     DisposePage(),
-    ForumPage(),
+    ConnectPage(),
     ProfilePage(),
   ]; // to store nested tabs
 
@@ -43,7 +43,6 @@ class _MainInterfaceState extends State<MainInterface> {
             currentTab = 5;
           });
         },
-
         backgroundColor: Colors.teal[900],
         child: Icon(Icons.restore_from_trash),
       ),
@@ -136,7 +135,7 @@ class _MainInterfaceState extends State<MainInterface> {
                     onPressed: () {
                       setState(() {
                         currentScreen =
-                            ForumPage(); // if user taps on this dashboard tab will be active
+                            ConnectPage(); // if user taps on this dashboard tab will be active
                         currentTab = 2;
                       });
                     },
@@ -149,7 +148,7 @@ class _MainInterfaceState extends State<MainInterface> {
                               currentTab == 2 ? Colors.green[900] : Colors.grey,
                         ),
                         Text(
-                          'Forum',
+                          'Connect',
                           style: TextStyle(
                             color: currentTab == 2
                                 ? Colors.green[900]
