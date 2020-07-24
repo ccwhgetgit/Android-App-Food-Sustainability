@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -16,8 +15,6 @@ class StartDiscussion extends StatefulWidget {
 class _StartDiscussionState extends State<StartDiscussion> {
   TextEditingController titleController = new TextEditingController();
   TextEditingController descController = new TextEditingController();
-  final FirebaseStorage _storage =
-      FirebaseStorage(storageBucket: 'gs://cycledorbital-ab3ff.appspot.com');
 
   final String uid;
   _StartDiscussionState({this.uid});
