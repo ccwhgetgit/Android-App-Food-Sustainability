@@ -1,8 +1,6 @@
-import 'package:Cycled_iOS/customWidgets/HowEarnPoints.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Cycled_iOS/database/DatabaseService.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../authentication.dart';
 
@@ -152,12 +150,11 @@ class _StorePageState extends State<StorePage> {
           ),
           child: Column(
             children: <Widget>[
-              
               /*
     
     consider adding something at the top 
              */
-           
+
               NotificationListener<OverscrollIndicatorNotification>(
                 onNotification: (OverscrollIndicatorNotification overscroll) {
                   overscroll.disallowGlow();
@@ -195,14 +192,10 @@ class _StorePageState extends State<StorePage> {
                               fontWeight: FontWeight.bold,
                               fontSize:
                                   MediaQuery.of(context).size.height * 0.02)),
-                
-                     
                       SizedBox(width: MediaQuery.of(context).size.width * 0.63),
                       DatabaseService(uid: LoginPage.user.uid)
                           .getTokens('rewards'),
-                    
                     ]),
-                    
                     SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                     Row(children: <Widget>[
                       Text("Cart ".toUpperCase(),
@@ -210,10 +203,8 @@ class _StorePageState extends State<StorePage> {
                               fontWeight: FontWeight.bold,
                               fontSize:
                                   MediaQuery.of(context).size.height * 0.02)),
-                      
                       Icon(Icons.shopping_cart),
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.63),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.63),
                       Text(cartVal.toString(),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -332,12 +323,10 @@ class _StorePageState extends State<StorePage> {
                         },
                       ),
                     ),
-                    
                   ],
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-              
             ],
           ),
         ));

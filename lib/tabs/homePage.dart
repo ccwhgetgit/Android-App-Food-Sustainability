@@ -1,8 +1,4 @@
-import 'package:Cycled_iOS/customWidgets/gridProgress.dart';
-import 'package:Cycled_iOS/customWidgets/pie_chart.dart' as third;
-
 import 'package:flutter/material.dart';
-import 'package:Cycled_iOS/customWidgets/DailyPollCard.dart' as second;
 import 'package:Cycled_iOS/customWidgets/UserCard.dart' as first;
 
 import 'package:intl/intl.dart';
@@ -58,11 +54,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             title: Container(
                 child: Column(
               children: <Widget>[
-                 DatabaseService(uid: LoginPage.user.uid).getName()
+                DatabaseService(uid: LoginPage.user.uid).getName()
               ],
-            ))
-            ,
-            
+            )),
             backgroundColor: Colors.white,
             bottom: new TabBar(
                 labelPadding: EdgeInsets.symmetric(horizontal: 30.0),
@@ -94,8 +88,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       color: Colors.black,
                     ),
                   )),
-                  
-                                 ])),
+                ])),
       ),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overscroll) {
@@ -105,7 +98,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         child: new TabBarView(controller: controller, children: <Widget>[
           new first.UserCard(),
           new Piechart(),
-         
         ]),
       ),
     );

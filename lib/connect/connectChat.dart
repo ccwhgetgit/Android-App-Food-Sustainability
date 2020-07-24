@@ -37,7 +37,6 @@ class _ConnectChatState extends State<ConnectChat> {
   @override
   void initState() {
     getUserInfo();
-
     super.initState();
   }
 

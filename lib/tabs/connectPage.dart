@@ -1,3 +1,4 @@
+import 'package:Cycled_iOS/connect/connectChat.dart';
 import 'package:flutter/material.dart';
 import 'package:Cycled_iOS/connect/connectForum.dart';
 
@@ -77,10 +78,9 @@ class _ConnectPageState extends State<ConnectPage>
           overscroll.disallowGlow();
           return;
         },
-        child: new TabBarView(controller: controller, children: <Widget>[
-          new ConnectForum(),
-          new ConnectForum()
-        ]),
+        child: new TabBarView(
+            controller: controller,
+            children: <Widget>[new ConnectForum(), new ConnectChat()]),
       ),
     );
   }

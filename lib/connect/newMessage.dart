@@ -75,12 +75,15 @@ class _NewMessageState extends State<NewMessage> {
       String chatRoomUID = getChatRoomUID(name, _myName);
 
       List<String> users = [name, _myName];
+
       Map<String, dynamic> chatRoomMap = {
         "users": users,
         "chatRoomUID": chatRoomUID,
       };
+
       DatabaseService(uid: LoginPage.user.uid)
           .createChatRoom(chatRoomUID, chatRoomMap);
+
       Navigator.push(
           context,
           MaterialPageRoute(
