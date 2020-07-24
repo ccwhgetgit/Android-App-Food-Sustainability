@@ -1,7 +1,7 @@
+import 'package:Cycled_iOS/connect/startDiscussion.dart';
 import 'package:Cycled_iOS/database/DatabaseService.dart';
 import 'package:flutter/material.dart';
 import '../authentication.dart';
-import 'startDiscussion.dart';
 
 class ConnectForum extends StatefulWidget {
   @override
@@ -36,19 +36,11 @@ class _ConnectForumState extends State<ConnectForum> {
                       ),
                       shape: CircleBorder(),
                       onPressed: () {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return Container(
-                                  color: Color(0xFF737373),
-                                  child: Container(
-                                      child: StartDiscussion(),
-                                      decoration: BoxDecoration(
-                                          color: Theme.of(context).canvasColor,
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(30),
-                                              topRight: Radius.circular(30)))));
-                            });
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => StartDiscussion(),
+                          ),
+                        );
                       }))
             ])
           ]))

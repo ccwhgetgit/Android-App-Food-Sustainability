@@ -1389,13 +1389,29 @@ class DatabaseService extends State<DatabaseServicee> {
         .catchError((e) => print(e.toString()));
   }
 
-  getConversationMessages(String chatRoomUID, messageMap) {
+  addConversationMessages(String chatRoomUID, messageMap) {
     Firestore.instance
         .collection("ChatRoom")
         .document(chatRoomUID)
-        .collection("Chats")
+        .collection("conversation")
         .add(messageMap)
         .catchError((e) => print(e.toString()));
+  }
+
+  getConversationMessages(String chatRoomUID) async {
+    return await Firestore.instance
+        .collection("ChatRoom")
+        .document(chatRoomUID)
+        .collection("conversation")
+        .orderBy("time")
+        .snapshots();
+  }
+
+  getChatRooms(String name) async {
+    return await Firestore.instance
+        .collection("ChatRoom")
+        .where("users", arrayContains: name)
+        .snapshots();
   }
 
   // =========== CONNECT FORUM / CHAT (OLD) ===========
@@ -1446,7 +1462,7 @@ class DatabaseService extends State<DatabaseServicee> {
                               padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                               child: Row(children: <Widget>[
                                 Text(snapshot.data.documents[index]['author']),
-                                Text("  "),
+                                Text("    "),
                                 Text(snapshot.data.documents[index]['date']),
                               ]),
                             ),
@@ -1472,18 +1488,17 @@ class DatabaseService extends State<DatabaseServicee> {
                               child: Row(children: <Widget>[
                                 GestureDetector(
                                     child: Icon(Icons.thumb_up), onTap: () {}),
-                                SizedBox(width: 0),
-                                //follow the voting count
+                                SizedBox(width: 5),
                                 Text(
-                                  snapshot.data.documents[index]['count']
+                                  snapshot.data.documents[index]['likes']
                                       .toString(),
                                 ),
-                                SizedBox(width: 20),
-
+                                SizedBox(width: 15),
                                 GestureDetector(
-                                    child: Icon(Icons.share),
-                                    onTap: () => {} //share(context)
-                                    ),
+                                    child: Icon(Icons.reply), onTap: () => {}),
+                                SizedBox(width: 20),
+                                GestureDetector(
+                                    child: Icon(Icons.share), onTap: () => {}),
                               ]),
                             ),
                           ],

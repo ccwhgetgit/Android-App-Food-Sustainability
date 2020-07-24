@@ -90,7 +90,7 @@ class _NewMessageState extends State<NewMessage> {
     }
   }
 
-  Widget _SearchTile({String name, String email}) {
+  Widget searchTile({String name, String email}) {
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: Column(
@@ -124,6 +124,7 @@ class _NewMessageState extends State<NewMessage> {
   getUserInfo() async {
     setState(() {});
     _myName = await HelperFunctions.getUserNameSharedPreference();
+    Constants.myName = _myName;
   }
 
   initiateSearch() {
@@ -155,7 +156,7 @@ class _NewMessageState extends State<NewMessage> {
                   itemCount: searchSnapshot.documents.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return _SearchTile(
+                    return searchTile(
                       name: searchSnapshot.documents[index].data["name"],
                       email: searchSnapshot.documents[index].data["email"],
                     );
