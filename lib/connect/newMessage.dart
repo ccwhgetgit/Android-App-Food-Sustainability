@@ -17,6 +17,8 @@ String _myName;
 class _NewMessageState extends State<NewMessage> {
   TextEditingController searchController = new TextEditingController();
   QuerySnapshot searchSnapshot;
+  QuerySnapshot searchSnapshotName;
+  QuerySnapshot searchSnapshotEmail;
 
   @override
   void initState() {
@@ -130,15 +132,8 @@ class _NewMessageState extends State<NewMessage> {
     Constants.myName = _myName;
   }
 
-  initiateSearch() {
-    DatabaseService(uid: LoginPage.user.uid)
-        .getUserByEmail(searchController.text)
-        .then((data) {
-      setState(() {
-        searchSnapshot = data;
-      });
-    });
-    DatabaseService(uid: LoginPage.user.uid)
+  initiateSearch() async {
+    await DatabaseService(uid: LoginPage.user.uid)
         .getUserByName(searchController.text)
         .then((data) {
       setState(() {
