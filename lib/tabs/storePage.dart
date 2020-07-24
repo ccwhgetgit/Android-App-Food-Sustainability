@@ -1,14 +1,10 @@
+import 'package:Cycled_iOS/customWidgets/HowEarnPoints.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Cycled_iOS/database/DatabaseService.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../authentication.dart';
-
-/*
-
-
-Issue : Count does not reset to 0 upon exiting the tabs
-*/
 
 class StorePage extends StatefulWidget {
   static final stores = ['Giant', 'NTUC', 'Popular', 'Sheng Siong'];
@@ -141,6 +137,7 @@ class _StorePageState extends State<StorePage> {
                 fontSize: 23,
                 color: Colors.black,
               )),
+
           //add a back
         ),
         body: new Container(
@@ -155,16 +152,12 @@ class _StorePageState extends State<StorePage> {
           ),
           child: Column(
             children: <Widget>[
+              
               /*
     
     consider adding something at the top 
              */
-              Row(
-                children: <Widget>[
-                  SizedBox(width: MediaQuery.of(context).size.width / 5),
-                ],
-              ),
-              SizedBox(height: 20),
+           
               NotificationListener<OverscrollIndicatorNotification>(
                 onNotification: (OverscrollIndicatorNotification overscroll) {
                   overscroll.disallowGlow();
@@ -202,10 +195,14 @@ class _StorePageState extends State<StorePage> {
                               fontWeight: FontWeight.bold,
                               fontSize:
                                   MediaQuery.of(context).size.height * 0.02)),
+                
+                     
                       SizedBox(width: MediaQuery.of(context).size.width * 0.63),
                       DatabaseService(uid: LoginPage.user.uid)
                           .getTokens('rewards'),
+                    
                     ]),
+                    
                     SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                     Row(children: <Widget>[
                       Text("Cart ".toUpperCase(),
@@ -213,8 +210,10 @@ class _StorePageState extends State<StorePage> {
                               fontWeight: FontWeight.bold,
                               fontSize:
                                   MediaQuery.of(context).size.height * 0.02)),
+                      
+                      Icon(Icons.shopping_cart),
                       SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.694),
+                          width: MediaQuery.of(context).size.width * 0.63),
                       Text(cartVal.toString(),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -333,10 +332,12 @@ class _StorePageState extends State<StorePage> {
                         },
                       ),
                     ),
+                    
                   ],
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+              
             ],
           ),
         ));

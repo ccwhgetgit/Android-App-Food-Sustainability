@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:Cycled_iOS/connect/connectForum.dart';
-import 'package:Cycled_iOS/connect/connectChat.dart';
 
 class ConnectPage extends StatefulWidget {
   @override
@@ -80,7 +79,7 @@ class _ConnectPageState extends State<ConnectPage>
         },
         child: new TabBarView(controller: controller, children: <Widget>[
           new ConnectForum(),
-          new ConnectChat(),
+          new ConnectForum()
         ]),
       ),
     );

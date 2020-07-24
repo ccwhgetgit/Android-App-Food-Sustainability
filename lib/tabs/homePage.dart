@@ -1,3 +1,4 @@
+import 'package:Cycled_iOS/customWidgets/gridProgress.dart';
 import 'package:Cycled_iOS/customWidgets/pie_chart.dart' as third;
 
 import 'package:flutter/material.dart';
@@ -6,6 +7,10 @@ import 'package:Cycled_iOS/customWidgets/UserCard.dart' as first;
 
 import 'package:intl/intl.dart';
 import 'dart:ui';
+
+import '../authentication.dart';
+import '../customWidgets/pie_chart.dart';
+import '../database/DatabaseService.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -22,7 +27,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    controller = new TabController(vsync: this, length: 3);
+    controller = new TabController(vsync: this, length: 2);
   }
 
   @override
@@ -53,13 +58,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             title: Container(
                 child: Column(
               children: <Widget>[
-                Text("\n" + message,
-                    style: TextStyle(
-                        fontSize: 24.5,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black)),
+                 DatabaseService(uid: LoginPage.user.uid).getName()
               ],
-            )),
+            ))
+            ,
+            
             backgroundColor: Colors.white,
             bottom: new TabBar(
                 labelPadding: EdgeInsets.symmetric(horizontal: 30.0),
@@ -85,21 +88,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   )),
                   new Tab(
                       icon: new Text(
-                    "Learn & Earn ".toUpperCase(),
+                    "Progress ".toUpperCase(),
                     style: TextStyle(
                       fontSize: 12.0,
                       color: Colors.black,
                     ),
                   )),
-                  new Tab(
-                      icon: new Text(
-                    "Efforts".toUpperCase(),
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      color: Colors.black,
-                    ),
-                  )),
-                ])),
+                  
+                                 ])),
       ),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overscroll) {
@@ -108,8 +104,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         },
         child: new TabBarView(controller: controller, children: <Widget>[
           new first.UserCard(),
-          new second.DailyPollCard(),
-          new third.Piechart(),
+          new Piechart(),
+         
         ]),
       ),
     );

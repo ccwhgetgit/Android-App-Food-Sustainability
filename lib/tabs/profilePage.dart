@@ -10,6 +10,8 @@ import 'package:Cycled_iOS/profileNav/about.dart';
 import 'package:Cycled_iOS/authentication.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
+import '../customWidgets/HowEarnPoints.dart';
+
 class ProfileListItem extends StatelessWidget {
   final IconData icon;
   final String text;
@@ -70,6 +72,13 @@ class ProfileListItem extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (BuildContext context) => LoginPage()))
+
+ else if (this.text == 'Earn Points')
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) =>HowEarnPoints()))
+
         },
       ),
     );
@@ -191,10 +200,17 @@ class _ProfilePageState extends State<ProfilePage> {
                   text: 'Be a Host',
                 ),
                 ProfileListItem(
+                  icon: LineAwesomeIcons.info_circle,
+                  text: 'Earn Points',
+                
+                ),
+
+                 ProfileListItem(
                   icon: LineAwesomeIcons.alternate_sign_out,
                   text: 'Logout',
                   hasNavigation: false,
                 ),
+
               ]),
             ),
           ],
