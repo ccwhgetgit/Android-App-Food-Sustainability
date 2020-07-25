@@ -12,6 +12,8 @@ import 'package:Cycled_iOS/onboarding/slide_item.dart';
 
 import 'authentication/login.dart';
 import 'authentication/signup.dart';
+import 'helper/constants.dart';
+import 'helper/helperFunctions.dart';
 import 'onboarding/slide_dots.dart';
 import 'onboarding/slide_item.dart';
 
@@ -378,6 +380,7 @@ class _LoginPageState extends State<LoginPage>
         idToken: gSA.idToken, accessToken: gSA.accessToken);
 
     LoginPage.user = (await _auth.signInWithCredential(credential)).user;
+    Constants.myName = LoginPage.user.displayName;
 
     DatabaseService(uid: LoginPage.user.uid).updateUserInfo(
         LoginPage.user.email, LoginPage.user.displayName, false);

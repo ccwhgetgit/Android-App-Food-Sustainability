@@ -22,12 +22,15 @@ class _ConnectChatState extends State<ConnectChat> {
               ? ListView.builder(
                   itemCount: snapshot.data.documents.length,
                   itemBuilder: (context, index) {
-                    return ChatRoomsTile(
-                        snapshot.data.documents[index].data["chatRoomUID"]
-                            .toString()
-                            .replaceAll("_", "")
-                            .replaceAll(Constants.myName, ""),
-                        snapshot.data.documents[index].data["chatRoomUID"]);
+                    return snapshot.data.documents[index].data["chatRoomUID"] !=
+                            null
+                        ? ChatRoomsTile(
+                            snapshot.data.documents[index].data["chatRoomUID"]
+                                .toString()
+                                .replaceAll("_", "")
+                                .replaceAll(LoginPage.user.displayName, ""),
+                            snapshot.data.documents[index].data["chatRoomUID"])
+                        : Container();
                   },
                 )
               : Container();
@@ -41,7 +44,7 @@ class _ConnectChatState extends State<ConnectChat> {
   }
 
   getUserInfo() async {
-    Constants.myName = await HelperFunctions.getUserNameSharedPreference();
+    //Constants.myName = await HelperFunctions.getUserNameSharedPreference();
     DatabaseService(uid: LoginPage.user.uid)
         .getChatRooms(Constants.myName)
         .then((val) {
@@ -114,10 +117,6 @@ class ChatRoomsTile extends StatelessWidget {
         },
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: 10, bottom: 10),
-              child: Text("Conversations", style: TextStyle(fontSize: 20)),
-            ),
             Container(
                 color: Colors.blueGrey,
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),

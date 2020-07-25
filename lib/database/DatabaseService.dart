@@ -51,10 +51,7 @@ class DatabaseService extends State<DatabaseServicee> {
 
   // =========== USER INFO ===========
   Future updateUserInfo(String email, String name, bool displayPic) async {
-    var ref = userCollection
-        .document(uid)
-        .collection('User Info')
-        .document('Personal Info');
+    var ref = userCollection.document(uid);
 
     return await ref.get().then((docData) => !docData.exists
         ? ref.setData({'email': email, 'name': name, 'displayPic': displayPic})
@@ -63,11 +60,7 @@ class DatabaseService extends State<DatabaseServicee> {
 
   Widget getName() {
     return StreamBuilder(
-      stream: Firestore.instance
-          .collection('UserDatabase')
-          .document(uid)
-          .collection('User Info')
-          .snapshots(),
+      stream: Firestore.instance.collection('UserDatabase').snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return Text("");
         DateTime now = DateTime.now();
@@ -91,11 +84,7 @@ class DatabaseService extends State<DatabaseServicee> {
 
   Widget getNewName() {
     return StreamBuilder(
-      stream: Firestore.instance
-          .collection('UserDatabase')
-          .document(uid)
-          .collection('User Info')
-          .snapshots(),
+      stream: Firestore.instance.collection('UserDatabase').snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return Text("");
         return Text(snapshot.data.documents[0]['name'],

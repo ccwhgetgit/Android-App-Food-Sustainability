@@ -61,24 +61,18 @@ class ProfileListItem extends StatelessWidget {
           ],
         ),
         onPressed: () => {
-        if (this.text == 'About')
+          if (this.text == 'About')
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => About()))
           else if (this.text == 'Be a Host')
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => FormPage()))
+          else if (this.text == 'Earn Points')
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => HowEarnPoints()))
           else if (this.text == 'Logout')
             Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (BuildContext context) => LoginPage()))
-
- else if (this.text == 'Earn Points')
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (BuildContext context) =>HowEarnPoints()))
-
+                context, MaterialPageRoute(builder: (context) => LoginPage()))
         },
       ),
     );
@@ -190,7 +184,6 @@ class _ProfilePageState extends State<ProfilePage> {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: Column(children: <Widget>[
-               
                 ProfileListItem(
                   icon: LineAwesomeIcons.user_plus,
                   text: 'About',
@@ -202,15 +195,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 ProfileListItem(
                   icon: LineAwesomeIcons.info_circle,
                   text: 'Earn Points',
-                
                 ),
-
-                 ProfileListItem(
+                ProfileListItem(
                   icon: LineAwesomeIcons.alternate_sign_out,
                   text: 'Logout',
                   hasNavigation: false,
                 ),
-
               ]),
             ),
           ],

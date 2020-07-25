@@ -48,7 +48,7 @@ class _Login1PageState extends State<Login1Page>
   TextEditingController signupPasswordController = new TextEditingController();
   TextEditingController signupConfirmPasswordController =
       new TextEditingController();
-  
+
   PageController _pageController;
 
   Color left = Colors.black;
@@ -285,6 +285,8 @@ class _Login1PageState extends State<Login1Page>
                     onPressed: () async {
                       _signupFormKey.currentState.validate();
                       _signUpWithEmailPassword();
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                     }),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.2),
@@ -347,9 +349,9 @@ class _Login1PageState extends State<Login1Page>
         value,
         textAlign: TextAlign.center,
         style: TextStyle(
-            color: Colors.white,
-            fontSize: 16.0,
-            ),
+          color: Colors.white,
+          fontSize: 16.0,
+        ),
       ),
       backgroundColor: Colors.blue,
       duration: Duration(seconds: 3),

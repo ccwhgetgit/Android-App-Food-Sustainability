@@ -39,7 +39,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                   return MessageTile(
                       snapshot.data.documents[index].data["message"],
                       snapshot.data.documents[index].data["sendBy"] ==
-                          Constants.myName);
+                          LoginPage.user.displayName);
                 },
               )
             : Container();
@@ -51,7 +51,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
     if (messageController.text.isNotEmpty) {
       Map<String, dynamic> messageMap = {
         "message": messageController.text,
-        "sendBy": Constants.myName,
+        "sendBy": LoginPage.user.displayName,
         "time": DateTime.now().millisecondsSinceEpoch
       };
 

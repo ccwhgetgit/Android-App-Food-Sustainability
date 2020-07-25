@@ -73,10 +73,10 @@ class _NewMessageState extends State<NewMessage> {
   }
 
   createChatRoom({String name}) {
-    if (name != _myName) {
-      String chatRoomUID = getChatRoomUID(name, _myName);
+    if (name != LoginPage.user.displayName) {
+      String chatRoomUID = getChatRoomUID(name, LoginPage.user.displayName);
 
-      List<String> users = [name, _myName];
+      List<String> users = [name, LoginPage.user.displayName];
 
       Map<String, dynamic> chatRoomMap = {
         "users": users,
