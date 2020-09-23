@@ -5,3 +5,8 @@ Main Features:
 2. Google Maps to add composting sites 
 3. Community Forum to discover latest events and share tips on food waste management 
 4. Daily Quiz to provide fun trivia 
+
+
+
+App available only on Play Store: 
+https://play.google.com/store/apps/details?id=com.nus.cycled2020
