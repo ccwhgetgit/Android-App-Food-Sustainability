@@ -1,4 +1,4 @@
-# Cycled---Food-Sustainability-
+# Android App : Food-Sustainability
 School project, mentored by Kelly from Paypal Innovation Lab. The idea revolved around encouraging, educating and engaging people to recycle and compost their food waste. 
 Main Features: 
 1. SignUp/Login using Google or Facebook 
